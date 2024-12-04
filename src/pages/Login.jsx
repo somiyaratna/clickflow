@@ -10,9 +10,18 @@ const Login = () => {
 
   return (
     <div
-      style={{ background: "linear-gradient(135deg, #4b6cb7, #182848)" }}
-      className="font-roboto bg-primary600 h-screen w-screen flex items-center justify-center "
+      className="font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center"
+      style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
     >
+      <div>
+        <img
+          src="./src/assets/shopify.png"
+          alt="clickflow logo"
+          className="max-h-12 md:max-h-16 lg:max-h-20"
+          draggable="false"
+        />
+      </div>
+
       <div
         style={{
           background: "#fff",
@@ -24,7 +33,7 @@ const Login = () => {
         <h1 className="text-xl md:text-2xl mb-4 font-bold text-primary800 tracking-normal">
           Welcome Back
         </h1>
-        <form className="block" onSubmit={handleSubmit}>
+        <form className="block flex-grow" onSubmit={handleSubmit}>
           <div className="mb-2 text-left">
             <label
               htmlFor="email"
