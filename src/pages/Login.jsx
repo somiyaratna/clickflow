@@ -15,7 +15,7 @@ const Login = () => {
     >
       <div>
         <img
-          src="./src/assets/shopify.png"
+          src="./src/assets/logo.png"
           alt="clickflow logo"
           className="max-h-12 md:max-h-16 lg:max-h-20"
           draggable="false"
