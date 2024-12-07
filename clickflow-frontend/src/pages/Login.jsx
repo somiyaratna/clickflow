@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ const Login = () => {
       className="font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center"
       style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
     >
+      {/* LOGO */}
       <div>
         <img
           src="./src/assets/logo.png"
@@ -34,6 +36,7 @@ const Login = () => {
           Welcome Back
         </h1>
         <form className="block flex-grow" onSubmit={handleSubmit}>
+          {/* EMAIL */}
           <div className="mb-2 text-left">
             <label
               htmlFor="email"
@@ -51,6 +54,8 @@ const Login = () => {
               className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
             />
           </div>
+
+          {/* PASSWORD */}
           <div className="mb-2 text-left">
             <label
               htmlFor="password"
@@ -86,12 +91,12 @@ const Login = () => {
               <p className="text-sm inline-block me-1">
                 Don&apos;t have an account?
               </p>
-              <a
-                href="#"
+              <Link
+                to={"/signup"}
                 className="font-thin text-primary500 hover:text-primary600 text-sm"
               >
                 Sign up
-              </a>
+              </Link>
             </div>
           </div>
         </form>

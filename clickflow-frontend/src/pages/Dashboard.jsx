@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import aldiLogo from "./../assets/aldi.png";
 import amazonLogo from "./../assets/amazon.png";
 import bunningsWarehouseLogo from "./../assets/bunnings-warehouse.png";
@@ -21,7 +21,7 @@ const logos = [
 ];
 
 const Dashboard = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // useEffect(() => {
   //   navigate("/login");
@@ -30,7 +30,9 @@ const Dashboard = () => {
   return (
     <div className="min-h-full flex-1">
       <section className="mx-auto my-8 max-w-[1600px]">
-        <h3 className="text-3xl text-center font-bold">MVP Levels</h3>
+        <h3 className="text-xl md:text-3xl text-center font-bold">
+          MVP Levels
+        </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 p-4 md:p-8 gap-4 max-w-[1600px] mx-auto">
           <MVPCard level={1} />
           <MVPCard level={2} />
@@ -40,7 +42,9 @@ const Dashboard = () => {
       </section>
 
       <section className="mx-auto my-8">
-        <h3 className="text-3xl text-center font-bold">Our Partners</h3>
+        <h3 className="text-xl md:text-3xl text-center font-bold">
+          Our Partners
+        </h3>
         <div className="grid grid-cols-3 md:grid-cols-4 p-4 md:p-8 gap-4 max-w-[1600px] mx-auto">
           {logos.map((logo, index) => (
             <div

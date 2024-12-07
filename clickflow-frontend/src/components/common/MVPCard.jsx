@@ -35,9 +35,9 @@ const MVPCard = ({ level }) => {
   const { img, description } = levels[level] || {};
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
+    <div className="p-4 bg-white rounded-lg shadow-md relative">
       <div className="flex flex-col justify-between md:flex-row items-center mb-4 rounded-xl">
-        <div className="flex flex-col lg:flex-row justify-center items-center">
+        <div className="flex flex-col lg:flex-row justify-center items-center mt-2">
           <img
             src={img}
             alt={`Level ${level}`}
@@ -45,7 +45,7 @@ const MVPCard = ({ level }) => {
           />
           <h3 className="text-lg font-bold">Level {level}</h3>
         </div>
-        <span className="flex">
+        <span className="flex absolute top-4 right-2">
           {Array.from({ length: level }).map((_, index) => (
             <img key={index} src={star} alt="star" className="w-4 h-4 mr-1" />
           ))}

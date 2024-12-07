@@ -18,16 +18,17 @@ const links = [
   { name: "Profile", icon: <FaUserCircle size={20} /> },
 ];
 
-const NavbarLinks = ({ isMobile }) => (
+const NavbarLinks = ({ isMobile, onClick }) => (
   <>
     {links.map((link) => (
       <NavLink
+        onClick={onClick}
         key={link.name}
         to={link.name === "Home" ? "/" : `/${link.name.toLowerCase()}`}
         className={({ isActive }) =>
           isActive
-            ? "text-primary100 transition-all duration-200 ease-in-out flex items-center gap-4"
-            : "hover:text-primary100 transition-all duration-200 ease-in-out flex items-center gap-4"
+            ? "text-primary900 md:text-primary100 transition-all duration-200 ease-in-out flex items-center gap-4"
+            : "text-primary500 md:text-white md:hover:text-primary100 transition-all duration-200 ease-in-out flex items-center gap-4"
         }
         aria-label={link.name}
       >
@@ -62,7 +63,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav>
+    <nav className="z-10">
       {/* Desktop view */}
       <div className="hidden md:flex flex-row gap-12 px-8">
         <NavbarLinks />
@@ -99,7 +100,7 @@ const Navbar = () => {
           }`}
         >
           <div className="flex flex-col gap-6 h-full">
-            <NavbarLinks isMobile={true} />
+            <NavbarLinks isMobile={true} onClick={() => setIsMenuOpen(false)} />
 
             {/* Sign-out button at the bottom */}
             <button className="mt-full absolute bottom-10 flex items-center gap-2 text-red-500">
