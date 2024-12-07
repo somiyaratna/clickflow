@@ -13,8 +13,8 @@ clickflow-frontend/dist-ssr
 *.local
 
 #backend
-clickFlow-backend\.env
-clickFlow-backend\node_modules
+clickFlow-backend/.env
+clickFlow-backend/node_modules
 
 
 # Editor directories and files
