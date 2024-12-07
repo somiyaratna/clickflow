@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../../config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(e) {
+  function handleLogin(e) {
     e.preventDefault();
+    // Send a POST request to the API
   }
 
   return (
@@ -35,7 +37,7 @@ const Login = () => {
         <h1 className="text-xl md:text-2xl mb-4 font-bold text-primary800 tracking-normal">
           Welcome Back
         </h1>
-        <form className="block flex-grow" onSubmit={handleSubmit}>
+        <form className="block flex-grow" onSubmit={handleLogin}>
           {/* EMAIL */}
           <div className="mb-2 text-left">
             <label

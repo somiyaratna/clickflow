@@ -7,7 +7,7 @@ import nourishLogo from "./../assets/nourish.png";
 import oneShotLogo from "./../assets/one-shot.png";
 import walmartLogo from "./../assets/walmart.png";
 import whelanLogo from "./../assets/whelan.png";
-import MVPCard from "../components/common/MVPCard";
+import MVPCard from "../components/ui/MVPCard";
 
 const logos = [
   aldiLogo,

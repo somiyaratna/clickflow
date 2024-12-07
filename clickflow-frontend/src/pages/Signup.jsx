@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../../config";
+import Button from "../components/ui/Button";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +18,8 @@ const Signup = () => {
     inviteCode: "",
     agreeTerms: false,
   });
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -23,9 +29,62 @@ const Signup = () => {
     }));
   }
 
-  function handleSubmit(e) {
+  async function handleSignup(e) {
     e.preventDefault();
-    // Handle form submission logic here
+    if (formData.loginPassword !== formData.confirmLoginPassword) {
+      toast.error("Login passwords do not match.");
+      return;
+    }
+
+    if (formData.withdrawalPassword !== formData.confirmWithdrawalPassword) {
+      toast.error("Withdrawal passwords do not match.");
+      return;
+    }
+
+    const payload = {
+      fullName: formData.fullName,
+      username: formData.username,
+      email: formData.email,
+      phoneNo: formData.phone,
+      withdrawalPassword: formData.withdrawalPassword,
+      loginPassword: formData.loginPassword,
+      inviteCode: formData.inviteCode,
+      termConditionAccepted: formData.agreeTerms,
+    };
+    try {
+      setIsSubmitting(true);
+      const response = await fetch(`${API_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok) {
+        setFormData({
+          fullName: "",
+          username: "",
+          email: "",
+          phone: "",
+          withdrawalPassword: "",
+          confirmWithdrawalPassword: "",
+          loginPassword: "",
+          confirmLoginPassword: "",
+          inviteCode: "",
+          agreeTerms: false,
+        });
+        toast.success(result.message);
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("An error occurred during signup. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -55,7 +114,7 @@ const Signup = () => {
         </h1>
         <form
           className="block max-h-[60vh] overflow-y-auto"
-          onSubmit={handleSubmit}
+          onSubmit={handleSignup}
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-10 mb-2">
             {/* FULL NAME */}
@@ -256,13 +315,15 @@ const Signup = () => {
             </label>
           </div>
 
-          <button
-            type="submit"
+          <Button
+            type={"submit"}
+            isLoading={isSubmitting}
             disabled={!formData.agreeTerms}
-            className="inline-block mt-2 w-full bg-primary500 text-white p-3 rounded-lg hover:bg-primary600 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            width={"full"}
+            onClick={handleSignup}
           >
-            Sign Up
-          </button>
+            Signup
+          </Button>
           <div className="mt-2">
             <p className="text-sm inline-block me-1">
               Already have an account?
@@ -276,6 +337,7 @@ const Signup = () => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

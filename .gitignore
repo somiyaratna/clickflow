@@ -7,9 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# frontend
 clickflow-frontend/node_modules
 clickflow-frontend/dist
 clickflow-frontend/dist-ssr
+clickflow-frontend/.env
 *.local
 
 #backend
