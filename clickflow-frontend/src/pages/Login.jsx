@@ -1,14 +1,44 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../config";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Button from "../components/ui/Button";
+import Input from "../components/ui/Input";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
-    // Send a POST request to the API
+    setIsSubmitting(true);
+    try {
+      const payload = {
+        identifier,
+        password,
+      };
+      const res = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to login");
+      }
+      const data = await res.json();
+      navigate("/");
+      return data;
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -38,50 +68,33 @@ const Login = () => {
           Welcome Back
         </h1>
         <form className="block flex-grow" onSubmit={handleLogin}>
-          {/* EMAIL */}
-          <div className="mb-2 text-left">
-            <label
-              htmlFor="email"
-              className="block mb-1 font-bold text-text500"
-            >
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-            />
-          </div>
-
-          {/* PASSWORD */}
-          <div className="mb-2 text-left">
-            <label
-              htmlFor="password"
-              className="block mb-1 font-bold text-text500"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="inline-block mt-2 w-full bg-primary500 text-white p-3 rounded-lg hover:bg-primary600 transition-all duration-300"
+          <Input
+            label="Email, Phone or Username"
+            type="email"
+            id="email"
+            placeholder="Enter your email, phone or username"
+            required
+            value={identifier}
+            onChange={(event) => setIdentifier(event.target.value)}
+          />
+          <Input
+            label="Password"
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <Button
+            type={"submit"}
+            isLoading={isSubmitting}
+            width={"full"}
+            disabled={!identifier || !password}
+            onClick={handleLogin}
           >
             Login
-          </button>
+          </Button>
           <div className="min-w-full mt-2">
             <a
               href="#"

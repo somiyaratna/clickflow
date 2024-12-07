@@ -1,87 +1,56 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../config";
-import Button from "../components/ui/Button";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import logo from "./../assets/logo.png";
+import Button from "../components/ui/Button";
+import Input from "../components/ui/Input";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     username: "",
     email: "",
-    phone: "",
-    withdrawalPassword: "",
-    confirmWithdrawalPassword: "",
+    phoneNo: "",
     loginPassword: "",
     confirmLoginPassword: "",
+    withdrawalPassword: "",
+    confirmWithdrawalPassword: "",
     inviteCode: "",
-    agreeTerms: false,
+    termConditionAccepted: false,
   });
-  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
-  function handleChange(e) {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  }
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [id]: type === "checkbox" ? checked : value,
+    });
+  };
 
   async function handleSignup(e) {
     e.preventDefault();
-    if (formData.loginPassword !== formData.confirmLoginPassword) {
-      toast.error("Login passwords do not match.");
-      return;
-    }
-
-    if (formData.withdrawalPassword !== formData.confirmWithdrawalPassword) {
-      toast.error("Withdrawal passwords do not match.");
-      return;
-    }
-
-    const payload = {
-      fullName: formData.fullName,
-      username: formData.username,
-      email: formData.email,
-      phoneNo: formData.phone,
-      withdrawalPassword: formData.withdrawalPassword,
-      loginPassword: formData.loginPassword,
-      inviteCode: formData.inviteCode,
-      termConditionAccepted: formData.agreeTerms,
-    };
+    setIsSubmitting(true);
     try {
-      setIsSubmitting(true);
-      const response = await fetch(`${API_URL}/signup`, {
+      const res = await fetch(`${API_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(formData),
       });
-      const result = await response.json();
-      console.log(result);
-
-      if (response.ok) {
-        setFormData({
-          fullName: "",
-          username: "",
-          email: "",
-          phone: "",
-          withdrawalPassword: "",
-          confirmWithdrawalPassword: "",
-          loginPassword: "",
-          confirmLoginPassword: "",
-          inviteCode: "",
-          agreeTerms: false,
-        });
-        toast.success(result.message);
-        navigate("/login");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to signup");
       }
+      const data = await res.json();
+      navigate("/login");
+      return data;
     } catch (error) {
-      console.error("Error during signup:", error);
-      alert("An error occurred during signup. Please try again later.");
+      toast.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -89,14 +58,15 @@ const Signup = () => {
 
   return (
     <div
-      className="font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center"
+      className="font-roboto min-h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center overflow-y-auto pt-24 md:pt-0"
       style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
     >
+      {/* LOGO */}
       <div>
         <img
-          src="./src/assets/logo.png"
+          src={logo}
           alt="clickflow logo"
-          className="max-h-8 md:max-h-12 lg:max-h-16 mt-8"
+          className="max-h-12 md:max-h-16 lg:max-h-20"
           draggable="false"
         />
       </div>
@@ -107,230 +77,133 @@ const Signup = () => {
           color: "#333",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
         }}
-        className="p-8 rounded-xl max-w-[280px] w-full text-center mb-16 md:max-w-[600px] lg:max-w-[1200px]"
+        className="p-8 rounded-xl max-w-72 sm:max-w-xl md:max-w-4xl w-full text-center"
       >
-        <h1 className="text-xl md:text-2xl mb-4 font-bold text-primary800 tracking-normal">
-          Create Your Account
+        <h1 className="text-xl md:text-2xl mb-2 md:mb-4 font-bold text-primary800 tracking-normal">
+          Create an Account
         </h1>
-        <form
-          className="block max-h-[60vh] overflow-y-auto"
-          onSubmit={handleSignup}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-10 mb-2">
-            {/* FULL NAME */}
-            <div className="text-left">
-              <label
-                htmlFor="fullName"
-                className="block mb-1 font-bold text-text500"
-              >
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                placeholder="John Doe"
-                required
-                value={formData.fullName}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* USERNAME */}
-            <div className="text-left">
-              <label
-                htmlFor="username"
-                className="block mb-1 font-bold text-text500"
-              >
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="johndoe123"
-                required
-                value={formData.username}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* EMAIL */}
-            <div className="text-left">
-              <label
-                htmlFor="email"
-                className="block mb-1 font-bold text-text500"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="john.doe@example.com"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* PHONE */}
-            <div className="text-left">
-              <label
-                htmlFor="phone"
-                className="block mb-1 font-bold text-text500"
-              >
-                Phone Number
-              </label>
-              <input
-                type="number"
-                id="phone"
-                name="phone"
-                placeholder="1234567890"
-                required
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* LOGIN PASSWORD */}
-            <div className="text-left">
-              <label
-                htmlFor="loginPassword"
-                className="block mb-1 font-bold text-text500"
-              >
-                Login Password
-              </label>
-              <input
-                type="password"
-                id="loginPassword"
-                name="loginPassword"
-                placeholder="Add Symbols, Numbers, and Letters"
-                required
-                value={formData.loginPassword}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* CONFIRM LOGIN PASSWORD */}
-            <div className="text-left">
-              <label
-                htmlFor="confirmLoginPassword"
-                className="block mb-1 font-bold text-text500"
-              >
-                Confirm Login Password
-              </label>
-              <input
-                type="password"
-                id="confirmLoginPassword"
-                name="confirmLoginPassword"
-                placeholder="Confirm your login password"
-                required
-                value={formData.confirmLoginPassword}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* WITHDRAWAL PASSWORD */}
-            <div className="text-left">
-              <label
-                htmlFor="withdrawalPassword"
-                className="block mb-1 font-bold text-text500"
-              >
-                Withdrawal Password
-              </label>
-              <input
-                type="password"
-                id="withdrawalPassword"
-                name="withdrawalPassword"
-                placeholder="Add Symbols, Numbers, and Letters"
-                required
-                value={formData.withdrawalPassword}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* CONFIRM WITHDRAWAL PASSWORD */}
-            <div className="text-left">
-              <label
-                htmlFor="confirmWithdrawalPassword"
-                className="block mb-1 font-bold text-text500"
-              >
-                Confirm Withdrawal Password
-              </label>
-              <input
-                type="password"
-                id="confirmWithdrawalPassword"
-                name="confirmWithdrawalPassword"
-                placeholder="Confirm your withdrawal password"
-                required
-                value={formData.confirmWithdrawalPassword}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* INVITE CODE */}
-            <div className="text-left">
-              <label
-                htmlFor="inviteCode"
-                className="block mb-1 font-bold text-text500"
-              >
-                Invite Code (Optional)
-              </label>
-              <input
-                type="text"
-                id="inviteCode"
-                name="inviteCode"
-                placeholder="e.g., A0BC8D9F"
-                value={formData.inviteCode}
-                onChange={handleChange}
-                className="w-full border border-[#ccc] outline-none rounded-lg px-4 py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500"
-              />
-            </div>
-          </div>
-
-          {/* TERMS AND CONDITIONS */}
-          <div className="flex items-center my-6">
-            <input
-              type="checkbox"
-              id="agreeTerms"
-              name="agreeTerms"
-              checked={formData.agreeTerms}
+        <form className="block flex-grow" onSubmit={handleSignup}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+            <Input
+              label="Full Name"
+              type="text"
+              id="fullName"
+              placeholder="Enter your full name"
+              required
+              value={formData.fullName}
               onChange={handleChange}
-              className="mr-2"
             />
-            <label htmlFor="agreeTerms" className="text-sm text-text500">
-              I have read and agree to the{" "}
-              <a href="#" className="text-primary500 hover:text-primary600">
-                Terms and Conditions
-              </a>
+            <Input
+              label="Username"
+              type="text"
+              id="username"
+              placeholder="Enter your username"
+              required
+              value={formData.username}
+              onChange={handleChange}
+            />
+            <Input
+              label="Email Address"
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <Input
+              label="Phone Number"
+              type="text"
+              id="phoneNo"
+              placeholder="Enter your phone number"
+              required
+              value={formData.phoneNo}
+              onChange={handleChange}
+            />
+            <Input
+              label="Login Password"
+              type="password"
+              id="loginPassword"
+              placeholder="Enter your login password"
+              required
+              value={formData.loginPassword}
+              onChange={handleChange}
+            />
+            <Input
+              label="Confirm Login Password"
+              type="password"
+              id="confirmLoginPassword"
+              placeholder="Confirm your login password"
+              required
+              value={formData.confirmLoginPassword}
+              onChange={handleChange}
+            />
+            <Input
+              label="Withdrawal Password"
+              type="password"
+              id="withdrawalPassword"
+              placeholder="Enter your withdrawal password"
+              required
+              value={formData.withdrawalPassword}
+              onChange={handleChange}
+            />
+            <Input
+              label="Confirm Withdrawal Password"
+              type="password"
+              id="confirmWithdrawalPassword"
+              placeholder="Confirm your withdrawal password"
+              required
+              value={formData.confirmWithdrawalPassword}
+              onChange={handleChange}
+            />
+            <Input
+              label="Invite Code"
+              type="text"
+              id="inviteCode"
+              placeholder="Enter your invite code (optional)"
+              value={formData.inviteCode}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-2 text-center">
+            <label
+              htmlFor="termConditionAccepted"
+              className="block mb-1 font-bold text-text500"
+            >
+              <input
+                type="checkbox"
+                id="termConditionAccepted"
+                checked={formData.termConditionAccepted}
+                onChange={handleChange}
+                className="mr-2"
+              />
+              I accept the terms and conditions
             </label>
           </div>
-
           <Button
             type={"submit"}
             isLoading={isSubmitting}
-            disabled={!formData.agreeTerms}
             width={"full"}
+            disabled={
+              !formData.fullName ||
+              !formData.username ||
+              !formData.email ||
+              !formData.phoneNo ||
+              !formData.withdrawalPassword ||
+              !formData.loginPassword ||
+              !formData.termConditionAccepted
+            }
             onClick={handleSignup}
           >
-            Signup
+            Sign Up
           </Button>
-          <div className="mt-2">
-            <p className="text-sm inline-block me-1">
+          <div className="min-w-full mt-2">
+            <p className="text-xs md:text-sm inline-block me-1">
               Already have an account?
             </p>
             <Link
               to={"/login"}
-              className="font-thin text-primary500 hover:text-primary600 text-sm"
+              className="font-thin text-primary500 hover:text-primary600 text-xs md:text-sm"
             >
               Login
             </Link>
