@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL } from "../../config";
 import { toast, ToastContainer } from "react-toastify";
+import userSignup from "./../api/userSignup";
 import "react-toastify/dist/ReactToastify.css";
 import logo from "./../assets/logo.png";
 import Button from "../components/ui/Button";
@@ -35,20 +35,9 @@ const Signup = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${API_URL}/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Failed to signup");
-      }
-      const data = await res.json();
+      const signupData = await userSignup({ ...formData }); // API call, userSignup is a function inside apiSignup.js
+      console.log(signupData);
       navigate("/login");
-      return data;
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -193,7 +182,6 @@ const Signup = () => {
               !formData.loginPassword ||
               !formData.termConditionAccepted
             }
-            onClick={handleSignup}
           >
             Sign Up
           </Button>

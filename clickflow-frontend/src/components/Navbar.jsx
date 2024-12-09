@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { RxHamburgerMenu, RxCross1 } from "react-icons/rx"; // Cross icon
+import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import {
   FaHome,
   FaPhone,
@@ -8,7 +8,10 @@ import {
   FaSignOutAlt,
   FaBook,
   FaShoppingBag,
-} from "react-icons/fa"; // Icons for links
+} from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const links = [
   { name: "Home", icon: <FaHome size={20} /> },
@@ -41,8 +44,14 @@ const NavbarLinks = ({ isMobile, onClick }) => (
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const menuRef = useRef(null); // Reference to the sliding menu
+
+  function userLogout() {
+    dispatch(logout());
+    navigate("/login");
+  }
 
   // Close the menu when clicking outside of it
   useEffect(() => {
@@ -103,7 +112,10 @@ const Navbar = () => {
             <NavbarLinks isMobile={true} onClick={() => setIsMenuOpen(false)} />
 
             {/* Sign-out button at the bottom */}
-            <button className="mt-full absolute bottom-10 flex items-center gap-2 text-red-500">
+            <button
+              onClick={userLogout}
+              className="mt-full absolute bottom-10 flex items-center gap-2 text-red-500"
+            >
               <FaSignOutAlt size={20} />
               Sign Out
             </button>

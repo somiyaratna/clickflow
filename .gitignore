@@ -15,8 +15,8 @@ clickflow-frontend/.env
 *.local
 
 #backend
-clickFlow-backend/.env
-clickFlow-backend/node_modules
+clickflow-backend/.env
+clickflow-backend/node_modules
 
 
 # Editor directories and files

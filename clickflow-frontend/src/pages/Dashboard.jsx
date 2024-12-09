@@ -1,4 +1,5 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import aldiLogo from "./../assets/aldi.png";
 import amazonLogo from "./../assets/amazon.png";
 import bunningsWarehouseLogo from "./../assets/bunnings-warehouse.png";
@@ -8,6 +9,7 @@ import oneShotLogo from "./../assets/one-shot.png";
 import walmartLogo from "./../assets/walmart.png";
 import whelanLogo from "./../assets/whelan.png";
 import MVPCard from "../components/ui/MVPCard";
+import { useEffect } from "react";
 
 const logos = [
   aldiLogo,
@@ -21,11 +23,16 @@ const logos = [
 ];
 
 const Dashboard = () => {
-  // const navigate = useNavigate();
+  const userDetails = useSelector((state) => state.user);
+  console.log(userDetails);
 
-  // useEffect(() => {
-  //   navigate("/login");
-  // }, [navigate]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userDetails.token) {
+      navigate("/login");
+    }
+  }, [navigate, userDetails.token]);
 
   return (
     <div className="min-h-full flex-1">

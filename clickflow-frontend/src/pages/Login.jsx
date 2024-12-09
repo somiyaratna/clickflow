@@ -1,39 +1,27 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL } from "../../config";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
+import { useDispatch } from "react-redux";
+import { addUserData } from "../redux/userSlice";
+import userLogin from "./../api/userLogin";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   async function handleLogin(e) {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const payload = {
-        identifier,
-        password,
-      };
-      const res = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Failed to login");
-      }
-      const data = await res.json();
+      const loginData = await userLogin(identifier, password); // API call, userLogin is a function inside apiLogin.js
+      dispatch(addUserData(loginData));
       navigate("/");
-      return data;
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -91,7 +79,6 @@ const Login = () => {
             isLoading={isSubmitting}
             width={"full"}
             disabled={!identifier || !password}
-            onClick={handleLogin}
           >
             Login
           </Button>
