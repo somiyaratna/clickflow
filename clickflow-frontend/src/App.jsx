@@ -6,6 +6,9 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Certificate from "./pages/Certificate";
+import FAQs from "./pages/FAQs";
+import TermsAndConditions from "./pages/TermsAndConditions";
 
 const App = () => {
   return (
@@ -30,6 +33,23 @@ const App = () => {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/certificates"
+            element={
+              <Layout>
+                <Certificate />
+              </Layout>
+            }
+          />
+          <Route path="/terms-conditions" element={<TermsAndConditions />} />
+          <Route
+            path="/faqs"
+            element={
+              <Layout>
+                <FAQs />
+              </Layout>
+            }
+          />
         </Routes>
       </Router>
     </Provider>
