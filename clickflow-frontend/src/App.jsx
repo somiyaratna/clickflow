@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -25,6 +26,14 @@ const App = () => {
             element={
               <Layout>
                 <Dashboard />
+              </Layout>
+            }
+          />
+          <Route 
+            path="/profile" 
+            element={
+              <Layout>
+                <Profile />
               </Layout>
             }
           />
