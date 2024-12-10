@@ -102,6 +102,7 @@ async function userLogin(req, res) {
         fullName: user.fullName,
         username: user.username,
         email: user.email,
+        phoneNo: user.phoneNo
       },
     });
   } catch (error) {
