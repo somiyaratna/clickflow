@@ -6,6 +6,7 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 import Certificate from "./pages/Certificate";
 import FAQs from "./pages/FAQs";
 import TermsAndConditions from "./pages/TermsAndConditions";
@@ -28,6 +29,14 @@ const App = () => {
             element={
               <Layout>
                 <Dashboard />
+              </Layout>
+            }
+          />
+          <Route 
+            path="/profile" 
+            element={
+              <Layout>
+                <Profile />
               </Layout>
             }
           />
