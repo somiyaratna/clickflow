@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { FaQuestionCircle } from "react-icons/fa";
-import { RxCaretUp, RxCaretDown } from "react-icons/rx";
+import { CircleHelp, ChevronDown, ChevronUp } from "lucide-react";
 
 const AccordionItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +11,7 @@ const AccordionItem = ({ question, answer }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <h3 className="text-lg font-semibold">{question}</h3>
-        {isOpen ? <RxCaretUp /> : <RxCaretDown />}
+        {isOpen ? <ChevronUp /> : <ChevronDown />}
       </button>
       <div
         className={`overflow-hidden transition-all duration-100 ease-in-out ${
@@ -58,7 +57,7 @@ const FAQs = () => {
   return (
     <div className="min-h-full flex-1 p-8 bg-gray-100">
       <div className="flex gap-4 items-center mb-8">
-        <FaQuestionCircle size={40} className="text-primary800" />
+        <CircleHelp size={40} className="text-primary800" />
         <h1 className="text-2xl md:text-4xl font-bold text-primary800">
           Frequently Asked Questions
         </h1>
