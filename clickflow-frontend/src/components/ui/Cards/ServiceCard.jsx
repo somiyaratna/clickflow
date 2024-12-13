@@ -8,10 +8,12 @@ const ServiceCard = ({ data }) => {
       className="flex flex-col items-center bg-white rounded-lg p-4 md:p-8 hover:scale-[1.03] transition-all duration-300 cursor-pointer"
       onClick={() => navigate(data.link)}
     >
-      <div className="p-4 rounded-full bg-primary100 text-primary800">
-        <data.icon />
+      <div className="p-4 rounded-full bg-primary100 text-primary600">
+        <data.icon size={30} />
       </div>
-      <p className="text-sm md:text-base text-text500 mt-2">{data.label}</p>
+      <p className="text-sm md:text-base text-text500 mt-2 font-semibold">
+        {data.label}
+      </p>
     </div>
   );
 };
