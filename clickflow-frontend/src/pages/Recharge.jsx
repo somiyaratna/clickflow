@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Input from "../components/ui/Input";
-import { Copy } from "lucide-react";
+import { ChevronLeft, Copy } from "lucide-react";
 import Button from "../components/ui/Button";
 import { amounts } from "../../constants";
+import { Link } from "react-router-dom";
 
 const Recharge = () => {
   const [paymentID, setpaymentID] = useState("");
@@ -25,7 +26,10 @@ const Recharge = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full flex-grow gap-8">
+    <div className="flex flex-col items-center relative justify-center h-full flex-grow gap-8">
+      <Link to="/dashboard" className="text-primary800 font-semibold">
+        <ChevronLeft size={32} className="absolute top-8 left-8" />
+      </Link>
       <h1 className="text-4xl text-primary800 font-bold">Recharge</h1>
       <div
         style={{

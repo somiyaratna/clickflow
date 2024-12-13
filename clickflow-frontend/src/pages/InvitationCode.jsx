@@ -1,6 +1,8 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import Button from "../components/ui/Button";
+import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const InvitationCode = ({ invitationCode }) => {
   function copyToClipboard() {
@@ -15,10 +17,13 @@ const InvitationCode = ({ invitationCode }) => {
   return (
     <div
       style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
-      className="bg-white rounded-lg mx-auto h-full p-16"
+      className="bg-white rounded relative-lg mx-auto h-full p-16"
     >
       <img src={logo} alt="logo" className="h-20 md:h-30 mx-auto" />
       <div className="bg-white max-w-[1600px] flex flex-col justify-around items-center mx-auto text-center mt-24 h-1/2 rounded-lg p-8 filter backdrop-blur-sm bg-opacity-70">
+        <Link to="/dashboard" className="text-primary800 absolute top-6 left-6">
+          <ChevronLeft size={32} />
+        </Link>
         <h1 className="font-bold text-xl md:text-2xl text-primary800">
           Your Invitation Code
         </h1>

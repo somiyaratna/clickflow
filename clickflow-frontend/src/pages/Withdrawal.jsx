@@ -1,8 +1,19 @@
+import { Link } from "react-router-dom";
 import Input from "../components/ui/Input";
+import { ChevronLeft } from "lucide-react";
 
 const Withdrawal = () => {
   return (
-    <div className="flex-1 justify-center items-center flex flex-col gap-8 h-full">
+    <div className="flex-1 relative justify-center items-center flex flex-col gap-8 h-full">
+      <Link
+        to="/dashboard"
+        className="text-primary800 font-semibold absolute top-8 left-8"
+      >
+        <span className="flex items-center gap-4">
+          <ChevronLeft size={32} />
+          <p className="text-lg">Back to Dashboard</p>
+        </span>
+      </Link>
       <h1 className="text-primary800 text-3xl font-bold">
         Binding Wallet Address
       </h1>

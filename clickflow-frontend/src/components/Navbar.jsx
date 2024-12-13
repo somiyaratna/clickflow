@@ -63,8 +63,14 @@ const Navbar = () => {
   return (
     <nav className="z-10">
       {/* Desktop view */}
-      <div className="hidden md:flex flex-row gap-12 px-8">
+      <div className="hidden md:flex flex-row gap-6 px-8 items-center justify-between">
         <NavbarLinks />
+        <button
+          onClick={userLogout}
+          className="flex items-center gap-2 text-primary600 bg-white hover:bg-primary100 transition-colors duration-300 ease-in-out   hover:text-primary600 px-8 py-2 rounded-lg"
+        >
+          Sign Out
+        </button>
       </div>
 
       {/* Mobile view */}
@@ -95,7 +101,7 @@ const Navbar = () => {
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="flex flex-col gap-6 h-full">
+          <div className="flex flex-col gap-6  h-full">
             <NavbarLinks isMobile={true} onClick={() => setIsMenuOpen(false)} />
 
             <button

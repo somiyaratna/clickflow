@@ -15,6 +15,7 @@ import InvitationCode from "./pages/InvitationCode";
 import Contact from "./pages/Contact";
 import Withdrawal from "./pages/Withdrawal";
 import Recharge from "./pages/Recharge";
+import LatestEvents from "./pages/LatestEvents";
 
 const App = () => {
   return (
@@ -108,6 +109,14 @@ const App = () => {
             element={
               <Layout>
                 <Recharge />
+              </Layout>
+            }
+          />
+          <Route
+            path="/events"
+            element={
+              <Layout>
+                <LatestEvents />
               </Layout>
             }
           />
