@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const Certificate = () => {
   return (
-    <div className="bg-primary100 flex items-start gap-4 p-8">
+    <div className="bg-bg-200 flex items-start gap-4 p-8">
       <Link to={"/dashboard"}>
-        <ChevronLeft />
+        <ChevronLeft size={32} className="text-white" />
       </Link>
 
       <img

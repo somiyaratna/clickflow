@@ -17,17 +17,17 @@ const InvitationCode = ({ invitationCode }) => {
   return (
     <div
       style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
-      className="bg-white rounded relative-lg mx-auto h-full p-16"
+      className="bg-darkbg100 rounded relative-lg mx-auto h-full p-16"
     >
-      <img src={logo} alt="logo" className="h-20 md:h-30 mx-auto" />
-      <div className="bg-white max-w-[1600px] flex flex-col justify-around items-center mx-auto text-center mt-24 h-1/2 rounded-lg p-8 filter backdrop-blur-sm bg-opacity-70">
-        <Link to="/dashboard" className="text-primary800 absolute top-6 left-6">
+      <div className="bg-darkbg200 max-w-[1600px] flex flex-col gap-16 justify-around items-center mx-auto text-center mt-24 h-1/2 rounded-lg p-16 filter backdrop-blur-sm bg-opacity-70 min-h-fit my-4">
+        <img src={logo} alt="logo" className="h-20 md:h-30 mx-auto" />
+        <Link to="/dashboard" className="text-white absolute top-6 left-6">
           <ChevronLeft size={32} />
         </Link>
-        <h1 className="font-bold text-xl md:text-2xl text-primary800">
+        <h1 className="font-bold text-xl md:text-2xl text-white">
           Your Invitation Code
         </h1>
-        <span className="font-bold text-primary800 text-xl md:text-2xl">
+        <span className="font-bold text-white text-xl md:text-2xl">
           {invitationCode}
         </span>
         <Button onClick={copyToClipboard} disabled={isCopied}>

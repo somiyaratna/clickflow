@@ -2,7 +2,7 @@ import star from "./../../../assets/lvl-star.png";
 
 const MVPCard = ({ data }) => {
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md relative">
+    <div className="bg-darkbg100 relative p-4 rounded-lg hover:shadow-lg hover:-translate-y-1 hover:shadow-primary500 transition-all duration-300 text-white">
       <div className="flex flex-col justify-between md:flex-row items-center mb-4 rounded-xl">
         <div className="flex flex-col lg:flex-row justify-center items-center mt-2">
           <img
@@ -18,7 +18,7 @@ const MVPCard = ({ data }) => {
           ))}
         </span>
       </div>
-      <ul className="text-sm text-text500 list-disc list-inside">
+      <ul className="text-sm text-white list-disc list-inside">
         {data.description.map((desc, index) => (
           <li key={index}>{desc}</li>
         ))}

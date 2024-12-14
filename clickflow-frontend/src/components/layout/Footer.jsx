@@ -2,9 +2,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-4 bg-gray-100">
+    <footer className="py-4 bg-primary800">
       <div className="max-w-4xl mx-auto px-4 text-center">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm  text-white">
           &copy; {currentYear} ClickFlow. All rights reserved.
         </p>
       </div>

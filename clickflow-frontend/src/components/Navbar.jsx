@@ -22,8 +22,8 @@ const NavbarLinks = ({ isMobile, onClick }) => (
         to={link.name === "Home" ? "/" : `/${link.name.toLowerCase()}`}
         className={({ isActive }) =>
           isActive
-            ? "text-primary900 md:text-primary100 transition-all duration-200 ease-in-out flex items-center gap-4"
-            : "text-primary500 md:text-white md:hover:text-primary100 transition-all duration-200 ease-in-out flex items-center gap-4"
+            ? "text-primary500 md:text-white transition-all duration-200 ease-in-out flex items-center gap-4"
+            : "text-primary100 md:text-primary100 md:hover:text-white transition-all duration-200 ease-in-out flex items-center gap-4"
         }
         aria-label={link.name}
       >
@@ -97,7 +97,7 @@ const Navbar = () => {
         {/* Sliding Navbar */}
         <div
           ref={menuRef}
-          className={`fixed top-[60px] bottom-1 rounded-l-xl right-0 w-1/2 sm:w-1/3 bg-white p-6 transform transition-transform duration-300 ease-in-out text-primary600 ${
+          className={`fixed top-[60px] bottom-1 rounded-l-xl right-0 w-1/2 sm:w-1/3 bg-darkbg100 p-6 transform transition-transform duration-300 ease-in-out text-primary600 ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Input = ({ label, type, id, placeholder, required, value, onChange }) => {
+const Input = ({ label, type, id, placeholder, value, onChange, disabled }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -19,10 +19,12 @@ const Input = ({ label, type, id, placeholder, required, value, onChange }) => {
         type={isPasswordVisible && type === "password" ? "text" : type}
         id={id}
         placeholder={placeholder}
-        required={required}
         value={value}
         onChange={onChange}
-        className="w-full border border-[#ccc] outline-none rounded-lg px-2 py-1 md:px-4 md:py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-gray-500 placeholder:text-xs md:placeholder:text-base flex items-center"
+        disabled={disabled}
+        className={`w-full border bg-bg800 text-white border-bg800 outline-none rounded-lg px-2 py-1 md:px-4 md:py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-bg100 placeholder:text-xs md:placeholder:text-base flex items-center ${
+          disabled ? "cursor-not-allowed" : ""
+        }`}
       />
       {type === "password" && value && (
         <span

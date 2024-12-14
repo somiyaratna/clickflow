@@ -107,3 +107,36 @@ export const faqData = [
 ];
 
 export const amounts = [50, 100, 500, 1000, 3000, 5000];
+
+export const categories = [
+  {
+    title: "Home Appliances",
+    image: "https://clickflow.life/static/img/u1.png?height=200&width=300",
+    alt: "TV display",
+  },
+  {
+    title: "Apple",
+    image: "https://clickflow.life/static/img/u2.png?height=200&width=300",
+    alt: "Smartphones",
+  },
+  {
+    title: "Daily Necessities",
+    image: "https://clickflow.life/static/img/u3.png?height=200&width=300",
+    alt: "Cleaning supplies",
+  },
+  {
+    title: "Luxury",
+    image: "https://clickflow.life/static/img/u4.png?height=200&width=300",
+    alt: "Luxury watch",
+  },
+  {
+    title: "Cosmetic",
+    image: "https://clickflow.life/static/img/u5.png?height=200&width=300",
+    alt: "Beauty product",
+  },
+  {
+    title: "Furniture",
+    image: "https://clickflow.life/static/img/u6.png?height=200&width=300",
+    alt: "Accent chair",
+  },
+];

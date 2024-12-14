@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
@@ -17,21 +17,27 @@ const Login = () => {
 
   async function handleLogin(e) {
     e.preventDefault();
+    if (identifier.trim().length === 0 || password.trim().length === 0) {
+      toast.error("Username/Email and password are required");
+      return;
+    }
     setIsSubmitting(true);
     try {
       const loginData = await userLogin(identifier, password); // API call, userLogin is a function inside apiLogin.js
+      toast.success("Login successful!");
       dispatch(addUserData(loginData));
       navigate("/");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(`Error logging in. ${error.message}`);
     } finally {
       setIsSubmitting(false);
+      // console.log(loginData);
     }
   }
 
   return (
     <div
-      className="font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center"
+      className="font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center bg-darkbg200"
       style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
     >
       {/* LOGO */}
@@ -46,20 +52,19 @@ const Login = () => {
 
       <div
         style={{
-          background: "#fff",
           color: "#333",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
         }}
-        className="p-8 rounded-xl max-w-72 md:max-w-96 w-full text-center"
+        className="p-8 rounded-xl max-w-72 md:max-w-96 w-full text-center bg-darkbg200"
       >
-        <h1 className="text-xl md:text-2xl mb-4 font-bold text-primary800 tracking-normal">
+        <h1 className="text-xl md:text-2xl mb-4 font-bold text-white tracking-normal">
           Welcome Back
         </h1>
         <form className="block flex-grow" onSubmit={handleLogin}>
           <Input
             label="Email, Phone or Username"
-            type="email"
-            id="email"
+            type="text"
+            id="identifier"
             placeholder="Enter your email, phone or username"
             required
             value={identifier}
@@ -74,12 +79,7 @@ const Login = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <Button
-            type={"submit"}
-            isLoading={isSubmitting}
-            width={"full"}
-            disabled={!identifier || !password}
-          >
+          <Button type={"submit"} isLoading={isSubmitting} width={"full"}>
             Login
           </Button>
           <div className="min-w-full mt-2">
@@ -103,6 +103,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

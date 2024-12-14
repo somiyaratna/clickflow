@@ -8,7 +8,7 @@ function Profile() {
   return (
     <div className="min-h-full flex-1 pb-4">
       <section className="mx-auto my-8 max-w-[1600px]">
-        <h3 className="text-xl md:text-3xl text-primary800 text-center font-bold">
+        <h3 className="text-xl md:text-3xl text-white text-center font-bold">
           Profile
         </h3>
       </section>

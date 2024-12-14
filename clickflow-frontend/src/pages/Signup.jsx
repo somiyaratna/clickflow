@@ -33,9 +33,57 @@ const Signup = () => {
 
   async function handleSignup(e) {
     e.preventDefault();
+    if (formData.loginPassword !== formData.confirmLoginPassword) {
+      toast.error("Login passwords do not match");
+      return;
+    }
+    if (formData.withdrawalPassword !== formData.confirmWithdrawalPassword) {
+      toast.error("Withdrawal passwords do not match");
+      return;
+    }
+    if (
+      formData.loginPassword.length < 10 ||
+      formData.withdrawalPassword.length < 10
+    ) {
+      toast.error("Passwords should consist of at least 10 characters.");
+      return;
+    }
+    if (!/^[a-zA-Z ]+$/.test(formData.fullName)) {
+      toast.error("Full Name should only contain letters and spaces.");
+      return;
+    }
+    if (!/^[a-zA-Z0-9]+$/.test(formData.username)) {
+      toast.error("Username should only contain letters and numbers.");
+      return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      toast.error("Invalid email address.");
+      return;
+    }
+    if (!/^\d{10}$/.test(formData.phoneNo)) {
+      toast.error("Phone Number should be 10 digits.");
+      return;
+    }
+    if (!formData.termConditionAccepted) {
+      toast.error("You must accept the terms and conditions.");
+      return;
+    }
+    if (
+      formData.fullName.trim().length === 0 ||
+      formData.username.trim().length === 0 ||
+      formData.email.trim().length === 0 ||
+      formData.phoneNo.trim().length === 0 ||
+      formData.loginPassword.trim().length === 0 ||
+      formData.confirmLoginPassword.trim().length === 0 ||
+      formData.withdrawalPassword.trim().length === 0 ||
+      formData.confirmWithdrawalPassword.trim().length === 0
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
     setIsSubmitting(true);
     try {
-      const signupData = await userSignup({ ...formData }); // API call, userSignup is a function inside apiSignup.js
+      const signupData = await userSignup({ ...formData });
       console.log(signupData);
       navigate("/login");
     } catch (error) {
@@ -47,11 +95,11 @@ const Signup = () => {
 
   return (
     <div
-      className="font-roboto min-h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center overflow-y-auto pt-24 md:pt-0"
+      className="font-roboto min-h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center bg-darkbg200 overflow-y-auto pt-24 md:pt-0"
       style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
     >
       {/* LOGO */}
-      <div>
+      <div className="">
         <img
           src={logo}
           alt="clickflow logo"
@@ -62,13 +110,12 @@ const Signup = () => {
 
       <div
         style={{
-          background: "#fff",
           color: "#333",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
         }}
-        className="p-8 rounded-xl max-w-72 sm:max-w-xl md:max-w-4xl w-full text-center"
+        className="p-8 rounded-xl max-w-72 sm:max-w-xl md:max-w-4xl w-full text-center bg-darkbg200"
       >
-        <h1 className="text-xl md:text-2xl mb-2 md:mb-4 font-bold text-primary800 tracking-normal">
+        <h1 className="text-xl md:text-2xl mb-2 md:mb-4 font-bold text-white tracking-normal">
           Create an Account
         </h1>
         <form className="block flex-grow" onSubmit={handleSignup}>
@@ -152,6 +199,7 @@ const Signup = () => {
               placeholder="Enter your invite code (optional)"
               value={formData.inviteCode}
               onChange={handleChange}
+              required={false}
             />
           </div>
           <div className="mb-2 text-center">
@@ -164,25 +212,12 @@ const Signup = () => {
                 id="termConditionAccepted"
                 checked={formData.termConditionAccepted}
                 onChange={handleChange}
-                className="mr-2"
+                className="mr-2 text-sm md:text-base"
               />
               I accept the terms and conditions
             </label>
           </div>
-          <Button
-            type={"submit"}
-            isLoading={isSubmitting}
-            width={"full"}
-            disabled={
-              !formData.fullName ||
-              !formData.username ||
-              !formData.email ||
-              !formData.phoneNo ||
-              !formData.withdrawalPassword ||
-              !formData.loginPassword ||
-              !formData.termConditionAccepted
-            }
-          >
+          <Button type={"submit"} isLoading={isSubmitting} width={"full"}>
             Sign Up
           </Button>
           <div className="min-w-full mt-2">

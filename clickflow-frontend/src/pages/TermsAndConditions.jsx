@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 
 const TermsAndConditions = () => {
   return (
-    <div className="p-6 bg-gray-100 text-gray-800">
+    <div className="p-6 bg-darkbg200 text-white">
       <div className="flex mb-8 items-center gap-4">
-        <Link to="/dashboard" className="text-primary800 hover:text-primary900">
+        <Link to="/dashboard" className="text-white">
           <ChevronLeft size={32} />
         </Link>
         <Handshake size={36} />
         <h1 className="text-3xl font-bold mb-4">Terms and Conditions</h1>
       </div>
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="bg-darkbg100 p-6 rounded-lg shadow-md">
         <p className="mb-2">
           <strong>Definitions:</strong>
         </p>
