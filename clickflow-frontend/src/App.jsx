@@ -16,6 +16,8 @@ import Contact from "./pages/Contact";
 import Withdrawal from "./pages/Withdrawal";
 import Recharge from "./pages/Recharge";
 import LatestEvents from "./pages/LatestEvents";
+import Starting from "./components/Starting";
+import Records from "./components/Records";
 
 const App = () => {
   return (
@@ -125,6 +127,22 @@ const App = () => {
             element={
               <Layout>
                 <FAQs />
+              </Layout>
+            }
+          />
+          <Route
+            path="/starting"
+            element={
+              <Layout>
+                <Starting/>
+              </Layout>
+            }
+          />
+          <Route
+            path="/records"
+            element={
+              <Layout>
+                <Records/>
               </Layout>
             }
           />
