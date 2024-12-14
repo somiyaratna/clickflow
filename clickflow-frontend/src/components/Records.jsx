@@ -2,7 +2,7 @@ import React from 'react'
 
 function Records() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 p-4 md:p-6 lg:p-8">
+        <div className="min-h-screen p-4 md:p-6 lg:p-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-2">Record</h1>
