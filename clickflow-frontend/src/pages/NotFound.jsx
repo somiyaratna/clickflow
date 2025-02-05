@@ -4,7 +4,7 @@ const NotFound = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-grow justify-center items-center flex-col gap-8">
-      <h1 className="font-semibold text-9xl text-white mt-12 md:mt-48">
+      <h1 className="font-semibold text-xl md:text-9xl text-white mt-36 md:mt-48">
         Oops!
       </h1>
       <h2 className="text-2xl font-semibold text-white">404 Not Found</h2>

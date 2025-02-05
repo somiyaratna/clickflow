@@ -5,7 +5,9 @@ const Contact = () => {
   return (
     <div className="flex-1 justify-center items-center flex flex-col gap-8 h-full">
       <MessagesSquare size={64} className="text-white " />
-      <h1 className="font-bold text-white text-6xl">Contact us on WhatsApp</h1>
+      <h1 className="font-bold text-white text-center text-4xl md:text-6xl">
+        Contact us on WhatsApp
+      </h1>
       <p className="text-white text-lg">Customer service time: 09:00-21:00.</p>
       <Button>
         <a

@@ -15,7 +15,7 @@ async function userLogin(identifier, password) {
   const data = await response.json();
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to login");
+    throw new Error(errorData || "Failed to login");
   }
   return data;
 }

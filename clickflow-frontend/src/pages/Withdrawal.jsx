@@ -14,7 +14,9 @@ const Withdrawal = () => {
           <p className="text-lg">Back to Dashboard</p>
         </span>
       </Link>
-      <h1 className="text-white text-3xl font-bold">Binding Wallet Address</h1>
+      <h1 className="text-white text-xl md:text-3xl font-bold">
+        Binding Wallet Address
+      </h1>
       <div
         style={{
           color: "#333",

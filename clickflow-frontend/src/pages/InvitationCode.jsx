@@ -20,7 +20,11 @@ const InvitationCode = ({ invitationCode }) => {
       className="bg-darkbg100 rounded relative-lg mx-auto h-full p-16"
     >
       <div className="bg-darkbg200 max-w-[1600px] flex flex-col gap-16 justify-around items-center mx-auto text-center mt-24 h-1/2 rounded-lg p-16 filter backdrop-blur-sm bg-opacity-70 min-h-fit my-4">
-        <img src={logo} alt="logo" className="h-20 md:h-30 mx-auto" />
+        <img
+          src={logo}
+          alt="logo"
+          className="hidden sm:block h-20 md:h-30 mx-auto object-contain"
+        />
         <Link to="/dashboard" className="text-white absolute top-6 left-6">
           <ChevronLeft size={32} />
         </Link>

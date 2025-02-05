@@ -30,7 +30,7 @@ const Recharge = () => {
       <Link to="/dashboard" className="text-white font-semibold">
         <ChevronLeft size={32} className="absolute top-8 left-8" />
       </Link>
-      <h1 className="text-4xl text-white font-bold">Recharge</h1>
+      <h1 className="text-2xl md:text-4xl text-white font-bold">Recharge</h1>
       <div
         style={{
           color: "#333",
@@ -48,7 +48,7 @@ const Recharge = () => {
         <p className="text-start -mb-3 font-semibold">
           Or, select an amount from below:
         </p>
-        <div className="flex justify-center gap-2 my-4">
+        <div className="flex flex-wrap justify-center gap-2 my-4">
           {amounts.map((value) => (
             <button
               key={value}
@@ -72,7 +72,7 @@ const Recharge = () => {
             <span className="absolute right-2 top-0 text-white">Copied!</span>
           )}
           <Copy
-            className="absolute right-2 top-9 text-white cursor-pointer"
+            className="absolute right-2 top-7 md:top-9 text-white cursor-pointer"
             onClick={() => copyToClipboard(paymentID)}
           />
         </div>

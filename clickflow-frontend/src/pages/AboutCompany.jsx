@@ -8,9 +8,9 @@ const AboutCompany = () => {
         <div className="flex items-center mb-4 gap-4 justify-start ">
           <Link to={"/"}>
             {" "}
-            <ChevronLeft size={32} className="cursor-pointer" />
+            <ChevronLeft className="cursor-pointer" />
           </Link>
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-xl md:text-3xl font-bold">
             Digital Innovation That Works For You
           </h1>
         </div>

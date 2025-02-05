@@ -9,7 +9,9 @@ const TermsAndConditions = () => {
           <ChevronLeft size={32} />
         </Link>
         <Handshake size={36} />
-        <h1 className="text-3xl font-bold mb-4">Terms and Conditions</h1>
+        <h1 className="text-xl md:text-3xl font-bold mb-4">
+          Terms and Conditions
+        </h1>
       </div>
       <div className="bg-darkbg100 p-6 rounded-lg shadow-md">
         <p className="mb-2">

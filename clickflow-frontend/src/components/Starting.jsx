@@ -8,7 +8,7 @@ function Starting() {
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-xl font-semibold">Boost</h1>
+          <h1 className="text-xl md:text-2xl font-semibold">Boost</h1>
           <button
             className="text-sm text-white font-semibold"
             onClick={() => {

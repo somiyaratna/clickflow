@@ -3,7 +3,6 @@ const User = require("../models/userModals");
 const jwt = require("jsonwebtoken");
 
 async function userSignup(req, res) {
-  console.log(req.body);
   try {
     const {
       fullName,
@@ -47,7 +46,7 @@ async function userSignup(req, res) {
       phoneNo,
       withdrawalPassword: hashedWithdrawalPassword,
       loginPassword: hashedLoginPassword,
-      inviteCode,
+      inviteCode: inviteCode || "", // Make inviteCode optional
       termConditionAccepted,
     });
 
@@ -63,7 +62,6 @@ async function userSignup(req, res) {
 async function userLogin(req, res) {
   try {
     const { identifier, password } = req.body;
-    console.log(req.body);
 
     if (!identifier || !password) {
       return res
@@ -102,7 +100,7 @@ async function userLogin(req, res) {
         fullName: user.fullName,
         username: user.username,
         email: user.email,
-        phoneNo: user.phoneNo
+        phoneNo: user.phoneNo,
       },
     });
   } catch (error) {
