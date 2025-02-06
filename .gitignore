@@ -18,6 +18,13 @@ clickflow-frontend/.env
 clickflow-backend/.env
 clickflow-backend/node_modules
 
+# admin
+clickflow-admin/node_modules
+clickflow-admin/dist
+clickflow-admin/dist-ssr
+clickflow-admin/.env
+*.local
+
 
 # Editor directories and files
 .vscode/*
