@@ -27,54 +27,62 @@ const mockWithdrawRequests = [
 ];
 
 export default function WithdrawRequests() {
-  const [requests, setRequests] = useState(mockWithdrawRequests);
+  const [requests, setRequests] = useState(mockWithdrawRequests)
 
   const handleApprove = (id) => {
-    setRequests(requests.map((req) => (req.id === id ? { ...req, status: "Approved" } : req)));
-  };
+    setRequests(requests.map((req) => (req.id === id ? { ...req, status: "Approved" } : req)))
+  }
 
   const handleReject = (id) => {
-    setRequests(requests.map((req) => (req.id === id ? { ...req, status: "Rejected" } : req)));
-  };
+    setRequests(requests.map((req) => (req.id === id ? { ...req, status: "Rejected" } : req)))
+  }
 
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">Withdraw Requests</h2>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {requests.map((request) => (
-              <tr key={request.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{request.user}</td>
-                <td className="px-6 py-4 whitespace-nowrap">${request.amount}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{request.status}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  {request.status === "Pending" && (
-                    <>
-                      <Button onClick={() => handleApprove(request.id)} className="mr-2" size="sm">
-                        <Check className="h-4 w-4 mr-1" />
-                        Approve
-                      </Button>
-                      <Button onClick={() => handleReject(request.id)} variant="destructive" size="sm" className="">
-                        <X className="h-4 w-4 mr-1" />
-                        Reject
-                      </Button>
-                    </>
-                  )}
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Amount
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {requests.map((request) => (
+                <tr key={request.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{request.user}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${request.amount}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{request.status}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    {request.status === "Pending" && (
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <Button onClick={() => handleApprove(request.id)} size="sm">
+                          <Check className="h-4 w-4 mr-1" />
+                          Approve
+                        </Button>
+                        <Button onClick={() => handleReject(request.id)} variant="destructive" size="sm">
+                          <X className="h-4 w-4 mr-1" />
+                          Reject
+                        </Button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  );
+  )
 }

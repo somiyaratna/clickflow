@@ -3,13 +3,7 @@ import { UserIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 import star from "./../../assets/lvl-star.png";
 
-function ProfileHeader() {
-  const [user, setUser] = useState(null);
-  const userDetails = useSelector((state) => state.user);
-
-  useEffect(() => {
-    setUser(userDetails.user);
-  }, [userDetails]);
+function ProfileHeader({user}) {
 
   return (
     <div className="bg-darkbg100 rounded-xl p-6 shadow-lg">

@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import Button from "../components/ui/Button";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const InvitationCode = ({ invitationCode }) => {
+const InvitationCode = () => {
+  const [user, setUser] = useState(null);
+  const userDetails = useSelector((state) => state.user);
+  
+  useEffect(() => {
+    setUser(userDetails.user);
+  }, [userDetails]);
+  
   function copyToClipboard() {
-    navigator.clipboard.writeText(invitationCode);
+    navigator.clipboard.writeText(user?.referralId);
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
   }
-
   const [isCopied, setIsCopied] = useState(false);
   return (
     <div
@@ -31,8 +38,8 @@ const InvitationCode = ({ invitationCode }) => {
         <h1 className="font-bold text-xl md:text-2xl text-white">
           Your Invitation Code
         </h1>
-        <span className="font-bold text-white text-xl md:text-2xl">
-          {invitationCode}
+        <span className="font-bold text-white text-xl md:text-2xl uppercase">
+          {user?.referralId}
         </span>
         <Button onClick={copyToClipboard} disabled={isCopied}>
           {isCopied ? "Copied!" : "Copy Invitation Code"}

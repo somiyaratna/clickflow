@@ -26,18 +26,31 @@ export default function EditUser({ user, onSave, onCancel }) {
           <form onSubmit={handleSubmit} className="mt-2 text-left">
             <div className="mb-4">
               <Label htmlFor="name">Name</Label>
-              <Input type="text" id="name" name="name" value={editedUser.name} onChange={handleChange} required />
+              <Input type="text" id="name" name="fullName" value={editedUser.fullName} onChange={handleChange} required />
             </div>
             <div className="mb-4">
               <Label htmlFor="email">Email</Label>
               <Input type="email" id="email" name="email" value={editedUser.email} onChange={handleChange} required />
             </div>
             <div className="mb-4">
-              <Label htmlFor="role">Role</Label>
-              <select id="role" name="role" value={editedUser.role} onChange={handleChange} className="w-full px-4 py-2 border rounded">
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </select>
+              <Label htmlFor="phoneNo">Phone Number</Label>
+              <Input type="text" id="phoneNo" name="phoneNo" value={editedUser.phoneNo} onChange={handleChange} required />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="username">Username</Label>
+              <Input type="text" id="username" name="username" value={editedUser.username} onChange={handleChange} required />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="wallet_balance">Wallet Balance</Label>
+              <Input type="number" id="wallet_balance" name="wallet_balance" value={editedUser.wallet_balance} onChange={handleChange} required />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="level">Level</Label>
+              <Input type="text" id="level" name="level" value={editedUser.level} onChange={handleChange} required />
+            </div>
+            <div className="mb-4">
+              <Label htmlFor="current_task">Current Task</Label>
+              <Input type="text" id="current_task" name="current_task" value={editedUser.current_task} onChange={handleChange} />
             </div>
             <div className="flex justify-end">
               <Button type="button" variant="outline" onClick={onCancel} className="mr-2">

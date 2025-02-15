@@ -10,7 +10,7 @@ async function userSignup(
   inviteCode,
   termConditionAccepted
 ) {
-  const response = await fetch(`${API_URL}/signup`, {
+  const response = await fetch(`${API_URL}/users/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Invitation() {
+function Invitation({user}) {
   return (
     <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
       <h2 className="text-2xl font-bold mb-2">Invite Friends</h2>

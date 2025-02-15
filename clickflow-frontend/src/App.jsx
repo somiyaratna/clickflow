@@ -18,6 +18,7 @@ import Recharge from "./pages/Recharge";
 import LatestEvents from "./pages/LatestEvents";
 import Starting from "./components/Starting";
 import Records from "./components/Records";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
   return (
@@ -76,7 +77,7 @@ const App = () => {
             path="/invitation"
             element={
               <Layout>
-                <InvitationCode invitationCode={"MYVVARGD"} />
+                <InvitationCode />
               </Layout>
             }
           />
@@ -143,6 +144,14 @@ const App = () => {
             element={
               <Layout>
                 <Records/>
+              </Layout>
+            }
+          />
+          <Route
+            path="/forgotPassword"
+            element={
+              <Layout>
+                <ForgotPassword/>
               </Layout>
             }
           />

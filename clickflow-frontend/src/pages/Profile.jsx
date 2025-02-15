@@ -3,8 +3,16 @@ import Invitation from "../components/profile/Invitation";
 import Buttons from "../components/profile/buttons";
 import ProfileHeader from "../components/profile/ProfileHeader";
 import BottomMenu from "../components/profile/BottomMenu";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function Profile() {
+  const [user, setUser] = useState(null);
+  const userDetails = useSelector((state) => state.user);
+
+  useEffect(() => {
+    setUser(userDetails.user);
+  }, [userDetails]);
   return (
     <div className="min-h-full flex-1 pb-4">
       <section className="mx-auto my-8 max-w-[1600px]">
@@ -13,10 +21,10 @@ function Profile() {
         </h3>
       </section>
       <section className="w-[95%] mx-auto space-y-6">
-        <ProfileHeader />
+        <ProfileHeader user={user}/>
         <Money />
-        <Invitation />
-        <Buttons />
+        <Invitation user={user}/>
+        <Buttons user={user}/>
         <BottomMenu />
       </section>
     </div>

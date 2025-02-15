@@ -42,10 +42,10 @@ const Signup = () => {
       return;
     }
     if (
-      formData.loginPassword.length < 10 ||
-      formData.withdrawalPassword.length < 10
+      formData.loginPassword.length < 8 ||
+      formData.withdrawalPassword.length < 8
     ) {
-      toast.error("Passwords should consist of at least 10 characters.");
+      toast.error("Passwords should consist of at least 8 characters.");
       return;
     }
     if (!/^[a-zA-Z ]+$/.test(formData.fullName)) {

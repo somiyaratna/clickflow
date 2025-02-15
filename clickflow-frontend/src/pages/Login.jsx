@@ -31,7 +31,6 @@ const Login = () => {
       toast.error(`Error logging in. ${error.message}`);
     } finally {
       setIsSubmitting(false);
-      // console.log(loginData);
     }
   }
 
@@ -83,12 +82,12 @@ const Login = () => {
             Login
           </Button>
           <div className="min-w-full mt-2">
-            <a
-              href="#"
+            <Link
+              to="/forgotPassword"
               className="font-thin text-primary500 text-sm hover:text-primary600"
             >
               Forgot Password?
-            </a>
+            </Link>
             <div className="-mt-1">
               <p className="text-sm inline-block me-1">
                 Don&apos;t have an account?

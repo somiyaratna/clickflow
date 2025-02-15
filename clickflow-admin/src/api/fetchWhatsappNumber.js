@@ -1,15 +1,11 @@
 import { API_URL } from "../../config";
 
-async function userLogin(identifier, password) {
-  const response = await fetch(`${API_URL}/users/login`, {
-    method: "POST",
+async function fetchWhatsappNumber() {
+  const response = await fetch(`${API_URL}/whatsapp/fetchWhatsappNumbers`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      identifier,
-      password,
-    }),
+    }
   });
 
   const data = await response.json();
@@ -20,4 +16,4 @@ async function userLogin(identifier, password) {
   return data;
 }
 
-export default userLogin;
+export default fetchWhatsappNumber;
