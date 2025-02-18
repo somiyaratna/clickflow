@@ -1,6 +1,6 @@
 import star from "./../../../assets/lvl-star.png";
 
-const MVPCard = ({ data }) => {
+const MVPCard = ({ data, user }) => {
   return (
     <div className="bg-darkbg100 relative p-4 rounded-lg hover:shadow-lg hover:-translate-y-1 hover:shadow-primary500 transition-all duration-300 text-white">
       <div className="flex flex-col justify-between md:flex-row items-center mb-4 rounded-xl">

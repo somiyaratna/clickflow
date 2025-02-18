@@ -12,6 +12,7 @@ router.post("/edit/:userId", userController.editUserDetails);
 router.post("/sendOtp", userController.sendOtp);
 router.post("/verifyOtp", userController.verifyOtp)
 router.delete("/delete/:userId", userController.deleteUser);
+router.get("/fetchSingleUser/:userId", userController.fetchSingleUser);
 
 
 module.exports = router;

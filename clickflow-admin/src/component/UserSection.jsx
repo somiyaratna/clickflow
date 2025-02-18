@@ -121,6 +121,7 @@ export default function UserSection() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wallet Balance</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deposit</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Task</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lifetime Earning</th>
@@ -135,6 +136,7 @@ export default function UserSection() {
                   <td className="px-6 py-4 whitespace-nowrap">{user?.phoneNo}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.username}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.wallet_balance}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{user?.deposit}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.level}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.current_task}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.lifetime_earning}</td>

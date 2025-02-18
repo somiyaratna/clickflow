@@ -19,6 +19,7 @@ import LatestEvents from "./pages/LatestEvents";
 import Starting from "./components/Starting";
 import Records from "./components/Records";
 import ForgotPassword from "./pages/ForgotPassword";
+import Task from "./pages/Task";
 
 const App = () => {
   return (
@@ -152,6 +153,14 @@ const App = () => {
             element={
               <Layout>
                 <ForgotPassword/>
+              </Layout>
+            }
+          />
+          <Route
+            path="/tasks"
+            element={
+              <Layout>
+                <Task/>
               </Layout>
             }
           />

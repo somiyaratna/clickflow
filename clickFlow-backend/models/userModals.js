@@ -14,7 +14,8 @@ const userSchema = mongoose.Schema({
   current_task: { type: String, required: false },
   lifetime_earning: { type: Number, default: 0 },
   referralId: { type: String, required: false },
-  otp: { type: String, required: false }
+  otp: { type: String, required: false },
+  deposit: {type: Number, default: 0}
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

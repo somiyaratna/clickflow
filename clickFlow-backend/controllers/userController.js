@@ -126,7 +126,7 @@ async function fetchAllUsers(req, res) {
 
 async function editUserDetails(req, res) {
   const { userId } = req.params;
-  const { fullName, username, email, phoneNo, wallet_balance, level, current_task, lifetime_earning } = req.body;
+  const { fullName, username, email, phoneNo, wallet_balance, deposit, level, current_task, lifetime_earning } = req.body;
 
   try {
     
@@ -143,10 +143,24 @@ async function editUserDetails(req, res) {
     if (username) user.username = username;
     if (email) user.email = email;
     if (phoneNo) user.phoneNo = phoneNo;
-    if (wallet_balance !== undefined) user.wallet_balance = wallet_balance;
+    if (wallet_balance !== undefined) user.wallet_balance = parseFloat(wallet_balance);
     if (level !== undefined) user.level = level;
     if (current_task) user.current_task = current_task;
     if (lifetime_earning !== undefined) user.lifetime_earning = lifetime_earning;
+    if(deposit) user.deposit = deposit
+
+    if(deposit >= 50){
+      user.level = 1;
+    } 
+    if(deposit >= 100){
+      user.level = 2;
+    }
+    if(deposit >= 1000){
+      user.level = 3;
+    }
+    if(deposit >= 5000){
+      user.level = 4;
+    }
 
     await user.save();
 
@@ -246,7 +260,25 @@ async function verifyOtp(req, res) {
 }
 
 
+async function fetchSingleUser(req, res) {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
 
 
 
-module.exports = { userSignup, userLogin, fetchAllUsers, editUserDetails, deleteUser, sendOtp, verifyOtp };
+
+
+
+module.exports = { userSignup, userLogin, fetchAllUsers, editUserDetails, deleteUser, sendOtp, verifyOtp, fetchSingleUser };

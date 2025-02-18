@@ -24,10 +24,10 @@ function Buttons({user}) {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <ActionButton icon={Wallet} label="Recharge" />
-        <ActionButton icon={Users} label="My Team" />
+        <ActionButton icon={Wallet} label="Recharge" navigate={"/contact"}/>
+        <ActionButton icon={Users} label="My Team" navigate={"/invitation"}/>
         <ActionButton icon={BanknoteIcon} label="Withdrawal" navigate="/withdrawal"/>
-        <ActionButton icon={UserCircle} label="Profile Details" />
+        <ActionButton icon={UserCircle} label="Profile Details" navigate={"/profile"}/>
       </div>
     </div>
   );

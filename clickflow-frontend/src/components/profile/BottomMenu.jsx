@@ -36,7 +36,7 @@ export default function BottomMenu() {
         <MenuItem
           icon={MessageCircle}
           label="Customer Service Center"
-          href="/support"
+          href="/contact"
         />
         <MenuItem
           icon={Wallet2}

@@ -1,40 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Check, X } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
 import { Button } from "./ui/button";
-
-const mockWithdrawRequests = [
-  { id: 1, user: "John Doe", amount: 100, status: "Pending" },
-  { id: 2, user: "Jane Smith", amount: 250, status: "Pending" },
-  { id: 3, user: "Bob Johnson", amount: 500, status: "Pending" },
-  { id: 4, user: "Alice Brown", amount: 150, status: "Pending" },
-  { id: 5, user: "Charlie Davis", amount: 300, status: "Pending" },
-  { id: 6, user: "Eve White", amount: 400, status: "Pending" },
-  { id: 7, user: "Frank Black", amount: 600, status: "Pending" },
-  { id: 8, user: "Grace Green", amount: 700, status: "Pending" },
-  { id: 9, user: "Hank Blue", amount: 800, status: "Pending" },
-  { id: 10, user: "Ivy Yellow", amount: 900, status: "Pending" },
-  { id: 11, user: "Jack Red", amount: 1000, status: "Pending" },
-  { id: 12, user: "Kathy Purple", amount: 1100, status: "Pending" },
-  { id: 13, user: "Leo Orange", amount: 1200, status: "Pending" },
-  { id: 14, user: "Mona Pink", amount: 1300, status: "Pending" },
-  { id: 15, user: "Nina Grey", amount: 1400, status: "Pending" },
-  { id: 16, user: "Oscar Cyan", amount: 1500, status: "Pending" },
-  { id: 17, user: "Paul Magenta", amount: 1600, status: "Pending" },
-  { id: 18, user: "Quinn Teal", amount: 1700, status: "Pending" },
-  { id: 19, user: "Rita Coral", amount: 1800, status: "Pending" },
-  { id: 20, user: "Sam Olive", amount: 1900, status: "Pending" },
-];
+import fetchAllWithdrawRequests from "../api/fetchAllWithdrawRequests";
+import changeWithdrawRequestStatus from "../api/changeWithdrawRequestStatus";
 
 export default function WithdrawRequests() {
-  const [requests, setRequests] = useState(mockWithdrawRequests)
+  const [requests, setRequests] = useState([])
 
-  const handleApprove = (id) => {
-    setRequests(requests.map((req) => (req.id === id ? { ...req, status: "Approved" } : req)))
+  const withdrawalRequest = async()=>{
+    try {
+      const request = await fetchAllWithdrawRequests();
+      setRequests(request)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
-  const handleReject = (id) => {
-    setRequests(requests.map((req) => (req.id === id ? { ...req, status: "Rejected" } : req)))
+  useEffect(()=>{
+    withdrawalRequest()
+  },[])
+  const handleApprove = async(id) => {
+    console.log(id)
+    try {
+      const change = await changeWithdrawRequestStatus(id, "accepted")
+      toast.error("Withdrawal Rejected!")
+    } catch (error) {
+      console.error(error);
+    }finally{
+      withdrawalRequest()
+    }
+  }
+
+  const handleReject = async(id) => {
+    try {
+      const change = await changeWithdrawRequestStatus(id, "rejected")
+      toast.success("Withdrawal Approved!")
+    } catch (error) {
+      console.error(error);
+    }finally{
+      withdrawalRequest()
+    }
   }
 
   return (
@@ -50,6 +57,12 @@ export default function WithdrawRequests() {
                   Amount
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Wallet Address 
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Network
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -59,18 +72,20 @@ export default function WithdrawRequests() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {requests.map((request) => (
-                <tr key={request.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">{request.user}</td>
+                <tr key={request._id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{request.fullName}</td>
                   <td className="px-6 py-4 whitespace-nowrap">${request.amount}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{request.status}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{request.wallet_address}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{request.network}</td>
+                  <td className="px-6 py-4 whitespace-nowrap capitalize">{request.status}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    {request.status === "Pending" && (
+                    {request.status === "pending" && (
                       <div className="flex flex-col sm:flex-row gap-2">
-                        <Button onClick={() => handleApprove(request.id)} size="sm">
+                        <Button onClick={() => handleApprove(request._id)} size="sm">
                           <Check className="h-4 w-4 mr-1" />
                           Approve
                         </Button>
-                        <Button onClick={() => handleReject(request.id)} variant="destructive" size="sm">
+                        <Button onClick={() => handleReject(request._id)} variant="destructive" size="sm">
                           <X className="h-4 w-4 mr-1" />
                           Reject
                         </Button>
@@ -83,6 +98,7 @@ export default function WithdrawRequests() {
           </table>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   )
 }

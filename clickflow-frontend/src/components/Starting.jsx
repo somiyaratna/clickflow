@@ -1,8 +1,64 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { categories } from "../../constants";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import fetchDailyTaskData from "../api/fetchDailyTaskData";
+import fetchSingleUser from "../api/fetchSingleUser";
 
 function Starting() {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [taskData, setTaskData] = useState(null);
+  const [task, setTask] = useState(0);
+  const [userData, setUserData] = useState(null);
+  const userDetails = useSelector((state) => state.user);
+  useEffect(() => {
+    setUser(userDetails.user);
+  }, [userDetails]);
+
+  const dailyTask = async()=>{
+    try{
+      if(user){
+        const data = await fetchDailyTaskData(user?._id);
+        // console.log(data)
+        if(data.message === "success"){
+          setTaskData(data.dailyTask);
+        }
+      }
+    }catch(error){
+      console.error(error.message);
+    }
+  }
+
+  useEffect(()=>{
+    dailyTask();
+    if(user?.level === 1){
+      setTask(45)
+    }
+    if(user?.level === 2){
+      setTask(50)
+    }
+    if(user?.level === 3){
+      setTask(55)
+    }
+    if(user?.level === 4){
+      setTask(60)
+    }
+  },[user])
+
+  const fetchUser = async()=>{
+    try{
+      if(user){
+        const data = await fetchSingleUser(user?._id);
+        setUserData(data)
+      }
+    }catch(error){
+      console.error(error.message);
+    }
+  }
+  useEffect(()=>{
+    fetchUser()
+  },[user])
 
   return (
     <div className="min-h-screen">
@@ -38,21 +94,23 @@ function Starting() {
             </div>
           ))}
         </div>
+        <Link to={"/tasks"}>
+          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg mb-6">
+            Starting
+          </button>
+        </Link>
 
-        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg mb-6">
-          Starting
-        </button>
 
-        <div className="text-center text-sm text-white mb-6">(43/45)</div>
+        <div className="text-center text-sm text-white mb-6">{taskData ? `(${taskData.task_count}/${taskData?.total_task})` : `(0/${task})`}</div>
 
         <div className="space-y-4">
           <div className="flex justify-between items-center py-2 border-b">
             <span className="text-sm">Daily Commission</span>
-            <span className="text-sm font-medium">USDT 0.0</span>
+            <span className="text-sm font-medium">USDT {taskData?.today_commission}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b">
             <span className="text-sm">Account Balance</span>
-            <span className="text-sm font-medium">USDT 61526.36</span>
+            <span className="text-sm font-medium">USDT {userData?.wallet_balance}</span>
           </div>
         </div>
 

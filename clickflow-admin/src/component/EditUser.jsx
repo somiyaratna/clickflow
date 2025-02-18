@@ -45,6 +45,10 @@ export default function EditUser({ user, onSave, onCancel }) {
               <Input type="number" id="wallet_balance" name="wallet_balance" value={editedUser.wallet_balance} onChange={handleChange} required />
             </div>
             <div className="mb-4">
+              <Label htmlFor="wallet_balance">Deposit</Label>
+              <Input type="number" id="deposit" name="deposit" value={editedUser?.deposit} onChange={handleChange} required />
+            </div>
+            <div className="mb-4">
               <Label htmlFor="level">Level</Label>
               <Input type="text" id="level" name="level" value={editedUser.level} onChange={handleChange} required />
             </div>
