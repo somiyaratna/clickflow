@@ -15,7 +15,8 @@ const userSchema = mongoose.Schema({
   lifetime_earning: { type: Number, default: 0 },
   referralId: { type: String, required: false },
   otp: { type: String, required: false },
-  deposit: {type: Number, default: 0}
+  deposit: {type: Number, default: 0},
+  token: { type: String, required: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

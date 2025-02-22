@@ -1,22 +1,20 @@
 import { API_URL } from "../../config";
 
-async function fetchSingleProduct(deposit) {
-  const response = await fetch(`${API_URL}/product/singleProducts`, {
+async function verifyOtp(username, otp) {
+  const response = await fetch(`${API_URL}/admin/verifyOtp`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-        deposit
-    }),
+    body: JSON.stringify({username, otp}),
   });
 
   const data = await response.json();
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData || "Failed to login");
+    throw new Error(errorData || "Failed to edit user");
   }
   return data;
 }
 
-export default fetchSingleProduct;
+export default verifyOtp;

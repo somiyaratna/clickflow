@@ -8,7 +8,7 @@ async function createWithdrawRequest(req, res) {
     const { wallet_address, network, amount, userId, fullName, withdrawalPassword } = req.body;
 
     try {
-        // Check if the user exists and the withdrawalPassword matches
+        
         const user = await User.findById(userId);
         if (!user) {
             return res.status(403).json({ message: "Invalid user" });
@@ -17,11 +17,10 @@ async function createWithdrawRequest(req, res) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         let dailyTask = await DailyTask.findOne({ userId, date: today });
-        if(dailyTask.task_count !== dailyTask.total_task){
+        if(!dailyTask || dailyTask.task_count !== dailyTask.total_task){
             return res.status(401).json({ message: "Before Withdrawal, Please Complete All Tasks." });
         }
 
-        // Check if the user already has a pending withdrawal request
         const existingRequest = await Withdraw.findOne({ userId, status: "pending" });
         if (existingRequest) {
             return res.status(400).json({ message: "You already have a pending withdrawal request." });
@@ -45,7 +44,9 @@ async function createWithdrawRequest(req, res) {
 
         const notification = new Notification({
             title: "Withdrawal Request",
-            description: `${fullName} has requested a withdrawal of $${amount}.`
+            description: `${fullName} has requested a withdrawal of $${amount}.`,
+            status : "pending",
+            request_id: newWithdrawRequest._id,
         });
 
         await notification.save();
@@ -82,6 +83,11 @@ async function changeWithdrawRequestStatus(req, res) {
             return res.status(404).json({ message: "Withdraw request not found" });
         }
 
+        const notification = await Notification.findOne({request_id : id});
+
+        notification.status = status;
+        await notification.save();
+
         withdrawRequest.status = status;
         const user = await User.findById(withdrawRequest.userId);
         if(status === "rejected"){
@@ -97,10 +103,16 @@ async function changeWithdrawRequestStatus(req, res) {
     }
 }
 
+async function fetchPendingNotifications(req, res) {
+    try {
+        const pendingNotifications = await Notification.find({ status: 'pending' }).sort({ createdAt: -1 });
+        res.status(200).json(pendingNotifications);
+    } catch (error) {
+        console.error("Error fetching pending notifications:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
 
 
 
-
-
-
-module.exports = { createWithdrawRequest, fetchAllWithdrawRequests, changeWithdrawRequestStatus };
+module.exports = { createWithdrawRequest, fetchAllWithdrawRequests, changeWithdrawRequestStatus, fetchPendingNotifications };

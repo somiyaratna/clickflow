@@ -1,14 +1,11 @@
 import { API_URL } from "../../config";
 
-async function fetchSingleProduct(deposit) {
-  const response = await fetch(`${API_URL}/product/singleProducts`, {
-    method: "POST",
+async function fetchNotifications() {
+  const response = await fetch(`${API_URL}/withdraw/fetchPendingNotifications`, {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        deposit
-    }),
+    }
   });
 
   const data = await response.json();
@@ -19,4 +16,4 @@ async function fetchSingleProduct(deposit) {
   return data;
 }
 
-export default fetchSingleProduct;
+export default fetchNotifications;

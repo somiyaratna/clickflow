@@ -4,7 +4,6 @@ const dailyTaskSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now,
-        unique: true
     },
     userId: {
         type: String,

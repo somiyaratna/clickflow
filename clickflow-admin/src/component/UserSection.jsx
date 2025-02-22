@@ -14,7 +14,7 @@ export default function UserSection() {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null); // State to manage confirmation dialog
-  const [premiumTask, setPremiumTask] = useState({ userId: '', commission: '', taskAmount: '' });
+  const [premiumTask, setPremiumTask] = useState({ userId: '', commission: '', taskAmount: '', task_no: ''});
   const [showPremiumTaskForm, setShowPremiumTaskForm] = useState(false);
 
 

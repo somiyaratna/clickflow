@@ -10,7 +10,7 @@ function EditPremiumTask({
     setEditingTask,
 }) {
     const handelCancel = ()=>{
-        setFormData({ status: "", commission: "", taskAmount: "", id: "" })
+        setFormData({ status: "", commission: "", taskAmount: "", id: "", task_no: '' })
         setEditingTask(null)
     }
     return (
@@ -19,6 +19,15 @@ function EditPremiumTask({
                 <div className="mt-3 text-center">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">Edit Task</h3>
                     <form onSubmit={handleSubmit} className="mt-2 text-left">
+                        <div className="mb-4">
+                            <Label>Total Task Amount</Label>
+                            <Input
+                                type="number"
+                                value={formData.taskAmount}
+                                onChange={(e) => setFormData({ ...formData, taskAmount: e.target.value })}
+                                required
+                            />
+                        </div>
                         <div className="mb-4">
                             <Label>Commission</Label>
                             <Input
@@ -29,11 +38,11 @@ function EditPremiumTask({
                             />
                         </div>
                         <div className="mb-4">
-                            <Label>Total Task Amount</Label>
+                            <Label>Task Number</Label>
                             <Input
                                 type="number"
-                                value={formData.taskAmount}
-                                onChange={(e) => setFormData({ ...formData, taskAmount: e.target.value })}
+                                value={formData?.task_no}
+                                onChange={(e) => setFormData({ ...formData, task_no: e.target.value })}
                                 required
                             />
                         </div>

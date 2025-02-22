@@ -64,7 +64,7 @@ function Starting() {
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <header className="flex justify-between items-center mb-8">
-          <h1 className="text-xl md:text-2xl font-semibold">Boost</h1>
+          <h1 className="text-xl md:text-2xl font-semibold text-white">Boost</h1>
           <button
             className="text-sm text-white font-semibold"
             onClick={() => {
@@ -103,10 +103,10 @@ function Starting() {
 
         <div className="text-center text-sm text-white mb-6">{taskData ? `(${taskData.task_count}/${taskData?.total_task})` : `(0/${task})`}</div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 text-white">
           <div className="flex justify-between items-center py-2 border-b">
             <span className="text-sm">Daily Commission</span>
-            <span className="text-sm font-medium">USDT {taskData?.today_commission}</span>
+            <span className="text-sm font-medium">USDT {taskData?.today_commission ? taskData?.today_commission : 0}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b">
             <span className="text-sm">Account Balance</span>
@@ -114,9 +114,9 @@ function Starting() {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 text-white">
           <h3 className="text-sm font-medium mb-2">Important Notes</h3>
-          <ul className="text-sm text-white space-y-2">
+          <ul className="text-sm space-y-2">
             <li>
               • Don&apos;t leave tasks pending it may result in low credit
               score!

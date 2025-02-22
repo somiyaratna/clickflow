@@ -25,6 +25,24 @@ async function fetchSingleProduct(req, res) {
         const randomIndex = Math.floor(Math.random() * products.length);
         const selectedProduct = products[randomIndex];
 
+        let closestMultiplier = 0;
+
+        // products.forEach(product => {
+        //     const multiplier = Math.floor(deposit / product.price);
+        //     const adjustedPrice = product.price * multiplier;
+
+        //     if (adjustedPrice <= deposit && adjustedPrice > (closestProduct ? closestProduct.price * closestMultiplier : 0)) {
+        //         closestProduct = product;
+        //         closestMultiplier = multiplier;
+        //     }
+        // });
+        let i = 1
+
+        while((selectedProduct.price * (i + 1)) < deposit){
+            i++;
+        }
+        selectedProduct.price = Math.round((parseFloat(selectedProduct.price * i)) * 1000) / 1000;
+        selectedProduct.title +=  ` (Pack of ${i})`
         res.status(200).json(selectedProduct);
     } catch (error) {
         console.error("Error fetching product:", error);

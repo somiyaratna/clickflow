@@ -1,6 +1,7 @@
 const DailyTask = require("../models/dailyTaskModal");
 const User = require("../models/userModals");
 const Tasks = require("../models/tasksModal");
+const PremiumTask = require("../models/preminumTaskModal")
 
 async function dailyTask(req, res){
     const { userId, commission, product_title, product_price, product_category, product_image, product_description } = req.body;
@@ -11,6 +12,11 @@ async function dailyTask(req, res){
         
         const user = await User.findOne({_id : userId});
         let dailyTask = await DailyTask.findOne({ userId, date: today });
+        const premiumTask = await PremiumTask.findOne({ userId: userId, status: 'not completed' });
+
+        if(product_price > user.wallet_balance){
+            return res.status(200).json({ message: "Wallet Amount is Less Than Task Amount", dailyTask });
+        }
 
         if (dailyTask) {
             if(dailyTask.task_count === dailyTask.total_task){
@@ -30,10 +36,21 @@ async function dailyTask(req, res){
                 commission
             });
             await task.save();
-            user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;
-            user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning + commission)) * 1000) / 1000;
-            user.current_task = dailyTask.task_count;
-            await user.save();
+            if(!premiumTask){
+                user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;;
+                user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning + commission)) * 1000) / 1000;
+                user.current_task = dailyTask.task_count;
+                await user.save();
+            }else{
+                if(premiumTask.task_no === dailyTask.task_count){
+                    user.wallet_balance = Math.round((parseFloat(user.wallet_balance - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;;
+                    user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;
+                    user.current_task = dailyTask.task_count;
+                    await user.save();
+                    premiumTask.status = "completed";
+                    premiumTask.save();
+                }
+            }
             return res.status(200).json({ message: "Task count updated", dailyTask });
         } else {
             let total_task = 45;
@@ -54,6 +71,7 @@ async function dailyTask(req, res){
                 total_task,
                 today_commission : parseFloat(commission)
             });
+            await dailyTask.save();
             const task = new Tasks({
                 product_title,
                 product_price,
@@ -65,11 +83,21 @@ async function dailyTask(req, res){
                 commission
             });
             await task.save();
-            await dailyTask.save();
-            user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;;
-            user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning + commission)) * 1000) / 1000;
-            user.current_task = dailyTask.task_count;
-            await user.save();
+            if(!premiumTask){
+                user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;;
+                user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning + commission)) * 1000) / 1000;
+                user.current_task = dailyTask.task_count;
+                await user.save();
+            }else{
+                if(premiumTask.task_no === 1){
+                    user.wallet_balance = Math.round((parseFloat(user.wallet_balance - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;;
+                    user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;
+                    user.current_task = dailyTask.task_count;
+                    await user.save();
+                    premiumTask.status = "completed";
+                    premiumTask.save();
+                }
+            }
             return res.status(201).json({ message: "New daily task created", dailyTask });
         }
     } catch (error) {

@@ -80,7 +80,7 @@ function Records() {
               <h4 className="text-sm font-medium text-white">
                 Today&apos;s Commissions
               </h4>
-              <p className="text-2xl font-bold text-white">USDT {taskData?.today_commission}</p>
+              <p className="text-2xl font-bold text-white">USDT {taskData?.today_commission ? taskData?.today_commission : 0}</p>
             </div>
           </div>
         </div>
@@ -109,6 +109,12 @@ function Records() {
                   {item.title || "Screen Enlarger High Quality"}
                 </h3>
                 <p className="text-lg text-white font-semibold">${item?.product_price || 0}</p>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg md:text-xl font-medium text-white mb-1">
+                  Commission
+                </h3>
+                <p className="text-lg text-white font-semibold">${item?.commission || 0}</p>
               </div>
             </div>
           </div>

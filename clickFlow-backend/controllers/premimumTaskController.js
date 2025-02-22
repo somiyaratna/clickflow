@@ -2,7 +2,7 @@ const premiumTask = require("../models/preminumTaskModal");
 const User = require("../models/userModals");
 
 async function createPremiumTask(req, res) {
-  const { userId, commission, taskAmount } = req.body;
+  const { userId, commission, taskAmount, task_no } = req.body;
 
   try {
     if (!userId || commission === undefined || taskAmount === undefined) {
@@ -15,10 +15,11 @@ async function createPremiumTask(req, res) {
       userId,
       commission,
       taskAmount,
+      task_no,
     });
 
     await newTask.save();
-    userTask.current_task = "Premium Task";
+    // userTask.current_task = "Premium Task";
     await userTask.save();
     res.status(201).json({ message: "Premium task created successfully", task: newTask });
   } catch (error) {
@@ -43,12 +44,12 @@ async function fetchAllPremiumTasks(req, res) {
 
 async function editPremiumTask(req, res) {
   const { taskId } = req.params;
-  const { commission, taskAmount, status } = req.body;
+  const { commission, taskAmount, status, task_no } = req.body;
 
   try {
     const updatedTask = await premiumTask.findByIdAndUpdate(
       {_id:taskId},
-      { commission, taskAmount, status },
+      { commission, taskAmount, status, task_no },
       { new: true, runValidators: true }
     );
 

@@ -17,7 +17,7 @@ const Dashboard = () => {
       navigate("/login");
     }
     setUser(userDetails.user)
-  }, [navigate, userDetails.token]);
+  }, []);
 
   const fetchUser = async()=>{
     try{

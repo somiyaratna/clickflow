@@ -11,6 +11,12 @@ import lvlOneImg from "./src/assets/lvl-1.png";
 import lvlTwoImg from "./src/assets/lvl-2.png";
 import lvlThreeImg from "./src/assets/lvl-3.png";
 import lvlFourImg from "./src/assets/lvl-4.png";
+import u1 from "./src/assets/u1.png";
+import u2 from "./src/assets/u2.jpg";
+import u3 from "./src/assets/u3.png";
+import u4 from "./src/assets/u4.png";
+import u5 from "./src/assets/u5.png";
+import u6 from "./src/assets/u6.png";
 
 // SERVICES
 import {
@@ -111,7 +117,7 @@ export const amounts = [50, 100, 500, 1000, 3000, 5000];
 export const categories = [
   {
     title: "Home Appliances",
-    image: "https://clickflow.life/static/img/u1.png?height=200&width=300",
+    image: u1,
     alt: "TV display",
   },
   {
@@ -121,22 +127,22 @@ export const categories = [
   },
   {
     title: "Daily Necessities",
-    image: "https://clickflow.life/static/img/u3.png?height=200&width=300",
+    image: u3,
     alt: "Cleaning supplies",
   },
   {
     title: "Luxury",
-    image: "https://clickflow.life/static/img/u4.png?height=200&width=300",
+    image: u4,
     alt: "Luxury watch",
   },
   {
     title: "Cosmetic",
-    image: "https://clickflow.life/static/img/u5.png?height=200&width=300",
+    image: u5,
     alt: "Beauty product",
   },
   {
     title: "Furniture",
-    image: "https://clickflow.life/static/img/u6.png?height=200&width=300",
+    image: u6,
     alt: "Accent chair",
   },
 ];

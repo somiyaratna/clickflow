@@ -8,13 +8,21 @@ function PremiumTask({
     setShowPremiumTaskForm
 }) {
     const handleCancel = ()=>{
-        setPremiumTask({ userId: '', commission: '', taskAmount: '' });
+        setPremiumTask({ userId: '', commission: '', taskAmount: '', task_no: '' });
         setShowPremiumTaskForm(false)
     }
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-5 rounded shadow-lg">
                 <h3 className="text-lg font-semibold mb-2">Create Premium Task</h3>
+                <input
+                    type="number"
+                    name="taskAmount"
+                    placeholder="Task Amount"
+                    value={premiumTask.taskAmount}
+                    onChange={handlePremiumTaskInputChange}
+                    className="border p-2 mb-2 w-full"
+                />
                 <input
                     type="text"
                     name="commission"
@@ -25,9 +33,9 @@ function PremiumTask({
                 />
                 <input
                     type="number"
-                    name="taskAmount"
-                    placeholder="Task Amount"
-                    value={premiumTask.taskAmount}
+                    name="task_no"
+                    placeholder="Task Number"
+                    value={premiumTask.task_no}
                     onChange={handlePremiumTaskInputChange}
                     className="border p-2 mb-2 w-full"
                 />

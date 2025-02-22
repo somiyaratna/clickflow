@@ -10,7 +10,7 @@ import deletePremiumTask from "../api/deletePremiumTask";
 export default function PremiumTasks() {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
-  const [formData, setFormData] = useState({ status: "", commission: "", taskAmount: "", id: "" });
+  const [formData, setFormData] = useState({ status: "", commission: "", taskAmount: "", id: "", task_no : '' });
 
   const fetchAllTask = async () => {
     try {
@@ -27,7 +27,7 @@ export default function PremiumTasks() {
 
   const handleEdit = (task) => {
     setEditingTask(task);
-    setFormData({ status: task?.status, commission: task.commission, taskAmount: task.taskAmount, id:task._id });
+    setFormData({ status: task?.status, commission: task.commission, taskAmount: task.taskAmount, id:task._id, task_no: task.task_no});
   };
 
   const handleDelete = async(taskId) => {
@@ -55,7 +55,7 @@ export default function PremiumTasks() {
       toast.error("Failed to update task");
       console.error(error.message);
     } finally {
-      setFormData({ status: "", commission: "", taskAmount: "", id: "" })
+      setFormData({ status: "", commission: "", taskAmount: "", id: "", task_no: '' })
       setEditingTask(null);
       fetchAllTask();
     }
@@ -75,6 +75,7 @@ export default function PremiumTasks() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commission</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Task Amount</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task Number</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assign On</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -86,6 +87,7 @@ export default function PremiumTasks() {
                   <td className="px-6 py-4 whitespace-nowrap">{task.fullName}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{task.commission}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{task.taskAmount}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{task.task_no || 0}</td>
                   <td className="px-6 py-4 whitespace-nowrap capitalize">{task?.status}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{moment(task.createdAt).format('MMM Do YYYY')}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

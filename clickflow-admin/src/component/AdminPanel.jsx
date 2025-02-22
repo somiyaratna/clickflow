@@ -6,12 +6,26 @@ import WithdrawRequests from "./WithdrawRequests";
 import PremiumTasks from "./PremiumTasks";
 import WhatsAppSection from "./WhatsAppSection";
 import logo from "../assets/logo.png"
+import fetchNotifications from "../api/fectchNotification";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../redux/userSlice";
 
 export default function AdminPanel() {
   const [activeSection, setActiveSection] = useState("users")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [notificationData, setNotificationData] = useState([]);
   const notificationRef = useRef(null);
+  const userDetails = useSelector((state) => state.user);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    if(!userDetails.token){
+      navigate("/login")
+    }
+  },[])
 
   const navItems = [
     { name: "Users", icon: Users, section: "users" },
@@ -20,10 +34,18 @@ export default function AdminPanel() {
     { name: "WhatsApp", icon: Phone, section: "whatsapp" },
   ]
 
-  const notifications = Array.from({ length: 200 }, (_, index) => {
-    const randomDate = new Date(Date.now() - Math.random() * 1000 * 60 * 60 * 24 * 30);
-    return { message: `Notification ${index + 1}: Sample message`, date: randomDate };
-  });
+  const notifications = async()=>{
+    try {
+      const data = await fetchNotifications();
+      setNotificationData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(()=>{
+    notifications()
+  },[])
 
   const formatDate = (date) => {
     return date.toLocaleString('en-US', { 
@@ -35,7 +57,6 @@ export default function AdminPanel() {
       hour12: true 
     });
   };
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -55,6 +76,11 @@ export default function AdminPanel() {
     };
   }, [isNotificationOpen]);
 
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate("/login");
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">
@@ -66,7 +92,7 @@ export default function AdminPanel() {
           <div className="flex items-center">
             <button
               className="p-2 rounded-full hover:bg-gray-200" 
-              onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+              onClick={() => {setIsNotificationOpen(!isNotificationOpen); notifications();}}
             >
               <Bell className="h-6 w-6 text-gray-600" />
             </button>
@@ -75,6 +101,12 @@ export default function AdminPanel() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <Menu className="h-6 w-6 text-gray-600" />
+            </button>
+            <button
+              className="ml-2 p-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              onClick={handleLogout}
+            >
+              Logout
             </button>
           </div>
         </div>
@@ -122,12 +154,16 @@ export default function AdminPanel() {
             <X className="text-lg cursor-pointer border-[1px] p-1 rounded-full border-black" onClick={() => setIsNotificationOpen(false)}/>
           </div>
           <div className="pl-5 mt-4">
-            {notifications.map((notification, index) => (
-              <div key={index} className="text-sm">
-                {notification.message} <span className="text-gray-500">({formatDate(notification.date)})</span>
-                <hr className="my-2" />
-              </div>
-            ))}
+            {notificationData.length === 0 ? (
+              <div className="text-sm">No Notifications</div>
+            ) : (
+              notificationData.map((notification, index) => (
+                <div key={index} className="text-sm">
+                  {notification.message} <span className="text-gray-500">({formatDate(notification.date)})</span>
+                  <hr className="my-2" />
+                </div>
+              ))
+            )}
           </div>
           <button className="mt-2 text-blue-500 hover:text-blue-700 transition duration-200" onClick={() => setIsNotificationOpen(false)}>Close</button>
         </div>

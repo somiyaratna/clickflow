@@ -98,11 +98,13 @@ async function userLogin(req, res) {
       return res.status(401).json({ message: "Invalid password" });
     }
 
+    // Generate a token that expires when the tab is closed
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET || "your_jwt_secret",
-      { expiresIn: "24h" }
+      { expiresIn: "12h" }
     );
+
     res.status(200).json({
       message: "Login successful",
       token,
@@ -199,19 +201,16 @@ async function sendOtp(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Generate a 6-digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // Configure nodemailer
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER, // Your email
-        pass: process.env.EMAIL_PASS, // Your email password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
-    // Send OTP to user's email
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: user.email,
