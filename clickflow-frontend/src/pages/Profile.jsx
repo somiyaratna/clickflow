@@ -1,6 +1,6 @@
 import Money from "../components/profile/Money";
 import Invitation from "../components/profile/Invitation";
-import Buttons from "../components/profile/buttons";
+import Buttons from "../components/profile/Buttons";
 import ProfileHeader from "../components/profile/ProfileHeader";
 import BottomMenu from "../components/profile/BottomMenu";
 import { useEffect, useState } from "react";
