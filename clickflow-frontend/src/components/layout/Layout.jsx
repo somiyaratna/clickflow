@@ -6,13 +6,13 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
-  const userDetails = useSelector((state) => state.user);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!userDetails.token) {
-      navigate("/login");
-    }
-  }, []);
+  // const userDetails = useSelector((state) => state.user);
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (!userDetails.token) {
+  //     navigate("/login");
+  //   }
+  // }, []);
   return (
     <div className="flex flex-col h-screen">
       <Header />

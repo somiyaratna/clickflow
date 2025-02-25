@@ -11,7 +11,9 @@ async function sendOtp(req, res) {
 
     try {
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.hostinger.com',
+            port: 465,
+            secure: true,
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
@@ -20,7 +22,7 @@ async function sendOtp(req, res) {
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
-            to: "aman44008@gmail.com",
+            to: "mohdshavez0777@gmail.com",
             subject: 'Password Reset OTP',
             text: `Your OTP for password verification is: ${otp}`,
         };
