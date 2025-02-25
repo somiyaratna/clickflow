@@ -7,6 +7,7 @@ import Input from "../components/ui/Input";
 import { useDispatch } from "react-redux";
 import { addUserData } from "../redux/userSlice";
 import userLogin from "./../api/userLogin";
+import logo from "./../assets/logo.png";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
@@ -42,7 +43,7 @@ const Login = () => {
       {/* LOGO */}
       <div>
         <img
-          src="./src/assets/logo.png"
+          src={logo}
           alt="clickflow logo"
           className="max-h-12 md:max-h-16 lg:max-h-20"
           draggable="false"
