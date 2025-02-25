@@ -8,20 +8,16 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # frontend
-clickflow-frontend/node_modules
-clickflow-frontend/dist
-clickflow-frontend/dist-ssr
+clickflow-frontend/node_modules/
 clickflow-frontend/.env
 *.local
 
 #backend
 clickflow-backend/.env
-clickflow-backend/node_modules
+clickflow-backend/node_modules/
 
 # admin
-clickflow-admin/node_modules
-clickflow-admin/dist
-clickflow-admin/dist-ssr
+clickflow-admin/node_modules/
 clickflow-admin/.env
 *.local
 
