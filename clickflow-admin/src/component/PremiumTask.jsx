@@ -19,7 +19,7 @@ function PremiumTask({
                     type="number"
                     name="taskAmount"
                     placeholder="Task Amount"
-                    value={premiumTask.taskAmount}
+                    value={premiumTask?.taskAmount}
                     onChange={handlePremiumTaskInputChange}
                     className="border p-2 mb-2 w-full"
                 />
@@ -27,7 +27,7 @@ function PremiumTask({
                     type="text"
                     name="commission"
                     placeholder="Commission"
-                    value={premiumTask.commission}
+                    value={premiumTask?.commission}
                     onChange={handlePremiumTaskInputChange}
                     className="border p-2 mb-2 w-full"
                 />
@@ -35,7 +35,7 @@ function PremiumTask({
                     type="number"
                     name="task_no"
                     placeholder="Task Number"
-                    value={premiumTask.task_no}
+                    value={premiumTask?.task_no}
                     onChange={handlePremiumTaskInputChange}
                     className="border p-2 mb-2 w-full"
                 />

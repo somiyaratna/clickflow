@@ -6,7 +6,7 @@ import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import fetchWhatsappNumber from "../api/fetchWhatsappNumber";
 import editWhatsappNumber from "../api/editWhatsappNumber";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function WhatsAppSection() {
   const [whatsappNumber, setWhatsappNumber] = useState("+1234567890") // Replace with actual WhatsApp number
@@ -87,6 +87,7 @@ export default function WhatsAppSection() {
           </Button>
         </div>
       )}
+      <ToastContainer/>
     </div>
   )
 }

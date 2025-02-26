@@ -75,7 +75,7 @@ export const mvpLevels = [
 
 export const services = [
   { label: "Latest Events", icon: CalendarDays, link: "/events" },
-  { label: "Recharge", icon: CircleDollarSign, link: "/recharge" },
+  { label: "Recharge", icon: CircleDollarSign, link: "/contact" },
   { label: "Withdrawal", icon: Banknote, link: "/withdrawal" },
   { label: "Invitation Code", icon: Share2, link: "/invitation" },
   { label: "Company", icon: Info, link: "/company" },

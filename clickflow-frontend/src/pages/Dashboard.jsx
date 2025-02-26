@@ -1,19 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Section from "../components/ui/Section";
 import { logos, mvpLevels, services } from "./../../constants";
 import fetchSingleUser from "../api/fetchSingleUser";
+import { logout } from "../redux/userSlice";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState(null);
   const userDetails = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
     if (!userDetails.token) {
+      dispatch(logout());
       navigate("/login");
     }
     setUser(userDetails.user)

@@ -109,7 +109,7 @@ export default function UserSection() {
   };
 
   return (
-    <div>
+    <div className="px-4 mt-10">
       <h2 className="text-2xl font-semibold mb-4">User Management</h2>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="overflow-x-auto">

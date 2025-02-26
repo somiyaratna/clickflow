@@ -24,9 +24,6 @@ async function editWhatsappNumber(req, res) {
   const { id } = req.params;
   const { whatsappNumber: number } = req.body;
 
-  console.log(id);
-  console.log(number);
-
   try {
     if (!number) {
       return res.status(400).json({ message: "WhatsApp number is required" });

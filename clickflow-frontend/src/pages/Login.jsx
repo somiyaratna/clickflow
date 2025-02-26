@@ -29,7 +29,8 @@ const Login = () => {
       dispatch(addUserData(loginData));
       navigate("/");
     } catch (error) {
-      toast.error(`Error logging in. ${error.message}`);
+      toast.error( "Username or Password is Incorrect");
+      console.log(`Error logging in. ${error.message}`)
     } finally {
       setIsSubmitting(false);
     }

@@ -16,7 +16,7 @@ const Section = ({ heading, data, variant, user }) => {
         {variant.toLowerCase() === "partners" &&
           data.map((item, index) => <LogoCard key={index} data={item} />)}
         {variant.toLowerCase() === "mvplevels" &&
-          filteredMVPData.map((item, index) => <MVPCard key={index} data={item} user={user}/>)}
+          data.map((item, index) => <MVPCard key={index} data={item} user={user}/>)}
       </div>
     </section>
   );

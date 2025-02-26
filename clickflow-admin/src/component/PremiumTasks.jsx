@@ -62,8 +62,8 @@ export default function PremiumTasks() {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">User Management</h2>
+    <div className="px-4 mt-10">
+      <h2 className="text-2xl font-semibold mb-4">Premium Tasks</h2>
       {editingTask && (
         <EditPremiumTask handleSubmit={handleSubmit} formData={formData} setFormData={setFormData} setEditingTask={setEditingTask} />
       )}
