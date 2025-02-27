@@ -10,6 +10,7 @@ const dailyTaskRoutes = require('./routes/dailyTaskRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const withdrawRoutes = require('./routes/withdrawRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const transactionRoutes = require('./routes/transactionRoutes');
 
 dotenv.config();
 connectDB();
@@ -26,6 +27,7 @@ app.use('/api/dailyTask', dailyTaskRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/withdraw', withdrawRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/transaction', transactionRoutes);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

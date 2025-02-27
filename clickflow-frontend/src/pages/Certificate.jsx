@@ -1,5 +1,5 @@
 import { ChevronLeft } from "lucide-react";
-import certificate from "../assets/certificate.png";
+import certificate from "../assets/certificate.jpg";
 import { Link } from "react-router-dom";
 
 const Certificate = () => {

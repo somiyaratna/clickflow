@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userModals");
 const jwt = require("jsonwebtoken");
 const nodemailer = require('nodemailer');
+const Transaction = require('../models/transactionModal');
 
 async function userSignup(req, res) {
   try {
@@ -128,7 +129,7 @@ async function fetchAllUsers(req, res) {
 
 async function editUserDetails(req, res) {
   const { userId } = req.params;
-  const { fullName, username, email, phoneNo, wallet_balance, deposit, level, current_task, lifetime_earning } = req.body;
+  const { fullName, username, email, phoneNo, wallet_balance, deposit, level, current_task, lifetime_earning, credit_score } = req.body;
 
   try {
     
@@ -141,6 +142,15 @@ async function editUserDetails(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    if(deposit > user.deposit){
+      const transaction = new Transaction({
+        type: "deposit",
+        amount: parseFloat(deposit) - parseFloat(user.deposit),
+        userId: userId
+      });
+      await transaction.save();
+    }
+
     if (fullName) user.fullName = fullName;
     if (username) user.username = username;
     if (email) user.email = email;
@@ -149,7 +159,8 @@ async function editUserDetails(req, res) {
     if (level !== undefined) user.level = level;
     if (current_task) user.current_task = current_task;
     if (lifetime_earning !== undefined) user.lifetime_earning = lifetime_earning;
-    if(deposit) user.deposit = deposit
+    if(deposit) user.deposit = deposit;
+    if(credit_score) user.credit_score = credit_score;
 
     if(deposit >= 50){
       user.level = 1;

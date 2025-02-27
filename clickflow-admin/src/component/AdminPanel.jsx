@@ -6,6 +6,7 @@ import fetchNotifications from "../api/fectchNotification";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { logout } from "../redux/userSlice";
+import moment from "moment/moment";
 
 export default function AdminPanel() {
   const [activeSection, setActiveSection] = useState("/");
@@ -92,10 +93,15 @@ export default function AdminPanel() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Admin Panel</h1>
           <div className="flex items-center">
             <button
-              className="p-2 rounded-full hover:bg-gray-200"
+              className="relative p-2 rounded-full hover:bg-gray-200"
               onClick={() => { setIsNotificationOpen(!isNotificationOpen); notifications(); }}
             >
               <Bell className="h-6 w-6 text-gray-600" />
+              {notificationData.length > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">
+                  {notificationData.length}
+                </span>
+              )}
             </button>
             <button
               className="ml-2 p-2 rounded-full hover:bg-gray-200 md:hidden"
@@ -148,9 +154,10 @@ export default function AdminPanel() {
               <div className="text-sm">No Notifications</div>
             ) : (
               notificationData.map((notification, index) => (
-                <div key={index} className="text-sm">
-                  {notification.message} <span className="text-gray-500">({formatDate(notification.date)})</span>
-                  <hr className="my-2" />
+                <div key={index} className="text-sm bg-gray-300 px-4 py-2 rounded-sm">
+                  <h2 className="text-base sm:text-lg font-semibold">{notification.title}</h2>
+                  {notification.description} <span className="text-gray-500 text-sm">{moment(notification.createdAt).format('MMM Do YYYY, h:mm:ss a')}</span>
+                  <hr className="my-2 border-black" />
                 </div>
               ))
             )}

@@ -11,6 +11,7 @@ import fetchDailyTaskData from "../api/fetchDailyTaskData";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/userSlice";
 import star from "../assets/lvl-star.png";
+import fetchSingleUser from "../api/fetchSingleUser";
 
 function Task() {
 
@@ -20,6 +21,7 @@ function Task() {
     const userDetails = useSelector((state) => state.user);
     const [taskData, setTaskData] = useState(null);
     const [task, setTask] = useState(0);
+    const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,19 +29,36 @@ function Task() {
     useEffect(() => {
         setUser(userDetails.user);
     }, [userDetails]);
+    console.log(userData)
 
     const fetchProduct = async () => {
         try {
-            if (user?.deposit > 0) {
-                const product = await fetchSingleProduct(user?.deposit);
+            if (user) {
+                if(userData?.deposit <= 0){
+                    toast.error("You have not made any deposit yet. Please contact customer care for assistance.")
+                }
+                const product = await fetchSingleProduct(user?._id, user?.deposit, user?.level);
                 setProduct(product);
+                setCommission(product.commission)
             }
         } catch (error) {
-            toast.error("Please Contact Customer Care.");
+            toast.error("You have not made any deposit yet. Please contact customer care for assistance.");
             console.error(error.message);
         }
     }
-
+    const fetchUser = async()=>{
+        try{
+          if(user){
+            const data = await fetchSingleUser(user?._id);
+            setUserData(data)
+          }
+        }catch(error){
+          console.error(error.message);
+        }
+    }
+    useEffect(()=>{
+        fetchUser()
+    },[user])
     useEffect(() => {
         fetchProduct();
     }, [user]);
@@ -50,8 +69,6 @@ function Task() {
                 const data = await fetchDailyTaskData(user?._id);
                 if (data.message === "success") {
                     setTaskData(data.dailyTask);
-                } else {
-                    toast.error("Failed to fetch daily tasks.");
                 }
             }
         } catch (error) {
@@ -67,6 +84,7 @@ function Task() {
                 toast.success("Task Completed Successfully.");
                 fetchProduct();
                 dailyTask();
+                setCommission(0);
             } else if (submitTask.message === "All Tasks are Completed for today" || submitTask.message === "Wallet Amount is Less Than Task Amount") {
                 toast.error(submitTask.message);
             } else if (submitTask.message === "Token is not valid.") {
@@ -79,26 +97,24 @@ function Task() {
             toast.error("Contact to Customer Care.");
             console.error(error.message);
         } finally {
-            setCommission(0);
-            fetchProduct();
             setLoading(false); 
         }
     }
 
-    useEffect(() => {
-        if (user?.level === 1) {
-            setCommission(Math.round((parseFloat(product?.price) * 0.8) / 100 * 1000) / 1000);
-        }
-        if (user?.level === 2) {
-            setCommission(Math.round((parseFloat(product?.price) * 1) / 100 * 1000) / 1000);
-        }
-        if (user?.level === 3) {
-            setCommission(Math.round((parseFloat(product?.price) * 1.2) / 100 * 1000) / 1000);
-        }
-        if (user?.level === 4) {
-            setCommission(Math.round((parseFloat(product?.price) * 1.4) / 100 * 1000) / 1000);
-        }
-    }, [product, user]);
+    // useEffect(() => {
+    //     if (user?.level === 1) {
+    //         setCommission(Math.round((parseFloat(product?.price) * 0.8) / 100 * 1000) / 1000);
+    //     }
+    //     if (user?.level === 2) {
+    //         setCommission(Math.round((parseFloat(product?.price) * 1) / 100 * 1000) / 1000);
+    //     }
+    //     if (user?.level === 3) {
+    //         setCommission(Math.round((parseFloat(product?.price) * 1.2) / 100 * 1000) / 1000);
+    //     }
+    //     if (user?.level === 4) {
+    //         setCommission(Math.round((parseFloat(product?.price) * 1.4) / 100 * 1000) / 1000);
+    //     }
+    // }, [product, user]);
 
     useEffect(() => {
         dailyTask();

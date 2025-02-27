@@ -16,7 +16,8 @@ const userSchema = mongoose.Schema({
   referralId: { type: String, required: false },
   otp: { type: String, required: false },
   deposit: {type: Number, default: 0},
-  token: { type: String, required: false }
+  token: { type: String, required: false },
+  credit_score : {type: Number, default: 100},
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

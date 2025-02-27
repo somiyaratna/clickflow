@@ -3,6 +3,7 @@ const User = require("../models/userModals");
 const DailyTask = require("../models/dailyTaskModal")
 const Notification = require("../models/notificationModal")
 const bcrypt = require("bcrypt");
+const TransactionModal = require("../models/transactionModal");
 
 async function createWithdrawRequest(req, res) {
     const { wallet_address, network, amount, userId, fullName, withdrawalPassword } = req.body;
@@ -50,6 +51,14 @@ async function createWithdrawRequest(req, res) {
         });
 
         await notification.save();
+        const transaction = new TransactionModal({
+            type: "withdrawal",
+            amount,
+            withdrawalId: newWithdrawRequest._id,
+            status: "pending",
+            userId
+        });
+        await transaction.save();
         user.wallet_balance = Math.round((parseFloat(user.wallet_balance - parseFloat(amount))) * 1000) / 1000;
         await user.save();
         res.status(201).json({ message: "Withdrawal request created successfully", newWithdrawRequest });
@@ -88,6 +97,8 @@ async function changeWithdrawRequestStatus(req, res) {
         notification.status = status;
         await notification.save();
 
+        const transaction = await TransactionModal.findOne({withdrawalId : id});
+
         withdrawRequest.status = status;
         const user = await User.findById(withdrawRequest.userId);
         if(status === "rejected"){
@@ -95,6 +106,8 @@ async function changeWithdrawRequestStatus(req, res) {
         }
         await withdrawRequest.save();
         await user.save();
+        transaction.status = status;
+        await transaction.save();
 
         res.status(200).json({ message: "Withdraw request status updated successfully", withdrawRequest });
     } catch (error) {

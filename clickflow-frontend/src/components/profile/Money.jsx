@@ -8,7 +8,7 @@ function Money({taskData, userData}) {
         <p className="text-sm text-white">Today&apos;s Commission</p>
       </div>
       <div className="text-center border-t sm:border-t-0 sm:border-l sm:border-r border-gray-200 py-4 sm:py-0">
-        <p className="text-2xl font-bold text-white">100%</p>
+        <p className="text-2xl font-bold text-white">{userData?.credit_score || 100}%</p>
         <p className="text-sm text-white">Credit Score</p>
       </div>
       <div className="text-center sm:text-right">

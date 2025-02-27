@@ -53,6 +53,10 @@ export default function EditUser({ user, onSave, onCancel }) {
               <Input type="text" id="level" name="level" value={editedUser.level} onChange={handleChange} required />
             </div>
             <div className="mb-4">
+              <Label htmlFor="credit_score">Credit Score</Label>
+              <Input type="text" id="credit_score" name="credit_score" value={editedUser?.credit_score} onChange={handleChange} required />
+            </div>
+            <div className="mb-4">
               <Label htmlFor="level">Lifetime Earning</Label>
               <Input type="text" id="lifetime_earning" name="lifetime_earning" value={editedUser.lifetime_earning} onChange={handleChange} required />
             </div>

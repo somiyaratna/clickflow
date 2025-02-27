@@ -12,9 +12,13 @@ async function dailyTask(req, res){
         
         const user = await User.findOne({_id : userId});
         let dailyTask = await DailyTask.findOne({ userId, date: today });
+        let task_count = 0;
+        if(dailyTask){
+            task_count = dailyTask.task_count;
+        }
         const premiumTask = await PremiumTask.findOne({ userId: userId, status: 'not completed' });
 
-        if(product_price > user.wallet_balance){
+        if((premiumTask?.task_no !== task_count + 1) && product_price > user.wallet_balance){
             return res.status(200).json({ message: "Wallet Amount is Less Than Task Amount", dailyTask });
         }
 
@@ -23,7 +27,7 @@ async function dailyTask(req, res){
                 return res.status(200).json({ message: "All Tasks are Completed for today", dailyTask });
             }
             dailyTask.task_count += 1;
-            dailyTask.today_commission += commission;
+            dailyTask.today_commission += Math.round((parseFloat(commission)) * 1000) / 1000;;
             await dailyTask.save();
             const task = new Tasks({
                 product_title,
@@ -69,7 +73,7 @@ async function dailyTask(req, res){
                 date: today,
                 task_count: 1,
                 total_task,
-                today_commission : parseFloat(commission)
+                today_commission : Math.round((parseFloat(commission)) * 1000) / 1000
             });
             await dailyTask.save();
             const task = new Tasks({
@@ -114,7 +118,7 @@ async function fetchDailyTask(req, res) {
         const dailyTask = await DailyTask.findOne({ userId, date: today });
 
         if (!dailyTask) {
-            return res.status(404).json({ message: "No daily task found for today." });
+            return res.status(200).json({ message: "No daily task found for today." });
         }
 
         res.status(200).json({message: "success", dailyTask});
@@ -124,5 +128,28 @@ async function fetchDailyTask(req, res) {
     }
 }
 
+async function taskReset(req, res) {    
+    const {userId} = req.body;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    try {
+        const user = await User.findById(userId);
+        const dailyTask = await DailyTask.findOne({ userId, date: today });
+        if(dailyTask){
+            user.current_task = 0;
+            dailyTask.task_count = 0;
+            await dailyTask.save();
+            await user.save();
+        }
+        else{
+            res.status(200).json({message: "User have not started the task for today"});
+        }
+        res.status(200).json({message: "Task reset successfully", dailyTask});
+    } catch (error) {
+        console.error("Error resetting daily task:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+} 
 
-module.exports = {dailyTask, fetchDailyTask}
+
+module.exports = {dailyTask, fetchDailyTask, taskReset}

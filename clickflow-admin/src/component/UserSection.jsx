@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Edit, Trash2, ClipboardList } from "lucide-react";
+import { Edit, Trash2, ClipboardList, RotateCcw } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import EditUser from "./EditUser";
 import fetchAllUser from "../api/fetchAllUser.js";
@@ -8,6 +8,7 @@ import ConfimationBox from "./ConfimationBox.jsx";
 import deleteUser from "../api/deleteUser.js";
 import PremiumTask from "./PremiumTask.jsx";
 import createPremiumTask from "../api/createPremiumTask.js";
+import restTask from "../api/resetTask.js";
 
 export default function UserSection() {
 
@@ -16,7 +17,7 @@ export default function UserSection() {
   const [confirmDelete, setConfirmDelete] = useState(null); // State to manage confirmation dialog
   const [premiumTask, setPremiumTask] = useState({ userId: '', commission: '', taskAmount: '', task_no: ''});
   const [showPremiumTaskForm, setShowPremiumTaskForm] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
   const fetchAllUsers = async () => {
     try {
@@ -108,9 +109,38 @@ export default function UserSection() {
     setShowPremiumTaskForm(true);
   };
 
+  const handleReset = async (userId) => {
+    try {
+      const data = await restTask(userId);
+      if(data.message === "Task reset successfully"){
+        toast.success("Task reset successfully");
+        fetchAllUsers();
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.error(error.message)
+      toast.error(`Error in Resetting Task.`);
+    }
+  }
+
+  // Filter users based on search term
+  const filteredUsers = users.filter(user => 
+    user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="px-4 mt-10">
       <h2 className="text-2xl font-semibold mb-4">User Management</h2>
+      <input 
+        type="text" 
+        placeholder="Search users..." 
+        value={searchTerm} 
+        onChange={(e) => setSearchTerm(e.target.value)} 
+        className="mb-4 p-2 border border-gray-300 rounded"
+      />
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -123,13 +153,14 @@ export default function UserSection() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wallet Balance</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deposit</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credit Score</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Task</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lifetime Earning</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <tr key={user._id}>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.fullName}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.email}</td>
@@ -138,9 +169,13 @@ export default function UserSection() {
                   <td className="px-6 py-4 whitespace-nowrap">{user?.wallet_balance}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.deposit}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.level}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{user?.credit_score || 0}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.current_task}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.lifetime_earning}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button onClick={() => handleReset(user._id)} className="text-amber-600 hover:text-amber-900 mr-2">
+                      <RotateCcw className="h-5 w-5" />
+                    </button>
                     <button onClick={() => handleEdit(user)} className="text-indigo-600 hover:text-indigo-900 mr-2">
                       <Edit className="h-5 w-5" />
                     </button>

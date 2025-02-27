@@ -5,5 +5,6 @@ const userLoginVerification = require("../middlewares/userLoginVerification")
 
 router.post("/taskSubmission", userLoginVerification, dailyTaskController.dailyTask);
 router.get("/fetchDailyTaskData/:userId", dailyTaskController.fetchDailyTask);
+router.post("/resetTask", dailyTaskController.taskReset);
 
 module.exports = router;

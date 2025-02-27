@@ -74,7 +74,11 @@ function Starting() {
             History →
           </button>
         </header>
-
+        <Link to={"/tasks"}>
+          <button className=" md:hidden w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg mb-6">
+            Starting
+          </button>
+        </Link>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {categories.map((category, index) => (
             <div
