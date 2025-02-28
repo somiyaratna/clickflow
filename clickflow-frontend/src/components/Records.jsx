@@ -106,7 +106,7 @@ function Records() {
               </div>
               <div className="flex-1">
                 <h3 className="text-lg md:text-xl font-medium text-white mb-1">
-                  {item.title || "Screen Enlarger High Quality"}
+                  {item.product_title}
                 </h3>
                 <p className="text-lg text-white font-semibold">${item?.product_price || 0}</p>
               </div>
