@@ -29,7 +29,6 @@ function Starting() {
       console.error(error.message);
     }
   }
-
   useEffect(()=>{
     dailyTask();
     if(user?.level === 1){
@@ -108,6 +107,10 @@ function Starting() {
         <div className="text-center text-sm text-white mb-6">{taskData ? `(${taskData.task_count}/${taskData?.total_task})` : `(0/${task})`}</div>
 
         <div className="space-y-4 text-white">
+          <div className="flex justify-between items-center py-2 border-b">
+            <span className="text-sm">Deposit Amount</span>
+            <span className="text-sm font-medium">USDT {userData?.deposit}</span>
+          </div>
           <div className="flex justify-between items-center py-2 border-b">
             <span className="text-sm">Daily Commission</span>
             <span className="text-sm font-medium">USDT {taskData?.today_commission ? taskData?.today_commission : 0}</span>

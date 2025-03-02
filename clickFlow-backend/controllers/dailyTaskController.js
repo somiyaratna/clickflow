@@ -140,11 +140,10 @@ async function taskReset(req, res) {
             dailyTask.task_count = 0;
             await dailyTask.save();
             await user.save();
+            return res.status(200).json({message: "Task reset successfully", dailyTask});
+        } else {
+            return res.status(200).json({message: "User has not started the task for today"});
         }
-        else{
-            res.status(200).json({message: "User have not started the task for today"});
-        }
-        res.status(200).json({message: "Task reset successfully", dailyTask});
     } catch (error) {
         console.error("Error resetting daily task:", error);
         res.status(500).json({ message: "Internal server error" });

@@ -3,6 +3,7 @@ const User = require("../models/userModals");
 const jwt = require("jsonwebtoken");
 const nodemailer = require('nodemailer');
 const Transaction = require('../models/transactionModal');
+const DailyTask = require('../models/dailyTaskModal');
 
 async function userSignup(req, res) {
   try {
@@ -130,6 +131,8 @@ async function fetchAllUsers(req, res) {
 async function editUserDetails(req, res) {
   const { userId } = req.params;
   const { fullName, username, email, phoneNo, wallet_balance, deposit, level, current_task, lifetime_earning, credit_score } = req.body;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   try {
     
@@ -176,6 +179,33 @@ async function editUserDetails(req, res) {
     }
 
     await user.save();
+
+    let dailyTask = await DailyTask.findOne({ userId, date: today });
+
+    if(dailyTask){
+      dailyTask.task_count = parseInt(current_task)
+      dailyTask.save()
+    } else {
+      let total_task = 45;
+      if (user.level === 1) {
+        total_task = 45;
+      } else if (user.level === 2) {
+        total_task = 50;
+      } else if (user.level === 3) {
+        total_task = 55;
+      } else {
+        total_task = 60;
+      }
+      dailyTask = new DailyTask({
+        userId,
+        level: user.level,
+        date: today,
+        task_count: parseInt(current_task),
+        total_task,
+        today_commission: 0
+      });
+      await dailyTask.save();
+    }
 
     res.status(200).json({ message: "User details updated successfully", user });
   } catch (error) {
