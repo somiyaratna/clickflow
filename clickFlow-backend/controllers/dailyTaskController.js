@@ -26,6 +26,10 @@ async function dailyTask(req, res){
             if(dailyTask.task_count === dailyTask.total_task){
                 return res.status(200).json({ message: "All Tasks are Completed for today", dailyTask });
             }
+            if(dailyTask.task_count + 1 === dailyTask.total_task){
+                user.wallet_balance = Math.round((parseFloat(user.wallet_balance + dailyTask.today_commission + commission)) * 1000) / 1000;
+                user.save();
+            }
             dailyTask.task_count += 1;
             dailyTask.today_commission += Math.round((parseFloat(commission)) * 1000) / 1000;;
             await dailyTask.save();
@@ -41,18 +45,23 @@ async function dailyTask(req, res){
             });
             await task.save();
             if(!premiumTask){
-                user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;;
+                // user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;
                 user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning + commission)) * 1000) / 1000;
                 user.current_task = dailyTask.task_count;
                 await user.save();
             }else{
                 if(premiumTask.task_no === dailyTask.task_count){
-                    user.wallet_balance = Math.round((parseFloat(user.wallet_balance - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;;
+                    user.wallet_balance = Math.round((parseFloat(user.wallet_balance - premiumTask.taskAmount )) * 1000) / 1000;;
                     user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;
                     user.current_task = dailyTask.task_count;
                     await user.save();
                     premiumTask.status = "completed";
                     premiumTask.save();
+                }else{
+                    // user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;;
+                    user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning + commission)) * 1000) / 1000;
+                    user.current_task = dailyTask.task_count;
+                    await user.save();
                 }
             }
             return res.status(200).json({ message: "Task count updated", dailyTask });
@@ -88,13 +97,13 @@ async function dailyTask(req, res){
             });
             await task.save();
             if(!premiumTask){
-                user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;;
+                // user.wallet_balance = Math.round((parseFloat(user.wallet_balance + commission)) * 1000) / 1000;;
                 user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning + commission)) * 1000) / 1000;
                 user.current_task = dailyTask.task_count;
                 await user.save();
             }else{
                 if(premiumTask.task_no === 1){
-                    user.wallet_balance = Math.round((parseFloat(user.wallet_balance - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;;
+                    user.wallet_balance = Math.round((parseFloat(user.wallet_balance - premiumTask.taskAmount )) * 1000) / 1000;;
                     user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning - premiumTask.taskAmount + premiumTask.commission)) * 1000) / 1000;
                     user.current_task = dailyTask.task_count;
                     await user.save();

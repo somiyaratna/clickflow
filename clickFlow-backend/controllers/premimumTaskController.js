@@ -30,7 +30,7 @@ async function createPremiumTask(req, res) {
 
 async function fetchAllPremiumTasks(req, res) {
   try {
-    const tasks = await premiumTask.find({});
+    const tasks = await premiumTask.find().sort({ createdAt: -1 });
     const tasksWithUserDetails = await Promise.all(tasks.map(async (task) => {
       const user = await User.findById(task.userId).select('fullName');
       return { ...task.toObject(), fullName: user ? user.fullName : null };

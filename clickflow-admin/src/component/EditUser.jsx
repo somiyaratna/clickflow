@@ -7,15 +7,21 @@ import { Label } from "./ui/label";
 
 export default function EditUser({ user, onSave, onCancel }) {
   const [editedUser, setEditedUser] = useState(user);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(editedUser);
+    setLoading(true);
+    try {
+      await onSave(editedUser);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,7 +74,9 @@ export default function EditUser({ user, onSave, onCancel }) {
               <Button type="button" variant="outline" onClick={onCancel} className="mr-2">
                 Cancel
               </Button>
-              <Button type="submit">Save Changes</Button>
+              <Button type="submit" disabled={loading}>
+                {loading ? "Saving..." : "Save Changes"}
+              </Button>
             </div>
           </form>
         </div>

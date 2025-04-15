@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
         primary100: "#c8d9ff",
@@ -24,6 +25,20 @@ export default {
         darkbg500: "#0f0f0f",
         darkbg800: "#0a0a0a",
         darkbg900: "#050505",
+      },
+      keyframes: {
+        floatY: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(20px)' },
+        },
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      animation: {
+        floatY: 'floatY 4s ease-in-out infinite',
+        scroll: 'scroll 4s linear infinite'
       },
     },
   },

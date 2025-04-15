@@ -76,7 +76,7 @@ export default function UserSection() {
     }
   };
 
-  const handleSave = (updatedUser) => {
+  const handleSave = async(updatedUser) => {
     editUserDetail(updatedUser, updatedUser._id)
     setEditingUser(null);
   };

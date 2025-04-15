@@ -21,6 +21,7 @@ import Records from "./components/Records";
 import ForgotPassword from "./pages/ForgotPassword";
 import Task from "./pages/Task";
 import Transactions from "./pages/Transactions";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
@@ -171,6 +172,12 @@ const App = () => {
               <Layout>
                 <Transactions/>
               </Layout>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <Home/>
             }
           />
         </Routes>

@@ -120,7 +120,7 @@ async function userLogin(req, res) {
 
 async function fetchAllUsers(req, res) {
   try {
-    const users = await User.find({});
+    const users = await User.find().sort({ createdAt: -1 });
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
