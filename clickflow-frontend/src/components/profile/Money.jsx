@@ -2,9 +2,9 @@ import React from "react";
 
 function Money({taskData, userData}) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 bg-darkbg100 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+    <div className="bg-[#121e3a] grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="text-center sm:text-left">
-        <p className="text-2xl font-bold text-white">USDT {taskData?.today_commission || 0}</p>
+        <p className="text-2xl font-bold text-white">USDT {(taskData?.today_commission)?.toFixed(2) || 0}</p>
         <p className="text-sm text-white">Today&apos;s Commission</p>
       </div>
       <div className="text-center border-t sm:border-t-0 sm:border-l sm:border-r border-gray-200 py-4 sm:py-0">

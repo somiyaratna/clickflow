@@ -4,6 +4,7 @@ import background from "../../assets/5072612.jpg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import BottomNav from "../Home/BottomNav";
 
 const Layout = ({ children }) => {
   // const userDetails = useSelector((state) => state.user);
@@ -17,16 +18,12 @@ const Layout = ({ children }) => {
     <div className="flex flex-col h-screen">
       <Header />
       <main
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
         className="flex-grow bg-repeat backdrop:filter bg-blur-lg"
       >
         {children}
       </main>
       <Footer />
+      <BottomNav />
     </div>
   );
 };

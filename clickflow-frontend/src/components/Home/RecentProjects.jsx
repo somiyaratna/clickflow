@@ -1,10 +1,15 @@
 import React, { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import img1 from '../../assets/home/b1.png';
+import img2 from '../../assets/home/b2.png';
+import img3 from '../../assets/home/b3.png';
+import img4 from '../../assets/home/b4.png';
 
 const projects = [
     {
         name: "STROKE AND DOVE",
-        bg: "https://clickflow.ca/wp-content/uploads/2024/04/6-3.png",
+        bg: img1,
         bgColor: "bg-[#8a53f8]",
         revenue: "28,000",
         time: "4 Months",
@@ -13,7 +18,7 @@ const projects = [
     },
     {
         name: "NOURISH HEALTH AND WELLNESS",
-        bg: "https://clickflow.ca/wp-content/uploads/2024/04/3-1.png",
+        bg: img2,
         bgColor: "bg-[#4054b2]",
         revenue: "64,000",
         time: "1 Month",
@@ -22,7 +27,7 @@ const projects = [
     },
     {
         name: "NEEVA SNACKS",
-        bg: "https://clickflow.ca/wp-content/uploads/2024/04/4-3.png",
+        bg: img3,
         bgColor: "bg-[#4c1a4b]",
         revenue: "60,000",
         time: "11 Months",
@@ -31,7 +36,7 @@ const projects = [
     },
     {
         name: "22 FRESH",
-        bg: "https://clickflow.ca/wp-content/uploads/2024/04/5-3.png",
+        bg: img4,
         bgColor: "bg-[#8a53f8]",
         revenue: "313,000",
         time: "11 Months",
@@ -41,6 +46,7 @@ const projects = [
 ];
 
 const RecentProjects = () => {
+    const navigate = useNavigate();
     const scrollRef = useRef(null);
     let isDown = false;
     let startX;
@@ -137,7 +143,7 @@ const RecentProjects = () => {
                                 style={{ backgroundImage: `url(${project.bg})` }}
                             >
                                 <div
-                                    className={`absolute inset-0 ${project.bgColor} text-white flex flex-col items-center justify-center text-center p-4 gap-2 transition-transform duration-500 transform translate-y-full group-hover:translate-y-0 z-20`}
+                                    className={`absolute inset-0 ${project.bgColor} text-white rounded-3xl flex flex-col items-center justify-center text-center p-4 gap-2 transition-transform duration-500 transform translate-y-full group-hover:translate-y-0 z-20`}
                                 >
                                     <h2 className="text-xl font-semibold mb-2">{project.name}</h2>
                                     <p className="font-semibold">Meta Ads | E-com</p>
@@ -151,7 +157,7 @@ const RecentProjects = () => {
                     </div>
                 </div>
 
-                <button className="bg-[#a071ff] text-white font-medium px-6 py-2 rounded-full mt-6">
+                <button className="bg-[#a071ff] text-white font-medium px-6 py-2 rounded-full mt-6" onClick={() => navigate("/contact")}>
                     Get Started
                 </button>
             </div>

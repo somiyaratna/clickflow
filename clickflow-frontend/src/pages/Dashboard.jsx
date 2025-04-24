@@ -39,18 +39,17 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-full flex-1">
-      <h1 className="text-2xl md:text-4xl font-bold text-white p-8">
+      <h1 className="text-2xl md:text-4xl font-bold bg-[#EFF3FB] text-[#14213D] p-8">
         Welcome, {userDetails.user.fullName}
       </h1>
 
-      {/* SERVICES */}
-      <Section heading={"Our Services"} data={services} variant={"services"} />
+      <Section heading={"Our Services"} data={services} variant={"services"} bg={"bg-[#EFF3FB] text-[#14213D]"}/>
 
       {/* MVP LEVELS */}
-      <Section heading={"MVP Levels"} data={mvpLevels} variant={"mvplevels"} user={userData}/>
+      <Section heading={"MVP Levels"} data={mvpLevels} variant={"mvplevels"} user={userData} bg={"bg-[#925FFF] text-white"}/>
 
       {/* PARTNERS */}
-      <Section heading={"Our Partners"} data={logos} variant={"partners"} />
+      <Section heading={"Our Partners"} data={logos} variant={"partners"} bg={"bg-[linear-gradient(0deg,_rgba(21,66,66,1)_0%,_rgba(0,0,0,1)_100%)] text-white"}/>
     </div>
   );
 };

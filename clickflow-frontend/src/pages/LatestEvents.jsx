@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 const LatestEvents = ({ events = [] }) => {
   return (
-    <div className="flex flex-grow flex-col gap-16 h-full mx-auto w-full relative items-center justify-center">
-      <Link to="/dashboard" className="text-white absolute top-6 left-6">
+    <div className="flex flex-grow flex-col gap-16 h-full mx-auto w-full relative items-center justify-center bg-[#EFF3FB] text-[#14213D]">
+      <Link to="/dashboard" className="absolute top-6 left-6">
         <ChevronLeft size={32} />
       </Link>
-      <h1 className="text-2xl md:text-6xl font-semibold text-white">
+      <h1 className="text-2xl md:text-6xl font-semibold">
         Latest Events
       </h1>
       <div>
@@ -20,7 +20,7 @@ const LatestEvents = ({ events = [] }) => {
             </div>
           ))
         ) : (
-          <p className="text-white text-xl">No events to show yet</p>
+          <p className="text-xl">No events to show yet</p>
         )}
       </div>
     </div>

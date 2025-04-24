@@ -1,5 +1,6 @@
 import React from "react";
 import quotes from "../../assets/svg/Vector.svg";
+import img1 from "../../assets/home/d1.png";
 
 const TestimonialSection = () => {
     return (
@@ -10,7 +11,8 @@ const TestimonialSection = () => {
                     <div className="relative flex items-center justify-center">
                         
                         <img
-                            src="https://clickflow.ca/wp-content/uploads/2024/04/14213D-1.png"
+                            src={img1}
+                            draggable="false"
                             alt="Nicole Trautman"
                             className="relative z-10 w-auto object-contain"
                         />
@@ -18,7 +20,7 @@ const TestimonialSection = () => {
                 </div>
 
                 <div className="md:w-1/2 text-left flex items-center flex-col">
-                    <div className="text-[40px] leading-none mb-6"><img src={quotes} alt="" /></div>
+                    <div className="text-[40px] leading-none mb-6"><img draggable="false" src={quotes} alt="" /></div>
                     <div>
                         <p className="text-white text-[21px] leading-relaxed mb-6">
                             Recently, I had the pleasure of working with Clickflow Marketing on

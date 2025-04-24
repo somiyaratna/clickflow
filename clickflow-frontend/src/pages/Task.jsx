@@ -29,7 +29,14 @@ function Task() {
     useEffect(() => {
         setUser(userDetails.user);
     }, [userDetails]);
-    console.log(userData)
+
+    useEffect(() => {
+        if (!userDetails.token) {
+          dispatch(logout());
+          navigate("/login");
+        }
+        setUser(userDetails.user)
+    }, []);
 
     const fetchProduct = async () => {
         try {
@@ -136,15 +143,15 @@ function Task() {
         <div className="min-h-screen p-4 md:p-6 lg:p-8">
             <div className="max-w-4xl mx-auto">
                 <div className="mb-8">
-                    <h1 className="text-2xl md:text-3xl font-semibold text-white mb-2">
+                    <h1 className="text-2xl md:text-3xl font-semibold text-[#14213D] mb-2">
                         Tasks
                     </h1>
-                    <p className="text-white">Yours tasks will be shown here</p>
+                    <p className="text-[#14213D]">Yours tasks will be shown here</p>
                 </div>
 
-                <div className="bg-darkbg100 rounded-xl shadow-sm p-4 md:p-6 mb-8">
+                <div className="bg-[#A4C8FF] text-[#14213D] rounded-xl shadow-sm p-4 md:p-6 mb-8">
                     <div className="flex justify-between items-center mb-6">
-                        <time className="text-sm text-white">
+                        <time className="text-sm">
                             {moment().format('ddd, MMM Do YYYY, h:mm A')}
                         </time>
                         <span className="px-3 py-1 bg-green-200 text-green-600 rounded-full text-sm font-medium">
@@ -161,7 +168,7 @@ function Task() {
                             />
                         </div>
                         <div className="flex-1">
-                            <h3 className="text-lg md:text-xl font-medium text-white mb-1">
+                            <h3 className="text-lg md:text-xl font-medium mb-1">
                                 {product?.title}
                             </h3>
                             <div className="flex">
@@ -171,20 +178,20 @@ function Task() {
                                 <img src={star} className="h-6" alt="" /> 
                                 <img src={star} className="h-6" alt="" /> 
                             </div>
-                            <p className="text-lg text-white font-semibold">${product?.price || 0}</p>
+                            <p className="text-lg font-semibold">${product?.price || 0}</p>
                         </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
                         <div className="space-y-2">
-                            <h4 className="text-sm font-medium text-white">Total Amount</h4>
-                            <p className="text-2xl font-bold text-white">${product?.price || 0}</p>
+                            <h4 className="text-sm font-medium">Total Amount</h4>
+                            <p className="text-2xl font-bold">${product?.price || 0}</p>
                         </div>
 
                         <div className="space-y-2">
-                            <h4 className="text-sm font-medium text-white">
+                            <h4 className="text-sm font-medium">
                                 Commission
                             </h4>
-                            <p className="text-2xl font-bold text-white">${isNaN(commission) ? 0 : commission}</p>
+                            <p className="text-2xl font-bold">${isNaN(commission) ? 0 : commission}</p>
                         </div>
                     </div>
                 </div>
@@ -193,7 +200,7 @@ function Task() {
                     {loading ? "Submitting..." : "Submit"}
                 </Button>
             </div>
-            <div className="text-center text-sm text-white mt-6">{taskData ? `(${taskData.task_count}/${taskData?.total_task})` : `(0/${task})`}</div>
+            <div className="text-center text-sm text-[#14213D] mt-6">{taskData ? `(${taskData.task_count}/${taskData?.total_task})` : `(0/${task})`}</div>
             <Toaster />
         </div>
     );

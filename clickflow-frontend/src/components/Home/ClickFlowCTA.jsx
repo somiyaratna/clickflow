@@ -1,11 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import img1 from "../../assets/home/g1.png";
+import img2 from "../../assets/home/g2.png";
 
 const ClickFlowCTA = () => {
+    const navigate = useNavigate();
     return (
         <div
             className="w-full bg-cover bg-center py-36 flex justify-center"
             style={{
-                backgroundImage: `url('https://clickflow.ca/wp-content/uploads/2024/04/Untitled-design-48.png')`,
+                backgroundImage: `url(${img1})`,
             }}
         >
             <div className="max-w-7xl w-full px-2 md:px-4 flex justify-center mt-12">
@@ -14,7 +18,8 @@ const ClickFlowCTA = () => {
                     <div className="absolute -top-36">
                         <div className="relative">
                             <img
-                                src="https://clickflow.ca/wp-content/uploads/2024/04/Website-Assets-24.png"
+                                src={img2}
+                                draggable="false"
                                 alt="ClickFlow Logo"
                                 className="w-[237px] h-auto"
                             />
@@ -25,7 +30,7 @@ const ClickFlowCTA = () => {
                         Ready for results? <br /> Contact our team!
                     </h2>
 
-                    <button className="inline-block bg-[#8A53F8] text-white px-[30px] py-[6px] rounded-[66px] hover:bg-blue-700 transition text-[22px] font-medium mt-8">
+                    <button className="inline-block bg-[#8A53F8] text-white px-[30px] py-[6px] rounded-[66px] hover:bg-blue-700 transition text-[22px] font-medium mt-8" onClick={() => navigate('/contact')}>
                         Get Started
                     </button>
                 </div>

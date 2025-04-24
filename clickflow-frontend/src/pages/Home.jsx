@@ -13,11 +13,15 @@ import ClickFlowCTA from '../components/Home/ClickFlowCTA'
 import FaqSection from '../components/Home/FaqSection'
 import Footer from '../components/Home/Footer'
 import RecentProjects from '../components/Home/RecentProjects'
+import BottomNav from '../components/Home/BottomNav'
+import ExclusiveDashboard from '../components/Home/ExclusiveDashboard'
+import ExclusiveGrid from '../components/Home/ExclusiveGrid'
 
 function Home() {
   return (
     <div>
         <Navbar/>
+        <BottomNav />
         <Hero/>
         <Logo/>
         <Count/>

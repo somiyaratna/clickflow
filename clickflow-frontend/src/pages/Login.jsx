@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { addUserData } from "../redux/userSlice";
 import userLogin from "./../api/userLogin";
 import logo from "./../assets/logo.png";
+import { ChevronLeft } from "lucide-react";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
@@ -27,7 +28,7 @@ const Login = () => {
       const loginData = await userLogin(identifier, password); // API call, userLogin is a function inside apiLogin.js
       toast.success("Login successful!");
       dispatch(addUserData(loginData));
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       toast.error( "Username or Password is Incorrect");
       console.log(`Error logging in. ${error.message}`)
@@ -38,10 +39,12 @@ const Login = () => {
 
   return (
     <div
-      className="font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center bg-darkbg200"
-      style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
+      className="font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center bg-[#925FFF]"
     >
       {/* LOGO */}
+      <div className="cursor-pointer flex justify-center items-center hover:text-gray-200 text-white absolute left-4 top-4" onClick={() => navigate('/')}>
+          <ChevronLeft size={32} />Home
+      </div>
       <div>
         <img
           src={logo}
@@ -56,7 +59,7 @@ const Login = () => {
           color: "#333",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
         }}
-        className="p-8 rounded-xl max-w-72 md:max-w-96 w-full text-center bg-darkbg200"
+        className="p-8 rounded-xl max-w-72 md:max-w-96 w-full text-center bg-[#A4C8FF]"
       >
         <h1 className="text-xl md:text-2xl mb-4 font-bold text-white tracking-normal">
           Welcome Back

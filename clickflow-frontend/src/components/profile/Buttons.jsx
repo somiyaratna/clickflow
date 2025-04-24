@@ -4,21 +4,21 @@ import { Link } from "react-router-dom";
 
 const ActionButton = ({ icon: Icon, label, navigate }) => (
   <Link to={navigate}>
-    <div className="flex flex-col items-center gap-3 p-4 bg-darkbg200 rounded-lg shadow transition-all duration-300 hover:shadow-md hover:bg-darkbg100 cursor-pointer">
-      <div className="w-16 h-16 bg-darkbg200 rounded-full flex items-center justify-center">
-        <Icon className="w-8 h-8 text-white" />
+    <div className="flex flex-col items-center gap-3 p-4 bg-[#A4C8FF] rounded-lg shadow transition-all duration-300 hover:shadow-md hover:bg-[#92baf8] cursor-pointer">
+      <div className="w-16 h-16 rounded-full flex items-center justify-center">
+        <Icon className="w-8 h-8 text-[#925FFF]" />
       </div>
-      <span className="text-sm font-medium text-white">{label}</span>
+      <span className="text-sm font-medium text-[#14213D]">{label}</span>
     </div>
   </Link>
 );
 
 function Buttons({user}) {
   return (
-    <div className="bg-darkbg100 rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
+    <div className="bg-[#925FFF] rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
       <div className="flex justify-between items-center mb-6">
         <span className="text-lg text-white">Invitation Code</span>
-        <span className="font-mono text-lg font-bold bg-darkbg100 px-4 py-2 rounded-lg text-white uppercase">
+        <span className="font-mono text-lg font-bold bg-[#A4C8FF] px-4 py-2 rounded-lg text-[#14213D] uppercase">
           {user?.referralId}
         </span>
       </div>

@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import logo from "./../assets/logo.png";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
+import { ChevronLeft } from "lucide-react";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -95,10 +96,12 @@ const Signup = () => {
 
   return (
     <div
-      className="font-roboto min-h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center bg-darkbg200 overflow-y-auto pt-24 md:pt-0"
-      style={{ backgroundImage: 'url("./src/assets/Background.png")' }}
+      className="font-roboto min-h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center bg-[#925FFF] overflow-y-auto pt-24 md:pt-0"
     >
       {/* LOGO */}
+      <div className="cursor-pointer flex justify-center items-center hover:text-gray-200 text-white absolute left-4 top-4" onClick={() => navigate('/')}>
+        <ChevronLeft size={32} />Home
+      </div>
       <div className="">
         <img
           src={logo}
@@ -113,7 +116,7 @@ const Signup = () => {
           color: "#333",
           boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
         }}
-        className="p-8 rounded-xl max-w-72 sm:max-w-xl md:max-w-4xl w-full text-center bg-darkbg200"
+        className="p-8 rounded-xl max-w-72 sm:max-w-xl md:max-w-4xl w-full text-center bg-[#A4C8FF]"
       >
         <h1 className="text-xl md:text-2xl mb-2 md:mb-4 font-bold text-white tracking-normal">
           Create an Account
@@ -214,7 +217,7 @@ const Signup = () => {
                 onChange={handleChange}
                 className="mr-2 text-sm md:text-base"
               />
-              I accept the terms and conditions
+              I accept the <Link to={'/terms-conditions'} className="text-primary500 hover:text-primary600 cursor-pointer underline">terms and conditions</Link>
             </label>
           </div>
           <Button type={"submit"} isLoading={isSubmitting} width={"full"}>

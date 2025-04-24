@@ -6,7 +6,7 @@ const ServiceCard = ({ data }) => {
   return (
     <div
       key={Math.random(0, 1000000).toString()}
-      className="flex flex-col items-center bg-darkbg100 rounded-lg p-4 md:p-8 hover:scale-[1.03] transition-all duration-300 cursor-pointer  hover:shadow-lg hover:-translate-y-1 hover:shadow-primary500"
+      className="flex flex-col items-center bg-[#925FFF] rounded-lg p-4 md:p-8 hover:scale-[1.03] transition-all duration-300 cursor-pointer  hover:shadow-lg hover:-translate-y-1 hover:shadow-primary500"
       onClick={() => navigate(data.link)}
     >
       <div className="p-4 rounded-full bg-primary100 text-primary600">

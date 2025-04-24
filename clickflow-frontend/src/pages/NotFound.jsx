@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 const NotFound = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-grow justify-center items-center flex-col gap-8">
-      <h1 className="font-semibold text-xl md:text-9xl text-white mt-36 md:mt-48">
+    <div className="flex-1 justify-center items-center flex flex-col gap-8 h-full bg-[#EFF3FB]">
+      <h1 className="font-semibold text-xl md:text-9xl text-[#14213D]">
         Oops!
       </h1>
-      <h2 className="text-2xl font-semibold text-white">404 Not Found</h2>
+      <h2 className="text-2xl font-semibold text-[#14213D]">404 Not Found</h2>
       <p>Looks like you lost your way</p>
       <button
         onClick={() => navigate("/")}

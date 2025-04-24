@@ -1,5 +1,5 @@
 import React from "react";
-// import canadaFlag from "../assets/canada-flag.png";
+import img1 from "../../assets/home/e1.png";
 
 const CanadianBanner = () => {
     return (
@@ -8,7 +8,8 @@ const CanadianBanner = () => {
 
                 <div className="flex flex-col md:flex-row items-center mb-2 md:mb-0">
                     <img
-                        src="https://clickflow.ca/wp-content/uploads/2024/05/Untitled-design-46-e1713650414548.png"
+                        src={img1}
+                        draggable="false"
                         alt="Canada Flag"
                         className="w-[300px] h-[68px] mr-2 mb-4 md:mb-0 object-contain"
                     />

@@ -1,6 +1,6 @@
 const LogoCard = ({ data }) => {
   return (
-    <div className="bg-darkbg100 p-4 rounded-lg hover:shadow-lg hover:-translate-y-1 hover:shadow-primary500 transition-all duration-300 text-white">
+    <div className="bg-[#925FFF] p-4 rounded-lg hover:shadow-lg hover:-translate-y-1 hover:shadow-primary500 transition-all duration-300 text-white">
       <img
         src={data}
         alt="logo-img"

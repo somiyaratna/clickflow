@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const AboutCompany = () => {
   return (
-    <div className="p-6 bg-darkbg200 text-white">
-      <div className="bg-darkbg100 p-6 rounded-lg shadow-md">
+    <div className="p-6 bg-[#A4C8FF] text-[#14213D] pt-12">
+      <div className="p-6 bg-[#EFF3FB] rounded-lg shadow-md">
         <div className="flex items-center mb-4 gap-4 justify-start ">
           <Link to={"/"}>
             {" "}

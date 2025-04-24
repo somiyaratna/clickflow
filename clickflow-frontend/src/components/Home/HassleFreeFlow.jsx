@@ -1,4 +1,10 @@
 import React from "react";
+import img1 from '../../assets/home/c1.png';
+import img2 from '../../assets/home/c2.png';
+import img3 from '../../assets/home/c3.png';
+import img4 from '../../assets/home/c4.png';
+import img5 from '../../assets/home/c5.png';
+import img6 from '../../assets/home/c6.png';
 
 const HassleFreeFlow = () => {
   return (
@@ -38,8 +44,8 @@ const HassleFreeFlow = () => {
           </p>
         </div>
         <div className="md:w-1/2 flex justify-center relative mb-16 md:mb-0">
-          <img src="https://clickflow.ca/wp-content/uploads/2024/04/28-2.png" alt=""  className="w-auto md:w-auto lg:w-[658px] absolute"/>
-          <img src="https://clickflow.ca/wp-content/uploads/2024/04/27-2.png" alt="Design" className="w-auto md:w-auto lg:w-[658px] rounded-xl animate-floatY transition-transform relative" />
+          <img draggable="false" src={img1} alt=""  className="w-auto md:w-auto lg:w-[658px] absolute"/>
+          <img draggable="false" src={img2} alt="Design" className="w-auto md:w-auto lg:w-[658px] rounded-xl animate-floatY transition-transform relative" />
         </div> 
       </div>
 
@@ -47,8 +53,8 @@ const HassleFreeFlow = () => {
       <div className="flex flex-col md:flex-row items-center md:items-center mb-20 md:mb-32 gap-8">
         
         <div className="md:w-1/2 flex justify-center order-1 md:order-1 relative mb-16 md:mb-0">
-          <img src="https://clickflow.ca/wp-content/uploads/2024/04/29.png" alt=""  className="w-auto md:w-auto lg:w-[658px] absolute"/>
-          <img src="https://clickflow.ca/wp-content/uploads/2024/04/28-3.png" alt="Design" className="w-auto md:w-auto lg:w-[658px] rounded-xl animate-floatY transition-transform relative" />
+          <img draggable="false" src={img3} alt=""  className="w-auto md:w-auto lg:w-[658px] absolute"/>
+          <img draggable="false" src={img4} alt="Design" className="w-auto md:w-auto lg:w-[658px] rounded-xl animate-floatY transition-transform relative" />
         </div>
         <div className="md:w-1/2 flex flex-col items-start order-1 md:order-2 mt-8 md:mt-0">
           <div className="mb-4 flex items-center">
@@ -84,8 +90,8 @@ const HassleFreeFlow = () => {
           </p>
         </div>
         <div className="md:w-1/2 flex justify-center relative mb-16 md:mb-0">
-          <img src="https://clickflow.ca/wp-content/uploads/2024/04/30.png" alt=""  className="w-auto md:w-auto lg:w-[658px] absolute"/>
-          <img src="	https://clickflow.ca/wp-content/uploads/2024/04/31.png" alt="Design" className="w-auto md:w-auto lg:w-[658px] rounded-xl animate-floatY transition-transform relative" />
+          <img draggable="false" src={img5} alt=""  className="w-auto md:w-auto lg:w-[658px] absolute"/>
+          <img draggable="false" src={img6} alt="Design" className="w-auto md:w-auto lg:w-[658px] rounded-xl animate-floatY transition-transform relative" />
         </div>
       </div>
     </div>

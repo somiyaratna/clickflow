@@ -7,10 +7,12 @@ import 'swiper/css/mousewheel';
 import SwiperCore from 'swiper';
 import { Autoplay } from 'swiper/modules';
 import { Mousewheel } from 'swiper/modules';
+import { useNavigate } from "react-router-dom";
 
 SwiperCore.use([Autoplay, Mousewheel]);
 
 const MemberBenefits = () => {
+    const navigate = useNavigate();
     const benefits = [
         {
             icon: <svg className="w-[50px] h-[50px]" fill="#8A53F8" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><title>MONEY</title><g><path d="M109,35.959H19a1.751,1.751,0,0,0-1.75,1.75V90.291A1.751,1.751,0,0,0,19,92.041h90a1.751,1.751,0,0,0,1.75-1.75V37.709A1.751,1.751,0,0,0,109,35.959Zm-1.75,52.582H20.75V39.459h86.5Z"></path><path d="M27,75.669a6.552,6.552,0,0,1,6.544,6.544,1.75,1.75,0,0,0,1.75,1.75H92.706a1.75,1.75,0,0,0,1.75-1.75A6.552,6.552,0,0,1,101,75.669a1.75,1.75,0,0,0,1.75-1.75V54.081a1.75,1.75,0,0,0-1.75-1.75,6.552,6.552,0,0,1-6.544-6.544,1.75,1.75,0,0,0-1.75-1.75H35.294a1.75,1.75,0,0,0-1.75,1.75A6.552,6.552,0,0,1,27,52.331a1.75,1.75,0,0,0-1.75,1.75V73.919A1.75,1.75,0,0,0,27,75.669Zm1.75-19.991a10.07,10.07,0,0,0,8.141-8.141H91.109a10.07,10.07,0,0,0,8.141,8.141V72.322a10.07,10.07,0,0,0-8.141,8.141H36.891a10.07,10.07,0,0,0-8.141-8.141Z"></path><path d="M64,76.249A12.249,12.249,0,1,0,51.75,64,12.263,12.263,0,0,0,64,76.249Zm0-21A8.749,8.749,0,1,1,55.25,64,8.758,8.758,0,0,1,64,55.251Z"></path></g></svg>,
@@ -114,7 +116,7 @@ const MemberBenefits = () => {
 
                 {/* CTA Button */}
                 <div className="text-center mt-12">
-                    <button className="inline-block bg-[#8A53F8] text-white px-[30px] py-[10px] rounded-[66px] hover:bg-blue-700 transition text-[22px] font-medium">
+                    <button className="inline-block bg-[#8A53F8] text-white px-[30px] py-[10px] rounded-[66px] hover:bg-blue-700 transition text-[22px] font-medium" onClick={() => navigate('/contact')}>
                         Get Started
                     </button>
                 </div>

@@ -39,9 +39,7 @@ const App = () => {
           <Route
             path="/"
             element={
-              <Layout>
-                <Dashboard />
-              </Layout>
+                <Home />
             }
           />
           <Route

@@ -11,7 +11,7 @@ const Input = ({ label, type, id, placeholder, value, onChange, disabled }) => {
     <div className="mb-1 md:mb-2 text-left relative">
       <label
         htmlFor={id}
-        className="text-sm md:text-base block mb-1 font-bold text-text500"
+        className="text-sm md:text-base block mb-1 font-normal text-[#14213D]"
       >
         {label}
       </label>
@@ -22,7 +22,7 @@ const Input = ({ label, type, id, placeholder, value, onChange, disabled }) => {
         value={value}
         onChange={onChange}
         disabled={disabled}
-        className={`w-full border bg-bg800 text-white border-bg800 outline-none rounded-lg px-2 py-1 md:px-4 md:py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-bg100 placeholder:text-xs md:placeholder:text-base flex items-center ${
+        className={`w-full border bg-[#EFF3FB] text-[#14213D] border-bg800 outline-none rounded-lg px-2 py-1 md:px-4 md:py-2 text-base transition-all duration-300 focus:border-primary500 focus:shadow-primary600 placeholder:text-[#14213D] placeholder:text-xs md:placeholder:text-base flex items-center ${
           disabled ? "cursor-not-allowed" : ""
         }`}
       />

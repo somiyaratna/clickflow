@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Phone, ShoppingBag, Book, User, X, LogOut, House } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -39,11 +39,23 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const menuRef = useRef(null);
+  const [logged, setLogged] = useState(false);
+  const userDetails = useSelector((state) => state.user);
 
   function userLogout() {
     dispatch(logout());
     navigate("/login");
   }
+
+  useEffect(() => {
+    if (!userDetails.token) {
+      setLogged(false);
+    }else{
+      setLogged(true);
+    }
+  }, []);
+
+
 
   // useEffect(() => {
   //   const handleClickOutside = (event) => {
@@ -69,14 +81,14 @@ const Navbar = () => {
           onClick={userLogout}
           className="flex items-center gap-2 text-primary600 bg-white hover:bg-primary100 transition-colors duration-300 ease-in-out   hover:text-primary600 px-6 py-2 rounded-lg"
         >
-          Sign Out
+          {logged ? 'Sign Out' : 'Log In'}
         </button>
       </div>
       <button
           onClick={userLogout}
           className="flex md:hidden items-center gap-2 text-primary600 bg-white hover:bg-primary100 transition-colors duration-300 ease-in-out   hover:text-primary600 px-8 py-2 rounded-lg"
         >
-          Sign Out
+          {logged ? 'Sign Out' : 'Log In'}
         </button>
       {/* Mobile view */}
       <div className="md:hidden relative px-4">
@@ -98,22 +110,7 @@ const Navbar = () => {
         ></div> */}
 
         {/* Sliding Navbar */}
-        <div
-          ref={menuRef}
-          className={`fixed flex justify-center items-center bottom-1 rounded-full left-0 w-full bg-white text-black p-4`}
-        >
-          <div className="flex gap-[4vw] h-auto">
-            <NavbarLinks isMobile={true} />
-
-            {/* <button
-              onClick={userLogout}
-              className="mt-full bottom-10 flex items-center gap-2 text-red-500"
-            >
-              <LogOut size={20} />
-              Sign Out
-            </button> */}
-          </div>
-        </div>
+        
       </div>
     </nav>
   );

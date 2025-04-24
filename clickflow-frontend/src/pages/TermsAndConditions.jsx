@@ -1,19 +1,20 @@
 import { ChevronLeft, Handshake } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TermsAndConditions = () => {
+  const navigate = useNavigate();
   return (
-    <div className="p-6 bg-darkbg200 text-white">
+    <div className="p-6 bg-[#A4C8FF] text-[#14213D]">
       <div className="flex mb-8 items-center gap-4">
-        <Link to="/dashboard" className="text-white">
+        <div className="cursor-pointer" onClick={() => navigate(-1)}>
           <ChevronLeft size={32} />
-        </Link>
+        </div>
         <Handshake size={36} />
         <h1 className="text-xl md:text-3xl font-bold mb-4">
           Terms and Conditions
         </h1>
       </div>
-      <div className="bg-darkbg100 p-6 rounded-lg shadow-md">
+      <div className="bg-[#EFF3FB] p-6 rounded-lg shadow-md">
         <p className="mb-2">
           <strong>Definitions:</strong>
         </p>

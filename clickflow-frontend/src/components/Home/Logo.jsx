@@ -33,6 +33,7 @@ const Logo = () => {
           }}
         >
           <img
+            draggable="false"
             src={logo}
             alt={`logo-${index}`}
             className="h-full w-auto object-contain"

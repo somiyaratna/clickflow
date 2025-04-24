@@ -28,18 +28,18 @@ const AccordionItem = ({ question, answer }) => {
 
 const FAQs = () => {
   return (
-    <div className="min-h-full flex-1 p-8 text-white bg-darkbg200">
+    <div className="min-h-full flex-1 p-8 text-[#14213D] bg-[#A4C8FF]">
       <div className="flex gap-4 items-center mb-8">
         <Link to={"/dashboard"}>
           <ChevronLeft size={40} />
         </Link>
-        <CircleHelp size={40} className="text-white" />
-        <h1 className="text-2xl md:text-4xl font-bold text-white">
+        <CircleHelp size={40} className="" />
+        <h1 className="text-2xl md:text-4xl font-bold">
           Frequently Asked Questions
         </h1>
       </div>
 
-      <ol className="list-decimal bg-darkbg100 p-6 rounded-lg shadow-md">
+      <ol className="list-decimal bg-[#EFF3FB] p-6 rounded-lg shadow-md">
         {faqData.map((faq, index) => (
           <AccordionItem
             key={index}
