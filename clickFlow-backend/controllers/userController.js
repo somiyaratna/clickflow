@@ -5,6 +5,30 @@ const nodemailer = require('nodemailer');
 const Transaction = require('../models/transactionModal');
 const DailyTask = require('../models/dailyTaskModal');
 
+const depositSuccessMail = (user, amount, date) => ({
+  from: process.env.EMAIL_USER,
+  to: user.email,
+  subject: 'Deposit Successful – ClickFlowPro',
+  html: `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; max-width: 600px; margin: auto;">
+      <h2 style="color: #0b5394;">Deposit Confirmation</h2>
+      <p>Hello ${user.fullName || 'User'},</p>
+      <p>Your deposit of <strong>$${amount}</strong> has been successfully processed and is now available in your ClickFlowPro account.</p>
+
+      <p><strong>Deposit Details:</strong><br/>
+      <strong>Amount:</strong> $${amount}<br/>
+      <strong>Date:</strong> ${date}</p>
+
+      <p>You're all set to put your funds to work! Head over to your dashboard to start managing your campaigns and making the most of your ClickFlowPro tools.</p>
+
+      <a href="https://clickflowpro.us/contact" style="display: inline-block; margin-top: 16px; padding: 10px 20px; background-color: #0b5394; color: white; text-decoration: none; border-radius: 5px;">Contact Support</a>
+
+      <p style="margin-top: 20px;">Thanks for being part of ClickFlowPro!</p>
+      <p>— The ClickFlowPro Team<br/>
+    </div>
+  `,
+});
+
 async function userSignup(req, res) {
   try {
     const {
@@ -144,7 +168,17 @@ async function editUserDetails(req, res) {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+    let temp_depo = user.deposit;
+    let temp_wallet = user.wallet_balance;
     if(deposit > user.deposit){
       const transaction = new Transaction({
         type: "deposit",
@@ -152,7 +186,16 @@ async function editUserDetails(req, res) {
         userId: userId
       });
       await transaction.save();
+      const amount = parseFloat(deposit) - parseFloat(user.deposit);
+      try {
+        await transporter.sendMail(
+          depositSuccessMail(user, amount , today.toLocaleDateString())
+        );
+      } catch (emailError) {
+          console.log("Email sending failed, but proceeding anyway:", emailError.message);
+      }
     }
+
 
     if (fullName) user.fullName = fullName;
     if (username) user.username = username;
@@ -164,6 +207,10 @@ async function editUserDetails(req, res) {
     if (lifetime_earning !== undefined) user.lifetime_earning = lifetime_earning;
     if(deposit) user.deposit = deposit;
     if(credit_score) user.credit_score = credit_score;
+
+    if( (deposit > temp_depo) && (temp_wallet === user.wallet_balance) ){
+      user.wallet_balance = (parseFloat(wallet_balance) + parseFloat(deposit) - parseFloat(temp_depo)).toFixed(2);
+    }
 
     if(deposit >= 50){
       user.level = 1;
@@ -301,6 +348,35 @@ async function verifyOtp(req, res) {
   }
 }
 
+async function verifyWithdrawOtp(req, res) {
+  const { email, otp, newPassword } = req.body;
+
+  try {
+    if (!email || !otp || !newPassword) {
+      return res.status(400).json({ message: "Email, OTP, and new password are required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.otp !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    const hashedLoginPassword = await bcrypt.hash(newPassword, 10);
+    user.withdrawalPassword = hashedLoginPassword;
+    user.otp = null;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 
 async function fetchSingleUser(req, res) {
   const { userId } = req.params;
@@ -323,4 +399,4 @@ async function fetchSingleUser(req, res) {
 
 
 
-module.exports = { userSignup, userLogin, fetchAllUsers, editUserDetails, deleteUser, sendOtp, verifyOtp, fetchSingleUser };
+module.exports = { userSignup, userLogin, fetchAllUsers, editUserDetails, deleteUser, sendOtp, verifyOtp, fetchSingleUser, verifyWithdrawOtp };

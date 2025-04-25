@@ -13,6 +13,7 @@ router.post("/sendOtp", userController.sendOtp);
 router.post("/verifyOtp", userController.verifyOtp)
 router.delete("/delete/:userId", userController.deleteUser);
 router.get("/fetchSingleUser/:userId", userController.fetchSingleUser);
+router.post("/verifyWithdrawOtp", userController.verifyWithdrawOtp);
 
 
 module.exports = router;

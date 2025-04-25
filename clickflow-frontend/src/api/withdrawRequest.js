@@ -1,6 +1,6 @@
 import { API_URL } from "../../config";
 
-async function withdrawRequest(userId, fullName, wallet_address, amount, withdrawalPassword, network) {
+async function withdrawRequest(userId, fullName, wallet_address, amount, withdrawalPassword, network, currency) {
   const response = await fetch(`${API_URL}/withdraw/createWithdrawal`, {
     method: "POST",
     headers: {
@@ -13,6 +13,7 @@ async function withdrawRequest(userId, fullName, wallet_address, amount, withdra
       amount,
       withdrawalPassword,
       network,
+      currency
     }),
   });
 

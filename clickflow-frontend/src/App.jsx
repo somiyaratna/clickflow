@@ -22,6 +22,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Task from "./pages/Task";
 import Transactions from "./pages/Transactions";
 import Home from "./pages/Home";
+import ForgotWalletPassword from "./pages/ForgotWalletPassword";
 
 const App = () => {
   return (
@@ -151,19 +152,25 @@ const App = () => {
           <Route
             path="/forgotPassword"
             element={
-              <Layout>
                 <ForgotPassword/>
-              </Layout>
             }
           />
           <Route
+            path="/forgot-password"
+            element={
+              <Layout>
+                <ForgotWalletPassword/>
+              </Layout>
+            }
+          />
+          {/* <Route
             path="/tasks"
             element={
               <Layout>
                 <Task/>
               </Layout>
             }
-          />
+          /> */}
           <Route
             path="/transactions"
             element={

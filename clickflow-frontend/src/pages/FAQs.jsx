@@ -28,7 +28,7 @@ const AccordionItem = ({ question, answer }) => {
 
 const FAQs = () => {
   return (
-    <div className="min-h-full flex-1 p-8 text-[#14213D] bg-[#A4C8FF]">
+    <div className="min-h-full flex-1 p-8 text-[#14213D] bg-[#A4C8FF] pt-32 md:pt-12">
       <div className="flex gap-4 items-center mb-8">
         <Link to={"/dashboard"}>
           <ChevronLeft size={40} />

@@ -40,7 +40,7 @@ function Transactions() {
 
   return (
     <div className='bg-[#A4C8FF]'>
-      <div className="max-w-6xl mx-auto min-h-screen text-[#14213D] p-2 sm:p-4">
+      <div className="max-w-6xl mx-auto min-h-screen text-[#14213D] p-2 sm:p-4 pt-28 md:pt-12">
         <h1 className="text-2xl font-semibold mb-4">Transaction History</h1>
         <div className="space-y-4">
           {transactions.map(transaction => {

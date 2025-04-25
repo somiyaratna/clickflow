@@ -5,9 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import sendOtp from "../api/sendOtp";
-import verifyOtp from "../api/verifyOtp";
+import verifyOtp from "../api/verifyWithdrawOtp";
 
-const ForgotPassword = () => {
+const ForgotWalletPassword = () => {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
       const verify = await verifyOtp(email, newPassword, otp);
       if (verify.message === "Password updated successfully") {
         toast.success("Password reset successful!");
-        setTimeout(() => navigate("/login"), 4000);
+        setTimeout(() => navigate("/withdrawal"), 4000);
       } else {
         toast.error(verify.message);
       }
@@ -104,13 +104,13 @@ const ForgotPassword = () => {
 
   return (
     <div
-      className="pt-36 md:pt-0 font-roboto h-screen w-screen flex flex-col items-center justify-center gap-10 bg-cover bg-center bg-[#925FFF]"
+      className="pt-36 md:pt-0 font-roboto h-screen w-screen flex flex-col items-center justify-center gap-16 bg-cover bg-center bg-[#925FFF]"
     >
-      <div>
+      <div className="mt-12">
         <img
           src="./src/assets/logo.png"
           alt="clickflow logo"
-          className="max-h-12 md:max-h-12 lg:max-h-12"
+          className="max-h-12 md:max-h-16 lg:max-h-16"
           draggable="false"
         />
       </div>
@@ -183,10 +183,10 @@ const ForgotPassword = () => {
                 Remembered your password?
               </p>
               <Link
-                to={"/login"}
+                to={"/withdrawal"}
                 className="font-thin text-primary500 hover:text-primary600 text-sm"
               >
-                Login
+                Withdrawal
               </Link>
             </div>
           </div>
@@ -197,4 +197,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotWalletPassword;

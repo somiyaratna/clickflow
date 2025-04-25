@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
   //   }
   // }, []);
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-x-hidden">
       <Header />
       <main
         className="flex-grow bg-repeat backdrop:filter bg-blur-lg"

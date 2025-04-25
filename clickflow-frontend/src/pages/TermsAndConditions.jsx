@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 const TermsAndConditions = () => {
   const navigate = useNavigate();
   return (
-    <div className="p-6 bg-[#A4C8FF] text-[#14213D]">
+    <div className="p-6 bg-[#A4C8FF] text-[#14213D] pt-32 md:pt-12">
       <div className="flex mb-8 items-center gap-4">
         <div className="cursor-pointer" onClick={() => navigate(-1)}>
           <ChevronLeft size={32} />

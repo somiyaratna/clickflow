@@ -61,8 +61,8 @@ function Profile() {
   },[user])
 
   return (
-    <div className="min-h-full flex-1 pb-4 bg-[#EFF3FB]">
-      <section className="max-w-6xl mx-auto py-8">
+    <div className="min-h-full flex-1 pb-4 bg-[#EFF3FB] pt-24 md:pt-4">
+      <section className="max-w-6xl mx-auto py-8 ">
         <h3 className="text-xl md:text-3xl text-[#14213D] text-center font-bold">
           Profile
         </h3>

@@ -38,11 +38,11 @@ export default function BottomMenu() {
           label="Customer Service Center"
           href="/contact"
         />
-        <MenuItem
+        {/* <MenuItem
           icon={Wallet2}
           label="Binding Wallet Address"
           href="/wallet"
-        />
+        /> */}
         <div
           onClick={() => {
             dispatch(logout());

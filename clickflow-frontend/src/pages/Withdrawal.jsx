@@ -13,14 +13,18 @@ const Withdrawal = () => {
   const [withdrawalAmount, setWithdrawalAmount] = useState(0);
   const [withdrawalAddress, setWithdrawalAddress] = useState("");
   const [withdrawalNetwork, setWithdrawalNetwork] = useState("TRC20");
+  const [withdrawalCurrency, setWithdrawalCurrency] = useState("Tether (USDT)");
   const [withdrawalPassword, setWithdrawalPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.user);
+    
 
-  const networkOptions = ["TRC20", "ERC20", "BEP20", "SPL", "ARC20"];
+  const networkOptions = ["TRC20", "ERC20", "BEP20", "SPL", "ARC20", "MATIC", "ETH", "BTC", "TRX", "USDC", "SOL", "USDT"];
+  const currencyOptions = ["Tether (USDT)", "Tron (TRX)", "Solana (SOL)", "USD Coin (USDC)", "Ethereum (ETH)","Bitcoin (BTC)"];
 
   useEffect(() => {
     setUser(userDetails.user);
@@ -64,6 +68,7 @@ const Withdrawal = () => {
     } else if (userData.wallet_balance < withdrawalAmount) {
       toast.error(`Please Enter Amount Less Than $${userData.wallet_balance}`);
     } else {
+      setIsLoading(true);
       try {
         if (user) {
           const request = await withdrawRequest(
@@ -72,7 +77,8 @@ const Withdrawal = () => {
             withdrawalAddress,
             withdrawalAmount,
             withdrawalPassword,
-            withdrawalNetwork
+            withdrawalNetwork,
+            withdrawalCurrency
           );
           if (request.message === "Withdrawal request created successfully") {
             toast.success("Withdrawal request created successfully");
@@ -80,10 +86,12 @@ const Withdrawal = () => {
             setWithdrawalAddress("");
             setWithdrawalAmount(0);
             setWithdrawalPassword("");
+            setIsLoading(false);
           }
           console.log("request", request);
         }
       } catch (error) {
+        setIsLoading(false);
         toast.error(error.message);
         console.log("Error", error);
       }
@@ -91,11 +99,11 @@ const Withdrawal = () => {
   };
 
   return (
-    <div className="bg-[#EFF3FB] h-full">
-      <div className="flex-1 relative justify-center items-center flex flex-col gap-8 h-full text-[#14213D]">
+    <div className="bg-[#EFF3FB] h-full pt-24 md:pt-6">
+      <div className="flex-1 relative justify-center items-center flex flex-col gap-8 h-full text-[#14213D] pt-24 md:pt-0">
         <Link
           to="/dashboard"
-          className="font-semibold absolute top-8 left-8"
+          className="font-semibold absolute top-12 left-0 md:left-8"
         >
           <span className="flex items-center gap-4">
             <ChevronLeft size={32} />
@@ -118,6 +126,20 @@ const Withdrawal = () => {
                 onChange={(e) => setWithdrawalAddress(e.target.value)}
                 placeholder={"Enter Wallet Address"}
               />
+              <div className="text-left">
+                <label className="block mb-1">Select Cryptocurrency</label>
+                <select
+                  value={withdrawalCurrency}
+                  onChange={(e) => setWithdrawalCurrency(e.target.value)}
+                  className="w-full p-2 rounded bg-[#EFF3FB] border border-bg800 outline-none"
+                >
+                  {currencyOptions.map((network) => (
+                    <option key={network} value={network}>
+                      {network}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className="text-left">
                 <label className="block mb-1">Select Network</label>
                 <select
@@ -164,6 +186,12 @@ const Withdrawal = () => {
               value={withdrawalPassword}
               onChange={(e) => setWithdrawalPassword(e.target.value)}
             />
+            <Link
+              to="/forgot-password"
+              className="font-thin hover:underline text-primary500 text-sm hover:text-primary600"
+            >
+              Forgot Wallet Password?
+            </Link>
             <div className="flex gap-4 justify-center">
               <button
                 onClick={() => setShowNextForm(false)}
@@ -172,19 +200,20 @@ const Withdrawal = () => {
                 Back
               </button>
               <button
+                disabled={isLoading}
                 type="submit"
                 className="mt-4 bg-green-500 text-white py-2 px-4 rounded"
               >
-                Submit
+                {isLoading ? "submiting..." : "Submit"}
               </button>
             </div>
           </form>
         )}
-        <ul className="list-disc px-8 mt-10">
-          <li className="text-red-600 text-sm">
+        <ul className="list-disc px-8 -mt-4">
+          {/* <li className="text-red-600 text-sm">
             We only support USDT TRC20 network, so make sure to double check your
             TRC20 USDT address.
-          </li>
+          </li> */}
           <li className="text-red-600 text-sm">
             If you made an incorrect withdrawal, we are not responsible for making
             changes. Please contact customer service for assistance.

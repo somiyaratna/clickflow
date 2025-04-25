@@ -1,5 +1,5 @@
 import Button from "../components/ui/Button";
-import amplifier from "../assets/screen-amplifier.jpg";
+import img1 from "../assets/imgload.gif";
 import { Toaster, toast } from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import { logout } from "../redux/userSlice";
 import star from "../assets/lvl-star.png";
 import fetchSingleUser from "../api/fetchSingleUser";
 
-function Task() {
+function Task({ setIsModalOpen }) {
 
     const [user, setUser] = useState(null);
     const [product, setProduct] = useState(null);
@@ -21,6 +21,7 @@ function Task() {
     const userDetails = useSelector((state) => state.user);
     const [taskData, setTaskData] = useState(null);
     const [task, setTask] = useState(0);
+    const [isTaskLoading, setIsTaskLoading] = useState(false);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -32,44 +33,47 @@ function Task() {
 
     useEffect(() => {
         if (!userDetails.token) {
-          dispatch(logout());
-          navigate("/login");
+            dispatch(logout());
+            navigate("/login");
         }
         setUser(userDetails.user)
     }, []);
 
     const fetchProduct = async () => {
+        setIsTaskLoading(true);
         try {
             if (user) {
-                if(userData?.deposit <= 0){
+                if (userData?.deposit <= 0) {
                     toast.error("You have not made any deposit yet. Please contact customer care for assistance.")
                 }
                 const product = await fetchSingleProduct(user?._id, user?.deposit, user?.level);
                 setProduct(product);
                 setCommission(product.commission)
+                setIsTaskLoading(false);
             }
         } catch (error) {
             toast.error("You have not made any deposit yet. Please contact customer care for assistance.");
             console.error(error.message);
+            setIsTaskLoading(false);
         }
     }
-    const fetchUser = async()=>{
-        try{
-          if(user){
-            const data = await fetchSingleUser(user?._id);
-            setUserData(data)
-          }
-        }catch(error){
-          console.error(error.message);
+    const fetchUser = async () => {
+        try {
+            if (user) {
+                const data = await fetchSingleUser(user?._id);
+                setUserData(data)
+            }
+        } catch (error) {
+            console.error(error.message);
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         fetchUser()
-    },[user])
+    }, [user])
     useEffect(() => {
         fetchProduct();
     }, [user]);
-    
+
     const dailyTask = async () => {
         try {
             if (user) {
@@ -84,7 +88,7 @@ function Task() {
     }
 
     const handleSubmit = async () => {
-        setLoading(true); 
+        setLoading(true);
         try {
             const submitTask = await taskSubmission(user?._id, product?.title, product.price, product?.image_url, product?.category, product?.description, commission, userDetails?.token);
             if (submitTask.message === "New daily task created" || submitTask.message === "Task count updated") {
@@ -104,7 +108,8 @@ function Task() {
             toast.error("Contact to Customer Care.");
             console.error(error.message);
         } finally {
-            setLoading(false); 
+            setLoading(false);
+            setIsModalOpen(false);
         }
     }
 
@@ -140,68 +145,62 @@ function Task() {
     }, [user]);
 
     return (
-        <div className="min-h-screen p-4 md:p-6 lg:p-8">
-            <div className="max-w-4xl mx-auto">
-                <div className="mb-8">
-                    <h1 className="text-2xl md:text-3xl font-semibold text-[#14213D] mb-2">
-                        Tasks
-                    </h1>
-                    <p className="text-[#14213D]">Yours tasks will be shown here</p>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white w-[90%] max-w-sm rounded-lg shadow-xl relative">
+                {isTaskLoading && (
+                    <div className="absolute w-full h-full bg-white/100 z-50 flex items-center justify-center rounded-lg">
+                        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                )}
+                <div className="p-4 border-b text-center relative">
+                    <h2 className="text-xl font-semibold">Task Submission</h2>
+                    <button
+                        className="absolute text-[20px] top-3 right-3 text-gray-500 hover:text-gray-700"
+                        onClick={() => setIsModalOpen(false)}
+                    >
+                        &times;
+                    </button>
                 </div>
 
-                <div className="bg-[#A4C8FF] text-[#14213D] rounded-xl shadow-sm p-4 md:p-6 mb-8">
-                    <div className="flex justify-between items-center mb-6">
-                        <time className="text-sm">
-                            {moment().format('ddd, MMM Do YYYY, h:mm A')}
-                        </time>
-                        <span className="px-3 py-1 bg-green-200 text-green-600 rounded-full text-sm font-medium">
-                            Pending
-                        </span>
+                <div className="p-4 text-center">
+                    <img
+                        draggable="false"
+                        src={product?.image_url || img1}
+                        alt="Product"
+                        className="mx-auto h-24 w-24 object-cover mb-2"
+                    />
+                    <h3 className="font-medium">{product?.title}</h3>
+                    <p className="font-bold text-lg">${product?.price}</p>
+                    <div className="flex justify-center mt-1 mb-4">
+                        {Array(5).fill().map((_, i) => (
+                            <img src={star} alt="star" className="h-5 mx-0.5" key={i} />
+                        ))}
                     </div>
 
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="relative w-16 h-16 md:w-20 md:h-20">
-                            <img
-                                src={product?.image_url}
-                                alt={product?.title}
-                                className="object-cover rounded-lg"
-                            />
+                    <div className="flex justify-between text-sm border-y py-3 mb-4">
+                        <div>
+                            <p className="font-semibold">Total Amount</p>
+                            <p className="text-blue-800">USDT {product?.price}</p>
                         </div>
-                        <div className="flex-1">
-                            <h3 className="text-lg md:text-xl font-medium mb-1">
-                                {product?.title}
-                            </h3>
-                            <div className="flex">
-                                <img src={star} className="h-6" alt="" /> 
-                                <img src={star} className="h-6" alt="" /> 
-                                <img src={star} className="h-6" alt="" /> 
-                                <img src={star} className="h-6" alt="" /> 
-                                <img src={star} className="h-6" alt="" /> 
-                            </div>
-                            <p className="text-lg font-semibold">${product?.price || 0}</p>
+                        <div>
+                            <p className="font-semibold">Task Commissions</p>
+                            <p className="text-blue-800">USDT {commission}</p>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-                        <div className="space-y-2">
-                            <h4 className="text-sm font-medium">Total Amount</h4>
-                            <p className="text-2xl font-bold">${product?.price || 0}</p>
-                        </div>
 
-                        <div className="space-y-2">
-                            <h4 className="text-sm font-medium">
-                                Commission
-                            </h4>
-                            <p className="text-2xl font-bold">${isNaN(commission) ? 0 : commission}</p>
-                        </div>
+                    <div className="text-left mb-8 text-sm">
+                        <p><span className="font-medium">Created Time:</span> {moment().format("hh:mm:ss A")}</p>
                     </div>
+
+                    <button
+                        className="w-full bg-blue-600 text-white font-medium py-2 rounded hover:bg-blue-700"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                    >
+                        {loading ? "Submitting..." : "Submit"}
+                    </button>
                 </div>
-
-                <Button onClick={handleSubmit} width={"full"} disabled={loading}>
-                    {loading ? "Submitting..." : "Submit"}
-                </Button>
             </div>
-            <div className="text-center text-sm text-[#14213D] mt-6">{taskData ? `(${taskData.task_count}/${taskData?.total_task})` : `(0/${task})`}</div>
-            <Toaster />
         </div>
     );
 }

@@ -21,7 +21,7 @@ const Contact = () => {
 
   return (
     <div className="bg-[#A4C8FF] h-full">
-      <div className="flex-1 justify-center items-center flex flex-col gap-8 h-full">
+      <div className="flex-1 justify-center items-center flex flex-col gap-8 h-full pt-24 md:pt-0">
         <MessagesSquare size={64} className="text-white " />
         <h1 className="font-bold text-[#14213D] text-center text-4xl md:text-6xl">
           Contact us on WhatsApp

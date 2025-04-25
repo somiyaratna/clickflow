@@ -12,7 +12,7 @@ const images = [
     "https://media.gettyimages.com/id/1466445474/photo/woman-taking-a-picture-of-a-pink-t-shirt-for-secondhand-sale.jpg?s=612x612&w=0&k=20&c=RgKR-fQrotZ_MBAY4YzCa4Rtvku4VU5JawYdeg6SNok=",
     "https://media.gettyimages.com/id/1294890431/photo/fresh-drink-an-orange-juice-hat-and-glasses-on-the-floor-in-front-of-pool-in-background-in.jpg?s=612x612&w=0&k=20&c=90OMMIU8QM7zsyeB0JBSkjejl52x5fNGQZpDG1o6hHA=",
 ];
-const ExclusiveGrid = ({user, commission}) => {
+const ExclusiveGrid = ({user, commission, isModalOpen, setIsModalOpen}) => {
     const [startIndex, setStartIndex] = useState(0);
     const [visibleImages, setVisibleImages] = useState(images.slice(0, 9));
 
@@ -53,9 +53,9 @@ const ExclusiveGrid = ({user, commission}) => {
                     ))}
 
                     <div className="col-span-2">
-                        <Link to={"/tasks"} className="bg-[#925FFF] text-white rounded-xl w-full h-16 flex justify-center items-center text-lg font-medium cursor-pointer">
+                        <div onClick={()=> setIsModalOpen(true)} className="bg-[#925FFF] text-white rounded-xl w-full h-16 flex justify-center items-center text-lg font-medium cursor-pointer">
                             Start
-                        </Link>
+                        </div>
                     </div>
 
                     {/* Bottom 2 images */}
@@ -92,9 +92,9 @@ const ExclusiveGrid = ({user, commission}) => {
 
                         
                         <div className="flex justify-center items-center">
-                            <Link to={"/tasks"} className="bg-[#925FFF] text-white rounded-xl w-full h-32 flex justify-center items-center text-lg font-medium cursor-pointer">
+                            <div onClick={()=>setIsModalOpen(true)} className="bg-[#925FFF] text-white rounded-xl w-full h-32 flex justify-center items-center text-lg font-medium cursor-pointer">
                                 Start
-                            </Link>
+                            </div>
                         </div>
 
                         

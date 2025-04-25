@@ -1,11 +1,11 @@
 import React from 'react';
 import ExclusiveGrid from './ExclusiveGrid';
 
-const ExclusiveDashboard = ({user, task, total_task, commission}) => {
+const ExclusiveDashboard = ({user, task, total_task, commission, isModalOpen, setIsModalOpen}) => {
   return (
     <div className="pt-6 pb-16">
       <div className="rounded-2xl  container mx-auto">
-        <ExclusiveGrid user={user} commission={commission}/>
+        <ExclusiveGrid user={user} commission={commission} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
       </div>
 
       <div className="rounded-2xl bg-gray-50 container p-6 mx-auto mt-5 text-center">

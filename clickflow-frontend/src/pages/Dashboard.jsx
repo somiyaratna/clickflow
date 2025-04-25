@@ -38,7 +38,7 @@ const Dashboard = () => {
   },[user])
 
   return (
-    <div className="min-h-full flex-1">
+    <div className="min-h-full flex-1 pt-20 md:pt-8">
       <h1 className="text-2xl md:text-4xl font-bold bg-[#EFF3FB] text-[#14213D] p-8">
         Welcome, {userDetails.user.fullName}
       </h1>

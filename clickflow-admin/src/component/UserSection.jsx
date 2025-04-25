@@ -9,6 +9,7 @@ import deleteUser from "../api/deleteUser.js";
 import PremiumTask from "./PremiumTask.jsx";
 import createPremiumTask from "../api/createPremiumTask.js";
 import restTask from "../api/resetTask.js";
+import { set } from "date-fns";
 
 export default function UserSection() {
 
@@ -18,6 +19,7 @@ export default function UserSection() {
   const [premiumTask, setPremiumTask] = useState({ userId: '', commission: '', taskAmount: '', task_no: ''});
   const [showPremiumTaskForm, setShowPremiumTaskForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAllUsers = async () => {
     try {
@@ -62,17 +64,20 @@ export default function UserSection() {
   };
 
   const editUserDetail = async (userDetail, userId) => {
+    setIsLoading(true);
     try {
       const userData = await editUser(userDetail, userId);
       if(userData.message === "User details updated successfully"){
         toast.success(userData.message)
         fetchAllUsers();
+        
       }
     } catch (error) {
       console.error(error.message)
       toast.error(`Error in Editing Users Data.`);
     } finally {
       setEditingUser(null);
+      setIsLoading(false);
     }
   };
 
@@ -192,6 +197,11 @@ export default function UserSection() {
           </table>
         </div>
       </div>
+      {isLoading && (
+        <div className="fixed inset-0 bg-white/70 z-50 flex items-center justify-center">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
       {editingUser && <EditUser user={editingUser} onSave={handleSave} onCancel={() => setEditingUser(null)} />}
       {confirmDelete && <ConfimationBox cancelDelete={cancelDelete} confirmDeleteUser={confirmDeleteUser}/>}
       {showPremiumTaskForm && (

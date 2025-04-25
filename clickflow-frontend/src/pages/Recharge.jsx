@@ -40,9 +40,9 @@ const Recharge = () => {
   };
 
   return (
-    <div className="flex flex-col items-center relative justify-center h-full flex-grow gap-8 bg-[#A4C8FF] text-[#14213D]">
+    <div className="flex flex-col items-center relative justify-center h-full flex-grow gap-8 bg-[#A4C8FF] text-[#14213D] pt-28">
       <Link to="/dashboard" className=" font-semibold">
-        <ChevronLeft size={32} className="absolute top-8 left-8" />
+        <ChevronLeft size={32} className="absolute top-36 md:top-12 left-8" />
       </Link>
       <h1 className="text-2xl md:text-4xl font-bold">Recharge</h1>
       <div

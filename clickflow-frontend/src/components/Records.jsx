@@ -73,7 +73,7 @@ function Records() {
 
   return (
     <div className="min-h-screen bg-[#A4C8FF] p-4 md:p-6 lg:p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto pt-24 md:pt-4">
         <div className="mb-8">
           <h1 className="text-2xl md:text-3xl font-semibold text-[#14213D] mb-2">
             Records
@@ -92,7 +92,7 @@ function Records() {
               <h4 className="text-sm font-medium">
                 Today&apos;s Commissions
               </h4>
-              <p className="text-2xl font-bold">USDT {taskData?.today_commission ? taskData?.today_commission : 0}</p>
+              <p className="text-2xl font-bold">USDT {taskData?.today_commission ? (taskData?.today_commission)?.toFixed(2) : 0}</p>
             </div>
           </div>
         </div>

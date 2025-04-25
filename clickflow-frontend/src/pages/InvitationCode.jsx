@@ -34,7 +34,7 @@ const InvitationCode = () => {
   const [isCopied, setIsCopied] = useState(false);
   return (
     <div
-      className="bg-[#A4C8FF] rounded relative-lg mx-auto h-full p-16"
+      className="bg-[#A4C8FF] rounded relative-lg mx-auto h-full p-12 "
     >
       <div className="bg-white text-[#14213D] max-w-[1600px] flex flex-col gap-16 justify-around items-center mx-auto text-center mt-24 h-1/2 rounded-lg p-16 filter backdrop-blur-sm bg-opacity-70 min-h-fit my-4">
         <img
