@@ -204,15 +204,15 @@ async function changeWithdrawRequestStatus(req, res) {
         await user.save();
         transaction.status = status;
         await transaction.save();
-
+        let currency = withdrawRequest.currency || `Not Available`;
         try {
             if (status === "accepted") {
                 await transporter.sendMail(
-                    withdrawalAcceptedMail(user, withdrawRequest.amount, withdrawRequest.wallet_address, withdrawRequest.network, withdrawRequest.currency)
+                    withdrawalAcceptedMail(user, withdrawRequest.amount, withdrawRequest.wallet_address, withdrawRequest.network, currency)
                 );
             } else if (status === "rejected") {
                 await transporter.sendMail(
-                    withdrawalRejectedMail(user, withdrawRequest.amount, withdrawRequest.wallet_address, withdrawRequest.network, withdrawRequest.currency)
+                    withdrawalRejectedMail(user, withdrawRequest.amount, withdrawRequest.wallet_address, withdrawRequest.network, currency)
                 );
             }
         } catch (emailError) {
