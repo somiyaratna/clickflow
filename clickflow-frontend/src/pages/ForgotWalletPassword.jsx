@@ -6,6 +6,7 @@ import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import sendOtp from "../api/sendOtp";
 import verifyOtp from "../api/verifyWithdrawOtp";
+import logo from "../assets/logo.png";
 
 const ForgotWalletPassword = () => {
   const [email, setEmail] = useState("");
@@ -108,7 +109,7 @@ const ForgotWalletPassword = () => {
     >
       <div className="mt-12">
         <img
-          src="./src/assets/logo.png"
+          src={logo}
           alt="clickflow logo"
           className="max-h-12 md:max-h-16 lg:max-h-16"
           draggable="false"
