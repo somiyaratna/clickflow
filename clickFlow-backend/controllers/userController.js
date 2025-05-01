@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require('nodemailer');
 const Transaction = require('../models/transactionModal');
 const DailyTask = require('../models/dailyTaskModal');
+const mongoose = require("mongoose");
 
 const depositSuccessMail = (user, amount, date) => ({
   from: process.env.EMAIL_USER,
@@ -156,7 +157,7 @@ async function editUserDetails(req, res) {
   const { userId } = req.params;
   const { fullName, username, email, phoneNo, wallet_balance, deposit, level, current_task, lifetime_earning, credit_score } = req.body;
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setUTCHours(0, 0, 0, 0);
 
   try {
     
@@ -379,18 +380,28 @@ async function verifyWithdrawOtp(req, res) {
 
 
 async function fetchSingleUser(req, res) {
-  const { userId } = req.params;
+  const userId = req.params.userId;
+
+  if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid or missing user ID. Please contact customer care.",
+    });
+  }
 
   try {
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ success: false, message: "User not found." });
     }
 
     res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred. Please contact customer care.",
+    });
   }
 }
 

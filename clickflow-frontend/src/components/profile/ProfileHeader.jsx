@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { UserIcon } from "lucide-react";
-import { useSelector } from "react-redux";
-import star from "./../../assets/lvl-star.png";
+import star from "../../assets/star.png";
 
 function ProfileHeader({user}) {
 

@@ -83,7 +83,7 @@ async function createWithdrawRequest(req, res) {
         }
 
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        today.setUTCHours(0, 0, 0, 0);
         let dailyTask = await DailyTask.findOne({ userId, date: today }).session(session);
         if (!dailyTask || dailyTask.task_count !== dailyTask.total_task) {
             throw new Error("Before Withdrawal, Please Complete All Tasks.");

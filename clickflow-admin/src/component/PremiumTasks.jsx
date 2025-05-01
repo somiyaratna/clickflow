@@ -51,6 +51,9 @@ export default function PremiumTasks() {
       if (editTask.message === "Premium task updated successfully") {
         toast.success("Task updated successfully!");
       }
+      if(editTask.message === "Cannot edit a completed task.") {
+        toast.error("Cannot edit a completed task.");
+      }
     } catch (error) {
       toast.error("Failed to update task");
       console.error(error.message);

@@ -1,4 +1,4 @@
-import Button from "../components/ui/Button";
+import React from "react";
 import img1 from "../assets/imgload.gif";
 import { Toaster, toast } from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,7 @@ import taskSubmission from "../api/taskSumbmission";
 import fetchDailyTaskData from "../api/fetchDailyTaskData";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/userSlice";
-import star from "../assets/lvl-star.png";
+import star from "../assets/star.png";
 import fetchSingleUser from "../api/fetchSingleUser";
 
 function Task({ setIsModalOpen }) {
@@ -92,24 +92,26 @@ function Task({ setIsModalOpen }) {
         try {
             const submitTask = await taskSubmission(user?._id, product?.title, product.price, product?.image_url, product?.category, product?.description, commission, userDetails?.token);
             if (submitTask.message === "New daily task created" || submitTask.message === "Task count updated") {
-                toast.success("Task Completed Successfully.");
-                fetchProduct();
-                dailyTask();
-                setCommission(0);
+                toast.success("Task Completed Successfully.", { duration: 1500 });
+                // fetchProduct();
+                // dailyTask();
             } else if (submitTask.message === "All Tasks are Completed for today" || submitTask.message === "Wallet Amount is Less Than Task Amount") {
-                toast.error(submitTask.message);
+                toast.error(submitTask.message, { duration: 1500 });
             } else if (submitTask.message === "Token is not valid.") {
                 dispatch(logout());
                 navigate("/login");
             } else {
-                toast.error("Contact to Customer Care.");
+                toast.error("Contact to Customer Care.", { duration: 1500 });
             }
         } catch (error) {
-            toast.error("Contact to Customer Care.");
+            toast.error("Contact to Customer Care.", { duration: 1500 });
             console.error(error.message);
         } finally {
-            setLoading(false);
-            setIsModalOpen(false);
+            setTimeout(() => {
+                setCommission(0);
+                setLoading(false);
+                setIsModalOpen(false);
+            }, 1600);
         }
     }
 
@@ -201,6 +203,7 @@ function Task({ setIsModalOpen }) {
                     </button>
                 </div>
             </div>
+            <Toaster />
         </div>
     );
 }

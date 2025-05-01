@@ -1,4 +1,5 @@
-import star from "./../../../assets/lvl-star.png";
+import React from "react";
+import star from "../../../assets/star.png";
 
 const MVPCard = ({ data, user }) => {
   return (

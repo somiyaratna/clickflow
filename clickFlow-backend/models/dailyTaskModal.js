@@ -13,7 +13,7 @@ const dailyTaskSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    lavel: {
+    level: {
         type: Number,
         default: 1
     },
@@ -21,7 +21,15 @@ const dailyTaskSchema = new mongoose.Schema({
         type: Number,
         default: 45
     },
+    today_task_count: {
+        type: Number,
+        default: 0
+    },
     today_commission: {
+        type: Number,
+        default:0
+    },
+    current_commission: {
         type: Number,
         default:0
     }

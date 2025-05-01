@@ -47,16 +47,41 @@ async function editPremiumTask(req, res) {
   const { commission, taskAmount, status, task_no } = req.body;
 
   try {
+    const task = await premiumTask.findById(taskId);
+    if (!task) {
+      return res.status(404).json({ message: "Premium task not found." });
+    }
+    if (task.status === "completed") {
+      return res.status(200).json({ message: "Cannot edit a completed task." });
+    }
+    if (commission === undefined || taskAmount === undefined) {
+      return res.status(400).json({ message: "Commission and task amount are required." });
+    }
+    if (status === undefined) {
+      return res.status(400).json({ message: "Status is required." });
+    }
+    if (task_no === undefined) {
+      return res.status(400).json({ message: "Task number is required." });
+    }
+
+    const user = await User.findById(task.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    if (status === "completed") {
+      user.wallet_balance = Math.round((parseFloat(user.wallet_balance - taskAmount + commission)) * 1000) / 1000;
+      user.lifetime_earning = Math.round((parseFloat(user.lifetime_earning - taskAmount + commission)) * 1000) / 1000;
+    }
+    await user.save();
     const updatedTask = await premiumTask.findByIdAndUpdate(
       {_id:taskId},
       { commission, taskAmount, status, task_no },
       { new: true, runValidators: true }
     );
-
     if (!updatedTask) {
       return res.status(404).json({ message: "Premium task not found." });
     }
-
+    
     res.status(200).json({ message: "Premium task updated successfully", task: updatedTask });
   } catch (error) {
     console.error("Error updating premium task:", error);

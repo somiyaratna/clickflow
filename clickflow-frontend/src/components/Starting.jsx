@@ -18,6 +18,7 @@ function Starting() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
   const userDetails = useSelector((state) => state.user);
   useEffect(() => {
     setUser(userDetails.user);
