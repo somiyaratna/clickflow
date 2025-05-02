@@ -10,12 +10,14 @@ import PremiumTask from "./PremiumTask.jsx";
 import createPremiumTask from "../api/createPremiumTask.js";
 import restTask from "../api/resetTask.js";
 import { set } from "date-fns";
+import ConfirmationBoxReset from "./ConfirmationBoxReset.jsx";
 
 export default function UserSection() {
 
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null); // State to manage confirmation dialog
+  const [confirmReset, setConfirmReset] = useState(null); // State to manage confirmation dialog
   const [premiumTask, setPremiumTask] = useState({ userId: '', commission: '', taskAmount: '', task_no: ''});
   const [showPremiumTaskForm, setShowPremiumTaskForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
@@ -61,6 +63,10 @@ export default function UserSection() {
 
   const cancelDelete = () => {
     setConfirmDelete(null);
+  };
+
+  const cancelReset = () => {
+    setConfirmReset(null);
   };
 
   const editUserDetail = async (userDetail, userId) => {
@@ -116,7 +122,7 @@ export default function UserSection() {
 
   const handleReset = async (userId) => {
     try {
-      const data = await restTask(userId);
+      const data = await restTask(confirmReset);
       if(data.message === "Task reset successfully"){
         toast.success("Task reset successfully");
         fetchAllUsers();
@@ -126,8 +132,11 @@ export default function UserSection() {
     } catch (error) {
       console.error(error.message)
       toast.error(`Error in Resetting Task.`);
+    }finally {
+      setConfirmReset(null);
     }
   }
+
 
   // Filter users based on search term
   const filteredUsers = users.filter(user => 
@@ -178,7 +187,7 @@ export default function UserSection() {
                   <td className="px-6 py-4 whitespace-nowrap">{user?.current_task}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{user?.lifetime_earning}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button onClick={() => handleReset(user._id)} className="text-amber-600 hover:text-amber-900 mr-2">
+                    <button onClick={() => setConfirmReset(user._id)} className="text-amber-600 hover:text-amber-900 mr-2">
                       <RotateCcw className="h-5 w-5" />
                     </button>
                     <button onClick={() => handleEdit(user)} className="text-indigo-600 hover:text-indigo-900 mr-2">
@@ -207,6 +216,7 @@ export default function UserSection() {
       {showPremiumTaskForm && (
         <PremiumTask premiumTask={premiumTask} setPremiumTask={setPremiumTask} handlePremiumTaskInputChange={handlePremiumTaskInputChange} handlePremiumTaskSubmit={handlePremiumTaskSubmit} setShowPremiumTaskForm={setShowPremiumTaskForm}/>
       )}
+      {confirmReset && <ConfirmationBoxReset cancelReset={cancelReset} confirmReset={handleReset}/>}
       <ToastContainer />
     </div>
   );
