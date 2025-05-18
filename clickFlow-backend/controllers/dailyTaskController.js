@@ -48,6 +48,7 @@ async function dailyTask(req, res){
 
         if (dailyTask) {
             if(dailyTask.task_count === dailyTask.total_task){
+                return res.status(200).json({ message: "Please Contact Customer Care", dailyTask });
                 dailyTask.task_count = 0;
                 dailyTask.current_commission = 0;
             }
@@ -153,7 +154,7 @@ async function dailyTask(req, res){
         }
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ message: "Error inserting/updating daily task", error });
+        return res.status(500).json({ message: "Please Contact Customer Care", error });
     }
 };
 
@@ -186,7 +187,6 @@ async function taskReset(req, res) {
         if(dailyTask){
             user.current_task = 0;
             dailyTask.task_count = 0;
-            dailyTask.today_task_count = 0;
             await dailyTask.save();
             await user.save();
             return res.status(200).json({message: "Task reset successfully", dailyTask});
