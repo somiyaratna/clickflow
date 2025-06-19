@@ -18,6 +18,7 @@ async function dailyTask(req, res){
         
         const user = await User.findOne({_id : userId});
         let dailyTask = await DailyTask.findOne({ userId, date: today });
+        let anyTask = await DailyTask.findOne({ userId });
         let yesterdayTask = await DailyTask.findOne({ userId }).sort({ date: -1 });
 
         let task_count = 1;
@@ -52,7 +53,7 @@ async function dailyTask(req, res){
                 dailyTask.task_count = 0;
                 dailyTask.current_commission = 0;
             }
-            if(dailyTask.today_task_count >= 3){
+            if(dailyTask.today_task_count >= 30000){
                 return res.status(200).json({ message: "All Tasks are Completed for today", dailyTask });
             }
             if(dailyTask.task_count + 1 === dailyTask.total_task){
@@ -97,6 +98,9 @@ async function dailyTask(req, res){
             }
             return res.status(200).json({ message: "Task count updated", dailyTask });
         } else {
+            if(anyTask){
+                return res.status(200).json({ message: "Please Contact Customer Care"});
+            }
             let total_task = 45;
             if(user.level === 1){
                 total_task = 45;
