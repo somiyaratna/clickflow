@@ -12,6 +12,7 @@ import UserSection from './component/UserSection';
 import WithdrawRequests from './component/WithdrawRequests';
 import WhatsAppSection from './component/WhatsAppSection';
 import PremiumTasks from './component/PremiumTasks';
+import TelegramSection from './component/telegramSection';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,6 +29,8 @@ function App() {
           <Route path='/withdraw-request' element={<Layout><WithdrawRequests/></Layout>} />
           <Route path='/premium-tasks' element={<Layout><PremiumTasks/></Layout>} />
           <Route path='/whatsapp' element={<Layout><WhatsAppSection/></Layout>} />
+          <Route path='*' element={<h1 className='text-center text-3xl mt-10'>404 Not Found</h1>} />
+          <Route path='/telegram' element={<Layout><TelegramSection/></Layout>} />
         </Routes>
       </Router>
     </Provider> 

@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const whatsappRoutes = require('./routes/whatsappRoutes');
+const telegramRoutes = require('./routes/telegramRoutes');
 const premiumTaskRoutes = require('./routes/premiumTaskRoutes');
 const productRoutes = require('./routes/productRoutes');
 const dailyTaskRoutes = require('./routes/dailyTaskRoutes');
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api/whatsapp', whatsappRoutes);
+app.use('/api/telegram', telegramRoutes);
 app.use('/api/premiumTask', premiumTaskRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/dailyTask', dailyTaskRoutes);

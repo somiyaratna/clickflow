@@ -1,4 +1,5 @@
 const WhatsappNumber = require("../models/whatsappNumberModal");
+const TelegramNumber = require("../models/telegramNumberModal");
 const express = require("express");
 const router = express.Router();
 
@@ -48,7 +49,8 @@ async function editWhatsappNumber(req, res) {
 async function fetchWhatsappNumbers(req, res) {
   try {
     const whatsappNumbers = await WhatsappNumber.findOne({});
-    res.status(200).json(whatsappNumbers);
+    const telegramNumbers = await TelegramNumber.findOne({});
+    res.status(200).json({ whatsappNumbers, telegramNumbers });
   } catch (error) {
     console.error("Error fetching WhatsApp numbers:", error);
     res.status(500).json({ message: "Internal server error" });

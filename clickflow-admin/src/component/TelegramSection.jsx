@@ -5,25 +5,25 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import fetchWhatsappNumber from "../api/fetchWhatsappNumber";
-import editWhatsappNumber from "../api/editWhatsappNumber";
+import editTelegramUsername from "../api/editTelegamUsername";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function WhatsAppSection() {
-  const [whatsappNumber, setWhatsappNumber] = useState("") // Replace with actual WhatsApp number
+export default function TelegramSection() {
+  const [telegramNumber, setTelegramNumber] = useState("") // Replace with actual Telegram number
   const [isEditing, setIsEditing] = useState(false)
-  const [tempNumber, setTempNumber] = useState(whatsappNumber);
+  const [tempNumber, setTempNumber] = useState(telegramNumber);
   const [numberDetails, setNumberDetails] = useState({});
 
   const handleEdit = () => {
     setIsEditing(true)
-    setTempNumber(whatsappNumber)
+    setTempNumber(telegramNumber)
   }
 
   const fetchNumber = async()=>{
     try{
       const number = await fetchWhatsappNumber();
-      setNumberDetails(number.whatsappNumbers);
-      setWhatsappNumber(number.whatsappNumbers.whatsappNumber);
+      setNumberDetails(number.telegramNumbers);
+      setTelegramNumber(number.telegramNumbers.telegramNumber);
     }catch(error){
       console.log(error.message)
     }
@@ -35,14 +35,15 @@ export default function WhatsAppSection() {
 
   const handleSave = async() => {
     try{
-      const editNumber = await editWhatsappNumber(numberDetails?._id, tempNumber)
-      if(editNumber?.message === "WhatsApp number updated successfully"){
-        setWhatsappNumber(tempNumber)
+        console.log("first")
+      const editNumber = await editTelegramUsername(numberDetails?._id, tempNumber)
+      if(editNumber?.message === "Telegram number updated successfully"){
+        setTelegramNumber(tempNumber)
         fetchNumber()
         toast.success(editNumber.message);
       }
     }catch(error){
-      toast.error("Erorr in Updating Whatsapp Number.")
+      toast.error("Error in Updating Telegram Number.")
       console.error(error.message)
     }finally{
       setIsEditing(false)
@@ -51,16 +52,16 @@ export default function WhatsAppSection() {
 
   const handleCancel = () => {
     setIsEditing(false)
-    setTempNumber(whatsappNumber)
+    setTempNumber(telegramNumber)
   }
 
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg p-4 sm:p-6">
-      <h2 className="text-2xl font-semibold mb-4">WhatsApp Contact</h2>
+      <h2 className="text-2xl font-semibold mb-4">Telegram Contact</h2>
       {isEditing ? (
         <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
           <div className="flex-grow mb-4 sm:mb-0">
-            <Label htmlFor="whatsapp-number">WhatsApp Number</Label>
+            <Label htmlFor="whatsapp-number">Telegram Username</Label>
             <Input
               id="whatsapp-number"
               value={tempNumber}
@@ -78,8 +79,8 @@ export default function WhatsAppSection() {
       ) : (
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="mb-4 sm:mb-0">
-            <Label>Current WhatsApp Number</Label>
-            <p className="text-lg font-medium">{whatsappNumber}</p>
+            <Label>Current Telegram Username</Label>
+            <p className="text-lg font-medium">{telegramNumber}</p>
           </div>
           <Button onClick={handleEdit} variant="outline">
             <Edit2 className="h-4 w-4 mr-2" />

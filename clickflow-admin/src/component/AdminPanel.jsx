@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { Bell, Users, DollarSign, Briefcase, Phone, Menu, X } from "lucide-react";
+import { Bell, Users, DollarSign, Briefcase, Phone, Menu, X, Send } from "lucide-react";
 import logo from "../assets/logo.png"
 import fetchNotifications from "../api/fectchNotification";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +34,7 @@ export default function AdminPanel() {
     { name: "Withdraw Requests", icon: DollarSign, section: "withdrawRequests", path: "/withdraw-request" },
     { name: "Premium Tasks", icon: Briefcase, section: "premiumTasks", path: "/premium-tasks" },
     { name: "WhatsApp", icon: Phone, section: "whatsapp", path: "/whatsapp" },
+    { name: "Telegram", icon: Send, section: "telegram", path: "/telegram" }
   ];
 
   const notifications = async () => {
